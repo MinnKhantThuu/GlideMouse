@@ -14,7 +14,7 @@
 .gesture-choices button:hover{background:#eef5f5;border-color:#9aafb4}
 .gesture-choices button[aria-pressed=true]{background:#e7f2fb;border-color:var(--blue);box-shadow:inset 3px 0 var(--blue)}
 .gesture-canvas{min-width:0;background:white;border:1px solid var(--line);border-radius:20px;overflow:hidden}
-.gesture-stage{aspect-ratio:760/390;display:flex;align-items:center;justify-content:center;background:linear-gradient(110deg,#eef6f4 0%,#f8fbfb 55%,#fff 55%);padding:14px}
+.gesture-stage{width:100%;aspect-ratio:760/390;display:flex;align-items:center;justify-content:center;background:linear-gradient(110deg,#eef6f4 0%,#f8fbfb 55%,#fff 55%);padding:14px}
 .gesture-stage svg{width:100%;height:100%;overflow:visible}
 .gesture-caption{padding:18px 24px 22px;border-top:1px solid var(--line)}
 .gesture-caption h3{font-size:20px;margin:0 0 4px}
