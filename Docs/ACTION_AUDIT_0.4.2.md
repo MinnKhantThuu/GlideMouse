@@ -58,3 +58,13 @@ Expandable sections use an explicit full-width Button for the label, blank area 
 | appleShortcut | Run Apple Shortcut | Apple Shortcut လုပ်ဆောင်ရန် |
 | shell | Shell command (opt-in) | Shell command (ခွင့်ပြုမှသာ) |
 | canvasPan | Canvas pan | Canvas ရွှေ့ရန် (ခလုတ်ဖိထား၍) |
+
+## Validation
+
+- Universal Release build passed; v0.4.2 (26) installed at the existing app path and Developer ID deep strict signing verification passed.
+- All 38 temporary-settings UX checks passed. Compiled localization check passed for 671 entries in EN/MY/ZH.
+- Rendered Buttons, Magic Mouse and Settings at 820, 1040 and 1440 points in all three languages, plus a dark app-profile view.
+- Native UI confirms the Buttons page no longer contains starter presets and retains the original three user actions with the engine Ready.
+- An isolated preview with no input engine confirmed the Add input Advanced button changes its accessibility value from collapsed to expanded and reveals Advanced mapping. A screenshot was saved.
+- Native automation disconnected during further pointer-coordinate checks. The sheet label and whitespace coordinate checks could not be completed; the shared full-width Button implementation owns all three hit areas.
+- User settings remained byte-for-byte unchanged. The isolated preview process was stopped after validation; the normal app remained running.
