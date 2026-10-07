@@ -35,7 +35,7 @@ Core mouse control works locally. The app does not keep a log of what you type. 
 4. Allow the two permissions below, return to the app and click **Refresh**. Reopen GlideMouse if macOS has not applied the permissions yet.
 5. Identify your buttons, save an action, then enable GlideMouse. Test one button at a time.
 
-**Release status:** the current download is a Developer ID signed **development prerelease**, not a notarized production release. macOS may block it. If macOS blocks opening it, check System Settings → Privacy & Security for the app-specific **Open Anyway** option. Keep Gatekeeper enabled. [Apple’s first-launch guide](https://support.apple.com/102445) Moving the app to a stable location before granting permissions helps avoid duplicate app entries.
+Install GlideMouse in Applications before granting permissions. [Apple’s first-launch guide](https://support.apple.com/102445) explains the macOS app-opening controls.
 
 ### Why the permissions are needed
 

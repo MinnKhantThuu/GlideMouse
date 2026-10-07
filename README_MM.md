@@ -34,7 +34,7 @@ Mouse control က ဒီ Mac ပေါ်မှာပဲ အလုပ်လု�
 4. အောက်က permission နှစ်ခုကို Allow လုပ်ပြီး app ပြန်လာကာ Refresh နှိပ်ပါ။ မရသေးရင် app ပိတ်ပြီး ပြန်ဖွင့်ပါ။
 5. ခလုတ်တွေကို သတ်မှတ်၊ လုပ်ဆောင်ချက်ကို သိမ်း၊ GlideMouse ကို ဖွင့်ပြီး ခလုတ်တခုချင်းစီ စမ်းပါ။
 
-လက်ရှိ download က **Developer ID နဲ့ signed လုပ်ထားတဲ့ development prerelease** ပါ။ Production notarization မပြီးသေးလို့ macOS က ဖွင့်မပေးတာ ဖြစ်နိုင်ပါတယ်။ macOS က ဖွင့်မပေးရင် System Settings → Privacy & Security မှာ ဒီ app အတွက် **Open Anyway** ပေါ်မပေါ် ကြည့်ပါ။ Gatekeeper ကို ပိတ်စရာမလိုပါ။ [ပထမဆုံးဖွင့်ချိန်အတွက် Apple လမ်းညွှန်](https://support.apple.com/102445) Permission မပေးခင် app ကို Applications ထဲ အရင်ရွှေ့ထားရင် app entry ထပ်နေတာကို လျှော့နိုင်ပါတယ်။
+Permission မပေးခင် GlideMouse ကို Applications ထဲ အရင်ရွှေ့ထားပါ။ [App ကို ပထမဆုံးဖွင့်ချိန်အတွက် Apple လမ်းညွှန်](https://support.apple.com/102445) ကိုလည်း ဖတ်နိုင်ပါတယ်။
 
 ### Permission ကို ဘာလို့ပေးရတာလဲ
 

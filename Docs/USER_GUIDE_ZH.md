@@ -12,7 +12,7 @@ GlideMouse 可以设置鼠标按钮操作、调整滚动手感，并为不同应
 2. 将 GlideMouse 拖到窗口中的 Applications 文件夹。
 3. 从 Applications 打开 GlideMouse，按提示允许权限并完成鼠标设置。复制后可以推出 GlideMouse 磁盘。
 
-当前版本是 Developer ID 签名的开发预发布版本，尚未完成公证。若 macOS 阻止打开，请查看“系统设置 → 隐私与安全性”中此应用的“仍要打开”选项，无需关闭 Gatekeeper。 [Apple 首次打开应用说明](https://support.apple.com/102445)
+授予权限之前，请先将 GlideMouse 移到“应用程序”文件夹。参阅 [Apple 首次打开应用说明](https://support.apple.com/102445)。
 
 ## 选择中文
 

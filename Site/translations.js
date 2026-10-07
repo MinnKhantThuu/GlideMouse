@@ -160,7 +160,8 @@ window.glideCopy = {
     "gestureModifiersBody": "Hold Command, Option, Control or Shift while making a gesture. A custom mapping takes priority; ordinary click mappings keep the held keys.",
     "gestureRestingTitle": "Leave a finger resting",
     "gestureRestingResult": "Tap with another finger",
-    "gestureRestingBody": "A finger that stays still is excluded from a new gesture after the resting delay. You can tap or swipe without lifting your whole hand."
+    "gestureRestingBody": "A finger that stays still is excluded from a new gesture after the resting delay. You can tap or swipe without lifting your whole hand.",
+    "privacy": "Privacy"
   },
   "my": {
     "navFeatures": "လုပ်ဆောင်ချက်များ",
@@ -323,7 +324,8 @@ window.glideCopy = {
     "gestureModifiersBody": "Gesture လုပ်နေတုန်း Command၊ Option၊ Control၊ Shift တစ်ခုခုကို တွဲနှိပ်ပါ။ သီးသန့် action သတ်မှတ်ထားရင် အဲဒါကို သုံးပါမယ်။ ပုံမှန် click မှာတော့ တွဲနှိပ်တဲ့ key ပါဝင်ပါမယ်။",
     "gestureRestingTitle": "လက်ချောင်းတစ်ချောင်း ချထားခြင်း",
     "gestureRestingResult": "တခြားလက်ချောင်းနဲ့ ထိရန်",
-    "gestureRestingBody": "လက်ချောင်းတစ်ချောင်းကို ငြိမ်ငြိမ်ချထားပြီး ခဏစောင့်ရင် နောက် gesture မှာ ထည့်မတွက်တော့ပါဘူး။ လက်တစ်ဖက်လုံးကို ဖယ်စရာမလိုဘဲ ထပ်ထိတာ၊ ပွတ်ရွှေ့တာ လုပ်နိုင်ပါတယ်။"
+    "gestureRestingBody": "လက်ချောင်းတစ်ချောင်းကို ငြိမ်ငြိမ်ချထားပြီး ခဏစောင့်ရင် နောက် gesture မှာ ထည့်မတွက်တော့ပါဘူး။ လက်တစ်ဖက်လုံးကို ဖယ်စရာမလိုဘဲ ထပ်ထိတာ၊ ပွတ်ရွှေ့တာ လုပ်နိုင်ပါတယ်။",
+    "privacy": "ကိုယ်ရေးအချက်အလက်"
   },
   "zh": {
     "navFeatures": "功能",
@@ -486,6 +488,7 @@ window.glideCopy = {
     "gestureModifiersBody": "做手势时按住 Command、Option、Control 或 Shift。自定义映射优先；普通点击会保留按住的修饰键。",
     "gestureRestingTitle": "保留静止的手指",
     "gestureRestingResult": "用另一根手指轻点",
-    "gestureRestingBody": "静止的手指在等待一段时间后，不再计入新手势。无需抬起整只手，就可以轻点或滑动。"
+    "gestureRestingBody": "静止的手指在等待一段时间后，不再计入新手势。无需抬起整只手，就可以轻点或滑动。",
+    "privacy": "隐私"
   }
 };
