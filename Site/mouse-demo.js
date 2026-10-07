@@ -5,7 +5,6 @@
   if (!root) return;
   const stage = root.querySelector('.gesture-stage');
   const choices = root.querySelector('.gesture-choices');
-  const motionButton = root.querySelector('[data-motion-toggle]');
   const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
   const demos = {
     buttons: ['upper', 'lower', 'hold', 'double', 'wheel', 'horizontal'],
@@ -14,16 +13,13 @@
   const families = { taps: demos.touch.slice(0, 6), movement: demos.touch.slice(6, 10), dragging: demos.touch.slice(10, 12), extras: demos.touch.slice(12) };
   const poses = {triple: 'multitap', threefingers: 'fingers', oneswipe: 'oneswipe', threeswipe: 'threeswipe', drag: 'drag', dragscroll: 'dragscroll', modifiers: 'modifiers', resting: 'resting'};
   let family = 'taps';
-  let mode = 'buttons', selected = 'upper', paused = reducedMotion.matches, visible = false;
+  let mode = 'buttons', selected = 'upper', visible = false;
   const language = () => document.documentElement.lang === 'zh-Hans' ? 'zh' : document.documentElement.lang;
   const t = key => window.glideCopy[language() || 'en'][key];
   const key = (name, suffix) => 'gesture' + name[0].toUpperCase() + name.slice(1) + suffix;
   function updateMotion() {
-    root.dataset.paused = String(paused || !visible || document.hidden);
+    root.dataset.paused = String(reducedMotion.matches || !visible || document.hidden);
     root.dataset.reduced = String(reducedMotion.matches);
-    const copyKey = paused ? 'gesturePlay' : 'gesturePause';
-    motionButton.querySelector('span').textContent = t(copyKey);
-    motionButton.setAttribute('aria-pressed', String(!paused));
   }
   function select(name, announce = true) {
     selected = name;
@@ -62,9 +58,7 @@
     family = button.dataset.gestureFamily; selected = families[family][0]; render();
   }));
   window.showMagicMouseGuide = () => { mode = 'touch'; family = 'taps'; selected = 'tap'; render(); };
-  motionButton.addEventListener('click', () => { paused = !paused; updateMotion(); });
-  root.querySelector('[data-motion-replay]').addEventListener('click', () => { paused = false; select(selected); updateMotion(); });
-  reducedMotion.addEventListener('change', event => { paused = event.matches; updateMotion(); });
+  reducedMotion.addEventListener('change', updateMotion);
   document.addEventListener('visibilitychange', updateMotion);
   window.addEventListener('glide:language', render);
   const observer = new IntersectionObserver(entries => { visible = entries[0].isIntersecting; updateMotion(); }, {threshold: 0.15});

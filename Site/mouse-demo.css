@@ -20,9 +20,6 @@
 .gesture-caption h3{font-size:20px;margin:0 0 4px}
 .gesture-caption p{font-size:14px;color:var(--slate);margin:0;min-height:3.3em}
 .gesture-caption .gesture-result-label{color:var(--blue);font-weight:650;margin:2px 0 10px;min-height:0}
-.gesture-tools{display:flex;align-items:center;gap:12px;margin-top:14px;flex-wrap:wrap}
-.gesture-tools button{display:inline-flex;align-items:center;gap:8px;min-height:44px;border:1px solid var(--line);border-radius:9px;background:white;color:var(--ink);padding:8px 16px}
-.gesture-tools button:hover{border-color:var(--blue);background:#eef6fc}
 .gesture-note{font-size:13px;color:var(--slate);max-width:860px;margin:18px 0 0}
 .gesture-guide[data-mode=touch] .gesture-note{border-left:3px solid #83aa9b;padding-left:14px}
 .gesture-stage .touch-mouse,.gesture-stage .finger,.gesture-stage .touch-halo,.gesture-stage .pinch-trace,.gesture-stage .swipe-trace,.gesture-stage .held-ring,.gesture-stage .wheel-mark,.gesture-stage .key-badge{display:none}
