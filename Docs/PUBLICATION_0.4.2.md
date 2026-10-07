@@ -15,8 +15,8 @@ parse, and Brave checks at 390 and 2560 pixels found no horizontal overflow.
 
 Store build 0.4.2 (26) was uploaded with the App Sandbox entitlement. Its English
 and Simplified Chinese metadata and four native sample screenshots per locale
-have been saved. The older submission was withdrawn; review submission is
-waiting for Apple's screenshot processing. Store screenshots exclude the
+have been saved. The older submission was withdrawn and 0.4.2 (26) was submitted on
+7 October 2026. App Store Connect confirms **Waiting for Review**. Store screenshots exclude the
 unsupported Magic Mouse touch page, media actions and Sparkle settings.
 
 An initial Developer ID build passed Apple notarization and Gatekeeper, but its

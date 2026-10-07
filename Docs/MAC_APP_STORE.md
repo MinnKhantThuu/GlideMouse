@@ -2,7 +2,7 @@
 
 The direct-download edition remains the shipping app. A separate Store candidate
 uses `app.glidemouse.store` and the App Sandbox, with its own settings container.
-Version 0.4.2 (26) has been signed by the Minn Khant Thu developer team and uploaded to App Store Connect. English and Simplified Chinese descriptions, current screenshots and review instructions have been updated. The earlier 0.3.19 submission was withdrawn to replace it with this build. Submission is awaiting screenshot processing. App Store availability depends on Apple's review; it is not yet publicly released.
+Version 0.4.2 (26) has been signed by the Minn Khant Thu developer team and uploaded to App Store Connect. English and Simplified Chinese descriptions, current screenshots and review instructions have been updated. The earlier 0.3.19 submission was withdrawn to replace it with this build. Version 0.4.2 (26) was submitted on 7 October 2026 and is **Waiting for Review**. App Store availability depends on Apple's review; it is not yet publicly released.
 
 ## Generate and archive
 
