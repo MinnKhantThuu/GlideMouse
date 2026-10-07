@@ -4,7 +4,7 @@
 
 **[网站](https://minnkhantthuu.github.io/GlideMouse/?lang=zh) · [English](../README.md) · [မြန်မာ](../README_MM.md)**
 
-**[下载 DMG](https://github.com/MinnKhantThuu/GlideMouse/releases/download/v0.3.19/GlideMouse-0.3.19-developer.dmg)**。本指南及图片展示 0.4.2；可用安装包见[发布列表](https://github.com/MinnKhantThuu/GlideMouse/releases)。
+**[下载 DMG](https://github.com/MinnKhantThuu/GlideMouse/releases/download/v0.4.2/GlideMouse-0.4.2.dmg)**。本指南及图片展示 0.4.2；可用安装包见[发布列表](https://github.com/MinnKhantThuu/GlideMouse/releases)。
 
 ![按钮操作列表](media/screenshots/zh-buttons.png)
 

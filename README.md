@@ -6,7 +6,7 @@ Set mouse button actions, adjust scrolling and use different settings in individ
 
 **[Website](https://minnkhantthuu.github.io/GlideMouse/) · [မြန်မာ](README_MM.md) · [简体中文](Docs/USER_GUIDE_ZH.md)**
 
-**[Download for macOS — DMG](https://github.com/MinnKhantThuu/GlideMouse/releases/download/v0.3.19/GlideMouse-0.3.19-developer.dmg)**
+**[Download for macOS — DMG](https://github.com/MinnKhantThuu/GlideMouse/releases/download/v0.4.2/GlideMouse-0.4.2.dmg)**
 
 The screenshots and instructions below show **0.4.2**. [Releases](https://github.com/MinnKhantThuu/GlideMouse/releases) lists the available installers.
 

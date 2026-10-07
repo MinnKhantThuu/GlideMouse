@@ -19,11 +19,18 @@ have been saved. The older submission was withdrawn and 0.4.2 (26) was submitted
 7 October 2026. App Store Connect confirms **Waiting for Review**. Store screenshots exclude the
 unsupported Magic Mouse touch page, media actions and Sparkle settings.
 
-An initial Developer ID build passed Apple notarization and Gatekeeper, but its
-feed URL was missing. It is not being published. A corrected signed universal
-archive includes the existing public update feed. Completing notarization and
-update signing requires the unlocked Mac and the existing Keychain confirmation.
-Download links remain on the available 0.3.19 release until that gate passes.
+The universal direct-download app is Developer ID signed, notarized by Apple and
+stapled. The final submission is D2B517C3-C94D-4FAE-B279-E880345FC2CF. Its
+Gatekeeper assessment and staple validation passed both before packaging and
+from the read-only mounted installer. The outer DMG is Developer ID signed;
+this is a notarized app inside a signed DMG, not a separate DMG notarization.
+
+[Release 0.4.2](https://github.com/MinnKhantThuu/GlideMouse/releases/tag/v0.4.2)
+contains the DMG, ZIP and SHA256SUMS.txt. Website and guide download links point
+to this release. The app includes the public update-feed URL. The ZIP's Sparkle
+EdDSA signature was verified and build 26 is published in the existing feed.
+This verifies the offered update artifact, not a new end-to-end installation
+through Sparkle on a second Mac. No running app was replaced for this publication.
 
 The Store generator now retains the shared mapping-list preview when excluding
 the touch preview, and removes unsupported touch fixture defaults. No personal

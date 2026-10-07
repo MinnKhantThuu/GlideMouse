@@ -6,7 +6,7 @@ Mac မှာ mouse ခလုတ်နှိပ်ရင် ဘာလုပ်�
 
 **[Website](https://minnkhantthuu.github.io/GlideMouse/?lang=my) · [English](README.md) · [简体中文](Docs/USER_GUIDE_ZH.md)**
 
-**[Mac အတွက် DMG ဒေါင်းလုဒ်](https://github.com/MinnKhantThuu/GlideMouse/releases/download/v0.3.19/GlideMouse-0.3.19-developer.dmg)**
+**[Mac အတွက် DMG ဒေါင်းလုဒ်](https://github.com/MinnKhantThuu/GlideMouse/releases/download/v0.4.2/GlideMouse-0.4.2.dmg)**
 
 အောက်က ပုံနဲ့လမ်းညွှန်တွေက **0.4.2** အတွက်ပါ။ ဒေါင်းလုဒ်ရနိုင်တဲ့ installer တွေကို [Releases](https://github.com/MinnKhantThuu/GlideMouse/releases) မှာ ကြည့်နိုင်ပါတယ်။
 
