@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.19
+
+- About GlideMouse’s Website button opens the GlideMouse product website.
+
 ## 0.3.18
 
 - Add an always-available Magic Mouse setup page: edit gestures before connecting hardware, review touch-only suggestions, choose finger/tap counts and directions, set modifier overrides, edit/delete and Undo.

@@ -6,7 +6,7 @@ Mouse ခလုတ်တွေကို ကိုယ်လိုချင်တ�
 
 **[Website](https://minnkhantthuu.github.io/GlideMouse/?lang=my) · [English guide](README.md) · [Video လမ်းညွှန်များ](https://minnkhantthuu.github.io/GlideMouse/tutorials.html#my) · [简体中文](Docs/USER_GUIDE_ZH.md)**
 
-**[GlideMouse ဒေါင်းလုဒ် — macOS DMG, v0.3.18](https://github.com/MinnKhantThuu/GlideMouse/releases/download/v0.3.18/GlideMouse-0.3.18-developer.dmg)**
+**[GlideMouse ဒေါင်းလုဒ် — macOS DMG, v0.3.19](https://github.com/MinnKhantThuu/GlideMouse/releases/download/v0.3.19/GlideMouse-0.3.19-developer.dmg)**
 
 ဒေါင်းလုဒ်ဆွဲ → Applications ထဲရွှေ့ → App ဖွင့်ပြီး permission ပေး → Mouse လုပ်ဆောင်ချက်ရွေးပြီး သုံးပါ။ Xcode တင်တာ၊ command နဲ့ build လုပ်တာတွေ မလိုပါ။
 
@@ -28,7 +28,7 @@ Mouse control က ဒီ Mac ပေါ်မှာပဲ အလုပ်လု�
 
 **လိုအပ်ချက်:** macOS 14 နဲ့အထက်၊ Apple Silicon သို့မဟုတ် Intel Mac ဖြစ်ရပါမယ်။ ဘီးခလုတ်/ဘေးခလုတ်ပါတဲ့ USB သို့မဟုတ် Bluetooth mouse နဲ့ သုံးရပိုအဆင်ပြေပါတယ်။ Universal build မှာ CPU နှစ်မျိုးလုံးအတွက် ပါပေမယ့် Mac၊ macOS နဲ့ mouse အမျိုးအစားအားလုံးမှာ physical test ပြီးပြီလို့ မဆိုလိုပါ။
 
-1. **[DMG ကို ဒေါင်းလုဒ်ဆွဲပါ](https://github.com/MinnKhantThuu/GlideMouse/releases/download/v0.3.18/GlideMouse-0.3.18-developer.dmg)**။
+1. **[DMG ကို ဒေါင်းလုဒ်ဆွဲပါ](https://github.com/MinnKhantThuu/GlideMouse/releases/download/v0.3.19/GlideMouse-0.3.19-developer.dmg)**။
 2. GlideMouse အဟောင်း ဖွင့်ထားရင် ပိတ်ပါ။ ဒေါင်းလုဒ်ရတဲ့ DMG ကို နှစ်ချက်နှိပ်ပြီး ဖွင့်ပါ။ ပေါ်လာတဲ့ window ထဲမှာ **GlideMouse** ကို **Applications** ပေါ် ဆွဲထည့်ပါ။
 3. Applications ထဲက GlideMouse ကိုဖွင့်ပြီး **Mouse သတ်မှတ်ရန်** ကို ဆက်လုပ်ပါ။ App ကူးပြီးရင် GlideMouse disk ကို Eject လုပ်နိုင်ပါတယ်။
 4. အောက်က permission နှစ်ခုကို Allow လုပ်ပြီး app ပြန်လာကာ Refresh နှိပ်ပါ။ မရသေးရင် app ပိတ်ပြီး ပြန်ဖွင့်ပါ။

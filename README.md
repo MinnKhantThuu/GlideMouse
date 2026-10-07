@@ -6,7 +6,7 @@ Make your mouse buttons useful and your scrolling comfortable on macOS. GlideMou
 
 **[Website](https://minnkhantthuu.github.io/GlideMouse/) · [မြန်မာလမ်းညွှန်](README_MM.md) · [Watch the tutorials](https://minnkhantthuu.github.io/GlideMouse/tutorials.html) · [简体中文](Docs/USER_GUIDE_ZH.md)**
 
-**[Download GlideMouse for macOS — DMG, v0.3.18](https://github.com/MinnKhantThuu/GlideMouse/releases/download/v0.3.18/GlideMouse-0.3.18-developer.dmg)**
+**[Download GlideMouse for macOS — DMG, v0.3.19](https://github.com/MinnKhantThuu/GlideMouse/releases/download/v0.3.19/GlideMouse-0.3.19-developer.dmg)**
 
 Download → drag GlideMouse to Applications → open and allow permissions → set your mouse actions. No Xcode or build commands needed.
 
@@ -29,7 +29,7 @@ Core mouse control works locally. The app does not keep a log of what you type. 
 
 **Requirements:** macOS 14 or later; Apple Silicon or Intel. A standard USB/Bluetooth mouse with a wheel or side buttons is recommended. The universal build contains both architectures; that does not mean every Mac, OS version or mouse has been physically tested.
 
-1. **[Download the DMG](https://github.com/MinnKhantThuu/GlideMouse/releases/download/v0.3.18/GlideMouse-0.3.18-developer.dmg)**.
+1. **[Download the DMG](https://github.com/MinnKhantThuu/GlideMouse/releases/download/v0.3.19/GlideMouse-0.3.19-developer.dmg)**.
 2. Quit an older GlideMouse copy. Double-click the downloaded DMG, then drag **GlideMouse** onto **Applications** in the window.
 3. Open GlideMouse from Applications and complete **Mouse setup**. You can eject the GlideMouse disk after copying the app.
 4. Allow the two permissions below, return to the app and click **Refresh**. Reopen GlideMouse if macOS has not applied the permissions yet.
