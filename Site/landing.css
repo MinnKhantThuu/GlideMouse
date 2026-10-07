@@ -516,11 +516,6 @@ blockquote{
 .intro-player{position:relative;background:#f7faf9;border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:0 18px 42px #17323d0a}
 .intro-player video{display:block;width:100%;height:auto;aspect-ratio:16/9}
 .intro-player video:focus-visible{outline:3px solid var(--blue);outline-offset:-5px}
-.intro-play{display:inline-flex;align-items:center;justify-content:center;gap:11px;min-height:48px;padding:12px 23px;border:1px solid #0672d3;border-radius:11px;background:var(--blue);color:white;font-size:15px;font-weight:600;white-space:nowrap}
-.intro-play:hover{background:#0069c7}
-.intro-play-icon{font-size:12px}
-.intro-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:15px}
-.intro-foot p{color:var(--slate);font-size:12px;margin:0}
 .download-section{
   background:#fff;
   padding-block:85px
@@ -1043,7 +1038,4 @@ details>p{
 .intro-heading{text-align:left;margin-bottom:22px}
 .intro-heading p{font-size:14px}
 .intro-player{border-radius:12px}
-.intro-play{font-size:13px;padding:10px 18px;min-height:48px}
-.intro-foot{align-items:flex-start;flex-direction:column;gap:2px}
-:lang(my) .intro-play{font-size:11px}
 }

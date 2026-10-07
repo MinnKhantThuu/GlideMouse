@@ -33,21 +33,4 @@
   try {preference = localStorage.getItem('glidemouse-site-language') || 'en';} catch (_) {}
   setLanguage(new URLSearchParams(location.search).get('lang') || preference);
   document.querySelectorAll('[data-language]').forEach(button => button.addEventListener('click',()=>setLanguage(button.dataset.language,true)));
-  const video = document.getElementById('intro-video');
-  const play = document.getElementById('intro-play');
-  function updatePlaybackButton() {
-    const playing = !video.paused && !video.ended;
-    const key = playing ? 'pauseIntro' : 'playIntro';
-    const label = play.querySelector('[data-copy]');
-    label.dataset.copy = key;
-    label.textContent = copy[activeLanguage][key];
-    play.dataset.aria = playing ? 'pauseIntroAria' : 'playIntroAria';
-    play.setAttribute('aria-label', copy[activeLanguage][play.dataset.aria]);
-    play.querySelector('.intro-play-icon').textContent = playing ? 'Ⅱ' : '▶';
-  }
-  play.addEventListener('click', () => {
-    if (!video.paused && !video.ended) video.pause();
-    else video.play().catch(updatePlaybackButton);
-  });
-  ['play', 'pause', 'ended'].forEach(event => video.addEventListener(event, updatePlaybackButton));
 })();

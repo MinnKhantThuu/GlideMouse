@@ -48,7 +48,10 @@
       button.append(title, result); button.addEventListener('click', () => select(name));
       return button;
     }));
-    root.querySelector('[data-gesture-note]').textContent = t(mode === 'touch' ? 'gestureTouchNote' : 'gestureButtonNote');
+    const note = root.querySelector('[data-gesture-note]');
+    note.hidden = mode !== 'touch';
+    note.textContent = mode === 'touch' ? t('gestureTouchNote') : '';
+
     select(selected, false); updateMotion();
   }
   root.querySelectorAll('[data-gesture-mode]').forEach(button => button.addEventListener('click', () => {
