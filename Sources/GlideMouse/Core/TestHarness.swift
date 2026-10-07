@@ -920,14 +920,14 @@ extension UIHarness {
         for language in AppLanguage.allCases {
             model.configuration.language = language
             for width in [820, 1040, 1440] {
-                for page in [SettingsPage.mappings, .magic] {
-                    let height = page == .magic ? 920 : 760
+                for page in [SettingsPage.mappings, .magic, .general] {
+                    let height = page == .mappings ? 760 : 920
                     let size = NSSize(width: width, height: height)
                     window.setContentSize(size)
                     let view = NSHostingView(rootView: SettingsRoot(model: model, initialPage: page).preferredColorScheme(.light))
                     view.sizingOptions = []; window.contentView = view; view.setFrameSize(size); window.orderFront(nil)
                     RunLoop.current.run(until: Date().addingTimeInterval(0.15)); view.layoutSubtreeIfNeeded(); window.display()
-                    save(view, directory.appendingPathComponent("\(language.rawValue)-\(page == .magic ? "magic" : "buttons")-\(width).png"))
+                    save(view, directory.appendingPathComponent("\(language.rawValue)-\(page == .magic ? "magic" : page == .general ? "settings" : "buttons")-\(width).png"))
                 }
             }
         }

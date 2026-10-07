@@ -19,12 +19,13 @@ struct MagicMousePage: View {
         if !connected { Text(model.text("Set up now, try when connected")).font(.caption).foregroundStyle(.secondary) }
         Text(model.text("Choose an action in each row. Changes save automatically.")).font(.caption).foregroundStyle(.secondary)
         ActionMappingList(model: model, touch: true)
-        DisclosureGroup(model.text("Ready-made setups")) {
+        ExpandableSection(model: model, title: model.text("Suggested gestures")) {
+            Text(model.text("Optional suggestions. Review before applying; your saved actions do not change until you confirm.")).font(.caption).foregroundStyle(.secondary)
             Button(model.text("Review suggested gestures")) { model.pendingPreset = "magic" }
             Text(model.text("Only the listed actions change. Other mappings are kept.")).font(.caption).foregroundStyle(.secondary)
         }
-        DisclosureGroup(model.text("Touch feel"), isExpanded: $tuning) { MagicTouchTuning(model: model).padding(.top, 12) }
-        DisclosureGroup(model.text("Connection and permissions")) {
+        ExpandableSection(model: model, title: model.text("Touch feel"), isExpanded: $tuning) { MagicTouchTuning(model: model).padding(.top, 12) }
+        ExpandableSection(model: model, title: model.text("Connection and permissions")) {
             Text(model.text(connected ? "Touch input is experimental. Enable GlideMouse and allow its permissions to try it." : "Your setup is saved. Touch input starts only when a supported Magic Mouse is connected and GlideMouse is enabled.")).font(.caption).foregroundStyle(.secondary)
             Text(model.text("If a double tap also triggers macOS Smart Zoom, turn Smart Zoom off in System Settings → Mouse → More Gestures. Pause other mouse utilities while testing.")).font(.caption).foregroundStyle(.secondary)
         }

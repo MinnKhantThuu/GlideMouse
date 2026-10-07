@@ -85,7 +85,6 @@ struct SettingsRoot: View {
             if !model.isTesting && model.configuration.globalDefaults.mappings.isEmpty && model.configuration.usability?.setupCompleted != true { model.showMouseSetup = true }
         }
         .buttonStyle(PointingButtonStyle())
-        .disclosureGroupStyle(ClickableDisclosureStyle(model: model))
     }
 }
 struct SectionBox<Content: View>: View {
@@ -112,7 +111,7 @@ struct WelcomePage: View {
             Text(model.text("Presets replace mappings in the selected profile. Undo restores the previous settings.")).font(.caption).foregroundStyle(.secondary)
         }
         GestureTutorial(model: model)
-        DisclosureGroup(model.text("Mouse compatibility")) {
+        ExpandableSection(model: model, title: model.text("Mouse compatibility")) {
             VStack(alignment: .leading, spacing: 10) {
                 Text(model.text("Use your mouse buttons and wheel to create mappings."))
                 Text(model.text("Some trackpad-style gestures are not available yet."))
@@ -149,7 +148,7 @@ struct DevicesPage: View {
                     VStack(alignment: .leading, spacing: 10) {
                         Text(d.transport).foregroundStyle(.secondary)
                         Text(model.text(d.magicMouse ? "Magic Mouse" : "Mouse buttons and wheel"))
-                        DisclosureGroup(model.text("Technical details")) {
+                        ExpandableSection(model: model, title: model.text("Technical details")) {
                             Text(model.text("Standard buttons") + ": \(d.buttons)")
                             Text(model.text(d.stableIdentity ? "Stable identity available" : "Session identity only"))
                             Text(model.text(d.magicMouse ? "Touch adapter: experimental" : "Touch surface: unavailable"))
@@ -246,7 +245,7 @@ struct GestureTutorial: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @State private var step = 0
     var body: some View {
-        DisclosureGroup(model.text("Input guide")) {
+        ExpandableSection(model: model, title: model.text("Input guide")) {
             HStack(spacing: 22) {
                 ZStack {
                     RoundedRectangle(cornerRadius: 42).stroke(Color.secondary, lineWidth: 2).frame(width: 90,height: 130)
@@ -337,22 +336,37 @@ struct SurfaceButtonStyle: ButtonStyle {
     }
 }
 
-struct ClickableDisclosureStyle: DisclosureGroupStyle {
+/// A single full-row button owns the label, whitespace and chevron hit areas.
+/// Explicit local state also works in sheets where disclosure styles are not inherited.
+struct ExpandableSection<Content: View>: View {
     @ObservedObject var model: AppModel
+    let title: String
+    private var expansion: Binding<Bool>?
+    private let content: () -> Content
+    @State private var locallyExpanded = false
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    func makeBody(configuration: DisclosureGroupStyleConfiguration) -> some View {
+    init(model: AppModel, title: String, isExpanded: Binding<Bool>? = nil, @ViewBuilder content: @escaping () -> Content) {
+        self.model = model; self.title = title; self.expansion = isExpanded; self.content = content
+    }
+    private var expanded: Bool { expansion?.wrappedValue ?? locallyExpanded }
+    var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             Button {
-                withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.15)) { configuration.isExpanded.toggle() }
+                withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.15)) {
+                    if let expansion { expansion.wrappedValue.toggle() } else { locallyExpanded.toggle() }
+                }
             } label: {
                 HStack(spacing: 8) {
-                    Image(systemName: configuration.isExpanded ? "chevron.down" : "chevron.right").font(.caption)
-                    configuration.label
+                    Image(systemName: expanded ? "chevron.down" : "chevron.right").font(.caption)
+                    Text(title).multilineTextAlignment(.leading)
                     Spacer(minLength: 0)
-                }.padding(.horizontal, 12).frame(maxWidth: .infinity, minHeight: 40, alignment: .leading).background(Color(nsColor: .controlBackgroundColor), in: RoundedRectangle(cornerRadius: 9)).contentShape(Rectangle())
-            }.buttonStyle(SurfaceButtonStyle())
-                .accessibilityValue(model.text(configuration.isExpanded ? "Expanded" : "Collapsed"))
-            if configuration.isExpanded { configuration.content }
+                }.padding(.horizontal, 12).padding(.vertical, 8)
+                    .frame(maxWidth: .infinity, minHeight: 40, alignment: .leading)
+                    .background(Color(nsColor: .controlBackgroundColor), in: RoundedRectangle(cornerRadius: 9))
+                    .contentShape(Rectangle())
+            }.buttonStyle(SurfaceButtonStyle()).accessibilityLabel(title)
+                .accessibilityValue(model.text(expanded ? "Expanded" : "Collapsed"))
+            if expanded { content() }
         }
     }
 }

@@ -23,25 +23,17 @@ struct SimpleMousePage: View {
         }
         Text(model.text("Choose an action in each row. Changes save automatically.")).font(.caption).foregroundStyle(.secondary)
         ActionMappingList(model: model, touch: false)
-        DisclosureGroup(model.text("Find a button on your mouse"), isExpanded: $buttonGuide) {
+        ExpandableSection(model: model, title: model.text("Find a button on your mouse"), isExpanded: $buttonGuide) {
             VStack(alignment: .leading, spacing: 12) {
                 Text(model.text("Select a label to add an action for that button.")).font(.caption).foregroundStyle(.secondary)
                 MousePictureSelector(model: model, buttons: known, selected: { _ in adding = true }).frame(maxWidth: 520)
                 Button(model.text("Label buttons")) { model.showCalibration = true }
             }.padding(.top, 8)
         }
-        DisclosureGroup(model.text("Ready-made setups")) {
-            HStack {
-                Button(model.text("Desktop navigation")) { model.pendingPreset = "desktop" }.disabled(!hasSides)
-                Button(model.text("Browser navigation")) { model.pendingPreset = "browser" }.disabled(!hasSides)
-            }
-            Text(model.text(hasSides ? "Only the listed actions change. Other mappings are kept." : "Label both side buttons to use a preset.")).font(.caption).foregroundStyle(.secondary)
-        }
         .sheet(isPresented: $showingGuide) { MouseActionGuide(model: model) }
         .sheet(isPresented: $adding) { AddInputSheet(model: model, touch: false, buttons: known) }
 
     }
-    private var hasSides: Bool { model.calibratedButtons.contains { $0.position == .upper } && model.calibratedButtons.contains { $0.position == .lower } }
 }
 
 struct DropdownLabel: View {
@@ -259,10 +251,10 @@ struct SimpleButtonInspector: View {
                 Toggle(model.text("Allow this shell command"), isOn: $draft.options.shellEnabled)
                 Text(model.text("More command options are in Advanced mapping.")).font(.caption).foregroundStyle(.secondary)
             }
-            DisclosureGroup(model.text("Names and other gestures")) {
+            ExpandableSection(model: model, title: model.text("Names and other gestures")) {
                 TextField(model.text("Mapping name (optional)"), text: Binding(get: { draft.name ?? "" }, set: { draft.name = String($0.prefix(150)) })).textFieldStyle(.roundedBorder)
                 Toggle(model.text("Enable mapping"), isOn: $draft.enabled)
-                if button >= 2, model.calibratedButtons.contains(where: { $0.button == button }) { DisclosureGroup(model.text("Change button position")) { positionPicker } }
+                if button >= 2, model.calibratedButtons.contains(where: { $0.button == button }) { ExpandableSection(model: model, title: model.text("Change button position")) { positionPicker } }
             if button >= 2 { HStack {
                 EasyDropdown(title: model.text("Add another gesture")) { close in
                     DropdownOption(title: model.text("Hold and move")) { model.pendingMapping = Mapping(trigger: .init(kind: .buttonDrag, button: button), action: .none); close() }
@@ -317,7 +309,7 @@ struct AdvancedBindings: View {
     init(model: AppModel, initiallyExpanded: Bool = false) { self.model = model; _expanded = State(initialValue: initiallyExpanded) }
     private var otherMappings: [Mapping] { model.effectiveProfile.mappings.filter { ![.button, .buttonHold].contains($0.trigger.kind) || ![1, 2].contains($0.trigger.clicks) || !$0.trigger.modifiers.isEmpty } }
     var body: some View {
-        DisclosureGroup(model.text("Other saved gestures") + " (\(otherMappings.count))", isExpanded: $expanded) {
+        ExpandableSection(model: model, title: model.text("Other saved gestures") + " (\(otherMappings.count))", isExpanded: $expanded) {
             VStack(alignment: .leading, spacing: 12) {
                 Text(model.text("These are saved actions for holding and moving, holding and scrolling, or other button combinations.")).font(.caption).foregroundStyle(.secondary)
                 if otherMappings.isEmpty { Text(model.text("No other gestures saved. Add one only if you need it.")).foregroundStyle(.secondary) }

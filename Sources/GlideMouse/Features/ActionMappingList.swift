@@ -224,23 +224,26 @@ struct AddInputSheet: View {
                     }
                 }
             } else {
-                Text(model.text("Press a mouse button in this box, or choose it below.")).foregroundStyle(.secondary)
-                MouseCaptureArea(armed: !choosing && details == nil && advanced == nil, label: model.text("Press your mouse button here"), holdDelay: model.configuration.tuning.holdDelay, dragDistance: model.configuration.tuning.dragDistance, areaChanged: { model.setMouseCaptureArea($1, owner: $0) }) { trigger, _ in
-                    if let trigger { selectedButton = trigger.button }
-                }.frame(height: 64)
-                EasyDropdown(title: button.map { model.buttonTitle($0) } ?? model.text("Choose a mouse button")) { close in
-                    ForEach(Array(Set([0, 1] + buttons + (button.map { [$0] } ?? []))).sorted(), id: \.self) { number in
-                        DropdownOption(title: model.buttonTitle(number)) { selectedButton = number; close() }
-                    }
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 16) {
+                        Text(model.text("Press a mouse button in this box, or choose it below.")).foregroundStyle(.secondary)
+                        MouseCaptureArea(armed: !choosing && details == nil && advanced == nil, label: model.text("Press your mouse button here"), holdDelay: model.configuration.tuning.holdDelay, dragDistance: model.configuration.tuning.dragDistance, areaChanged: { model.setMouseCaptureArea($1, owner: $0) }) { trigger, _ in
+                            if let trigger { selectedButton = trigger.button }
+                        }.frame(height: 64)
+                        EasyDropdown(title: button.map { model.buttonTitle($0) } ?? model.text("Choose a mouse button")) { close in
+                            ForEach(Array(Set([0, 1] + buttons + (button.map { [$0] } ?? []))).sorted(), id: \.self) { number in
+                                DropdownOption(title: model.buttonTitle(number)) { selectedButton = number; close() }
+                            }
+                        }
+                        if let button {
+                            ForEach(inputs, id: \.self) { trigger in inputOption(trigger) }
+                            if button < 2 { Text(model.text("Select 1 or 2 to assign double click or hold.")).font(.caption).foregroundStyle(.secondary) }
+                            Text(model.text("Double click adds a brief wait to the single-click action on this button.")).font(.caption).foregroundStyle(.secondary)
+                        }
+                    }.frame(maxWidth: .infinity, alignment: .leading)
                 }
-                if let button {
-                    ForEach(inputs, id: \.self) { trigger in inputOption(trigger) }
-                    if button < 2 { Text(model.text("Select 1 or 2 to assign double click or hold.")).font(.caption).foregroundStyle(.secondary) }
-                    Text(model.text("Double click adds a brief wait to the single-click action on this button.")).font(.caption).foregroundStyle(.secondary)
-                }
-                Spacer(minLength: 0)
             }
-            DisclosureGroup(model.text("Advanced")) {
+            ExpandableSection(model: model, title: model.text("Advanced")) {
                 Button(model.text("Advanced mapping")) {
                     let trigger = touch ? Trigger(kind: .tap) : Trigger(kind: (button ?? 2) < 2 ? .buttonHold : .buttonDrag, button: button ?? 2)
                     advanced = Mapping(trigger: trigger, action: .none)
@@ -295,7 +298,7 @@ struct ActionDetailsSheet: View {
             if [.openApp, .openFolder].contains(mapping.action) { Button(model.text("Choose target")) { chooseTarget() } }
             if mapping.action == .shell {
                 Toggle(model.text("Allow this shell command"), isOn: $mapping.options.shellEnabled)
-                DisclosureGroup(model.text("Advanced")) {
+                ExpandableSection(model: model, title: model.text("Advanced")) {
                     TextField(model.text("Working directory"), text: $mapping.options.workingDirectory).textFieldStyle(.roundedBorder)
                     Slider(value: $mapping.options.timeout, in: 1...60, step: 1) { Text(model.text("Timeout")) }
                 }

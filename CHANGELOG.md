@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.2 — local preview
+
+- Clarify volume increase/decrease and mute toggling, Spotlight, screenshot tools and other action names.
+- Move optional side-button suggestions from Buttons into Settings with a review explanation.
+- Make every expandable section a full-width button, including Advanced controls in sheets.
+
 ## 0.4.1 — local preview
 
 - Use dedicated generated mouse illustrations for standard buttons and Magic Mouse gestures.

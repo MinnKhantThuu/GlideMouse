@@ -21,7 +21,7 @@ struct ScrollingPage: View {
             Picker(model.text("Scroll feel"), selection: Binding(get: { ScrollPreset.matching(settings) }, set: { preset in if preset == .custom { advancedScroll = true } else { edit { $0 = preset.applying(to: $0) } } })) { ForEach(ScrollPreset.allCases, id: \.self) { Text(model.text($0.rawValue)).tag($0) } }.pickerStyle(.segmented).modifier(PointingHandCursor())
             slider("Speed", key: \.speed, range: 0.2...5)
             Picker(model.text("Scroll direction"), selection: Binding(get: { settings.reverseVertical }, set: { value in edit { $0.reverseVertical = value } })) { Text(model.text("Standard direction")).tag(false); Text(model.text("Reverse direction")).tag(true) }.pickerStyle(.segmented).modifier(PointingHandCursor())
-            DisclosureGroup(model.text("Fine-tune scrolling"), isExpanded: $advancedScroll) {
+            ExpandableSection(model: model, title: model.text("Fine-tune scrolling"), isExpanded: $advancedScroll) {
             VStack(alignment: .leading, spacing: 12) {
             Picker(model.text("Smoothness"), selection: Binding(get: { settings.smoothness }, set: { v in edit { $0.smoothness = v } })) { ForEach(Smoothness.allCases, id: \.self) { Text(model.text($0.rawValue)).tag($0) } }.pickerStyle(.segmented).modifier(PointingHandCursor())
             toggle("Momentum", \.momentum)
@@ -78,7 +78,7 @@ struct TuningPage: View {
         SectionBox(title: model.text("Button feel")) {
             Picker(model.text("Response"), selection: Binding(get: { ButtonFeelPreset.matching(model.configuration.tuning) }, set: { preset in if preset == .custom { advancedButtons = true } else { model.update { $0.tuning = preset.applying(to: $0.tuning) } } })) { ForEach(ButtonFeelPreset.allCases, id: \.self) { Text(model.text($0.rawValue)).tag($0) } }.pickerStyle(.segmented).modifier(PointingHandCursor())
             Text(model.text("Choose a comfortable response first. Adjust individual values only if needed.")).font(.caption).foregroundStyle(.secondary)
-            DisclosureGroup(model.text("Fine-tune buttons"), isExpanded: $advancedButtons) {
+            ExpandableSection(model: model, title: model.text("Fine-tune buttons"), isExpanded: $advancedButtons) {
             VStack(alignment: .leading, spacing: 12) {
             tuningSlider("Hold delay", \.holdDelay, 0.15...1.5)
             tuningSlider("Multi-tap interval", \.multiTapInterval, 0.1...0.8)
@@ -88,7 +88,7 @@ struct TuningPage: View {
             }
         }
         if model.devices.contains(where: { $0.magicMouse }) {
-            DisclosureGroup(model.text("Advanced touch settings")) {
+            ExpandableSection(model: model, title: model.text("Advanced touch settings")) {
                 VStack(alignment: .leading, spacing: 14) {
                     tuningSlider("Tap duration", \.tapDuration, 0.05...0.6)
                     tuningSlider("Tap movement", \.tapMovement, 0.005...0.2)
@@ -128,7 +128,7 @@ struct DiagnosticsPage: View {
                 LabeledContent(model.text("Status"), value: model.text(model.runtimeReport.status))
                 PermissionControls(model: model)
             }
-            DisclosureGroup(model.text("Technical details"), isExpanded: $technicalExpanded) {
+            ExpandableSection(model: model, title: model.text("Technical details"), isExpanded: $technicalExpanded) {
                 VStack(alignment: .leading, spacing: 18) {
                     SectionBox(title: model.text("Engine health")) {
                         LabeledContent(model.text("Observed events"), value: "\(model.runtimeReport.events)")
@@ -169,19 +169,28 @@ struct TroubleshootingSheet: View {
             }
         }.padding(22).frame(width: 640, height: 560)
             .buttonStyle(PointingButtonStyle())
-            .disclosureGroupStyle(ClickableDisclosureStyle(model: model))
             .onDisappear { model.stopLearning() }
     }
 }
 struct GeneralPage: View {
     @ObservedObject var model: AppModel
     @State private var reset = false
+    private var hasSides: Bool { model.calibratedButtons.contains { $0.position == .upper } && model.calibratedButtons.contains { $0.position == .lower } }
     var body: some View {
         SectionBox(title: model.text("Mouse setup")) {
             Button(model.text("Set up your mouse")) { model.showMouseSetup = true }
             Button(model.text("Identify buttons")) { model.showCalibration = true }
             if model.accessibility && model.inputMonitoring { Label(model.text("Mouse control is allowed"), systemImage: "checkmark.shield").foregroundStyle(.secondary) }
             else { PermissionControls(model: model) }
+        }
+        ExpandableSection(model: model, title: model.text("Suggested button actions")) {
+            Text(model.text("Optional shortcuts for your side buttons. You can keep setting each button yourself.")).font(.callout).foregroundStyle(.secondary)
+            Text(model.text("Review before applying. Only the listed actions change; other settings stay as they are.")).font(.caption).foregroundStyle(.secondary)
+            HStack {
+                Button(model.text("Desktop navigation")) { model.pendingPreset = "desktop" }.disabled(!hasSides)
+                Button(model.text("Browser navigation")) { model.pendingPreset = "browser" }.disabled(!hasSides)
+            }
+            if !hasSides { Text(model.text("Identify both side buttons first to use these suggestions.")).font(.caption).foregroundStyle(.secondary) }
         }
         SectionBox(title: model.text("Preferences")) {
             Picker(model.text("Language"), selection: Binding(get: { model.configuration.language }, set: { v in model.update { $0.language = v } })) { ForEach(AppLanguage.allCases, id: \.self) { Text($0.nativeName).tag($0) } }.pickerStyle(.segmented).modifier(PointingHandCursor())
@@ -248,7 +257,7 @@ private struct ProfileIdentityEditor: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             TextField(model.text("Name"), text: $name)
-            DisclosureGroup(model.text("Technical details")) {
+            ExpandableSection(model: model, title: model.text("Technical details")) {
                 TextField(model.text("Bundle identifier"), text: $bundleID)
                 TextField(model.text("Device identifier"), text: $deviceID)
             }

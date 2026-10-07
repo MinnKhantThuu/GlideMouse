@@ -4940,7 +4940,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "智能缩放"
+            "value": "原生智能缩放（不可用）"
           }
         }
       }
@@ -5026,7 +5026,7 @@
         "my": {
           "stringUnit": {
             "state": "translated",
-            "value": "Window ပြောင်းရန်"
+            "value": "ဒီ App ၏ Window များ ပြောင်းရန်"
           }
         },
         "zh-Hans": {
@@ -5118,7 +5118,7 @@
         "my": {
           "stringUnit": {
             "state": "translated",
-            "value": "App Exposé"
+            "value": "လက်ရှိ App ၏ Window များ ကြည့်ရန်"
           }
         },
         "zh-Hans": {
@@ -5204,19 +5204,19 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "App launcher"
+            "value": "Search apps (Spotlight)"
           }
         },
         "my": {
           "stringUnit": {
             "state": "translated",
-            "value": "App ဖွင့်ရန်"
+            "value": "App ရှာဖွင့်ရန် (Spotlight)"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "打开启动台"
+            "value": "搜索 App（聚焦）"
           }
         }
       }
@@ -5227,13 +5227,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Volume up"
+            "value": "Increase volume"
           }
         },
         "my": {
           "stringUnit": {
             "state": "translated",
-            "value": "အသံတိုးရန်"
+            "value": "အသံကျယ်စေရန်"
           }
         },
         "zh-Hans": {
@@ -5250,7 +5250,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Volume down"
+            "value": "Decrease volume"
           }
         },
         "my": {
@@ -5273,13 +5273,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Mute"
+            "value": "Mute / unmute"
           }
         },
         "my": {
           "stringUnit": {
             "state": "translated",
-            "value": "အသံပိတ်ရန်"
+            "value": "အသံပိတ် / ပြန်ဖွင့်ရန်"
           }
         },
         "zh-Hans": {
@@ -5302,7 +5302,7 @@
         "my": {
           "stringUnit": {
             "state": "translated",
-            "value": "ဖွင့် / ခေတ္တရပ်ရန်"
+            "value": "မီဒီယာ ဖွင့် / ခေတ္တရပ်ရန်"
           }
         },
         "zh-Hans": {
@@ -5371,7 +5371,7 @@
         "my": {
           "stringUnit": {
             "state": "translated",
-            "value": "အလင်းတိုးရန်"
+            "value": "မျက်နှာပြင် ပိုလင်းစေရန်"
           }
         },
         "zh-Hans": {
@@ -5394,7 +5394,7 @@
         "my": {
           "stringUnit": {
             "state": "translated",
-            "value": "အလင်းလျှော့ရန်"
+            "value": "မျက်နှာပြင် အလင်းလျှော့ရန်"
           }
         },
         "zh-Hans": {
@@ -5526,19 +5526,19 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Screenshot shortcut"
+            "value": "Open screenshot tools"
           }
         },
         "my": {
           "stringUnit": {
             "state": "translated",
-            "value": "Screenshot shortcut"
+            "value": "Screenshot ရိုက်ရန် ကိရိယာများဖွင့်မည်"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "截图"
+            "value": "打开截屏工具"
           }
         }
       }
@@ -6773,19 +6773,19 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Review preset"
+            "value": "Review suggested actions"
           }
         },
         "my": {
           "stringUnit": {
             "state": "translated",
-            "value": "Preset ကို စစ်ကြည့်ပါ"
+            "value": "အကြံပြုထားသည့် လုပ်ဆောင်ချက်များ"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "检查预设"
+            "value": "查看建议的操作"
           }
         }
       }
@@ -6817,19 +6817,19 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Current mappings"
+            "value": "Saved actions"
           }
         },
         "my": {
           "stringUnit": {
             "state": "translated",
-            "value": "လက်ရှိ mappings"
+            "value": "သိမ်းထားသည့် လုပ်ဆောင်ချက်များ"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "当前操作设置"
+            "value": "已保存的操作"
           }
         }
       }
@@ -6839,19 +6839,19 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "New mappings"
+            "value": "Suggested actions"
           }
         },
         "my": {
           "stringUnit": {
             "state": "translated",
-            "value": "အသစ်ထည့်မယ့် mappings"
+            "value": "ထည့်မည့် လုပ်ဆောင်ချက်များ"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "新的操作设置"
+            "value": "建议的操作"
           }
         }
       }
@@ -6861,19 +6861,19 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Apply preset"
+            "value": "Apply these actions"
           }
         },
         "my": {
           "stringUnit": {
             "state": "translated",
-            "value": "Preset ထည့်မယ်"
+            "value": "ဒီလုပ်ဆောင်ချက်များကို ထည့်မည်"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "应用预设"
+            "value": "应用这些操作"
           }
         }
       }
@@ -14430,7 +14430,7 @@
         "my": {
           "stringUnit": {
             "state": "translated",
-            "value": "ရှေ့ app ကို ရွေးမည်"
+            "value": "အရင် App ကို ရွေးမည်"
           }
         },
         "zh-Hans": {
@@ -15097,6 +15097,144 @@
           "stringUnit": {
             "state": "translated",
             "value": "点击输入框，然后按下快捷键。"
+          }
+        }
+      }
+    },
+    "Suggested button actions": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Suggested button actions"
+          }
+        },
+        "my": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "အကြံပြု ခလုတ်လုပ်ဆောင်ချက်များ"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "建议的鼠标按钮操作"
+          }
+        }
+      }
+    },
+    "Optional shortcuts for your side buttons. You can keep setting each button yourself.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Optional shortcuts for your side buttons. You can keep setting each button yourself."
+          }
+        },
+        "my": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ဘေးခလုတ်တွေအတွက် အကြံပြုထားတဲ့ လုပ်ဆောင်ချက်တွေပါ။ မသုံးလည်းရပါတယ်။ ခလုတ်တစ်ခုချင်းစီကို ကိုယ်တိုင်ရွေးထားသလို ဆက်သုံးနိုင်ပါတယ်။"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "这些是侧键的可选操作。你也可以继续自行设置每个按钮。"
+          }
+        }
+      }
+    },
+    "Review before applying. Only the listed actions change; other settings stay as they are.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Review before applying. Only the listed actions change; other settings stay as they are."
+          }
+        },
+        "my": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "မထည့်ခင် ဘာတွေပြောင်းမလဲဆိုတာ အရင်ကြည့်နိုင်ပါတယ်။ စာရင်းထဲက လုပ်ဆောင်ချက်တွေကိုပဲ ပြောင်းပြီး ကျန်ဆက်တင်တွေကို မပြောင်းပါဘူး။"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "应用前可先查看将要更改的操作。仅更改列出的操作，其他设置保持不变。"
+          }
+        }
+      }
+    },
+    "Identify both side buttons first to use these suggestions.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Identify both side buttons first to use these suggestions."
+          }
+        },
+        "my": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ဒီအကြံပြုချက်တွေကို သုံးဖို့ ဘေးခလုတ်နှစ်ခုရဲ့ နေရာကို အရင်သတ်မှတ်ပေးပါ။"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "请先识别两个侧键，再使用这些建议。"
+          }
+        }
+      }
+    },
+    "Suggested gestures": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Suggested gestures"
+          }
+        },
+        "my": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "အကြံပြု လက်ချောင်းလှုပ်ရှားမှုများ"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "建议的手势"
+          }
+        }
+      }
+    },
+    "Optional suggestions. Review before applying; your saved actions do not change until you confirm.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Optional suggestions. Review before applying; your saved actions do not change until you confirm."
+          }
+        },
+        "my": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "အကြံပြုချက်တွေပါ။ မသုံးလည်းရပါတယ်။ မထည့်ခင် အရင်ကြည့်နိုင်ပြီး အတည်ပြုမှသာ သိမ်းထားတဲ့ လုပ်ဆောင်ချက်တွေကို ပြောင်းပေးပါမယ်။"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "这些建议为可选项。应用前可先查看，只有确认后才会更改已保存的操作。"
           }
         }
       }
