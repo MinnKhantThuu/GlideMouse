@@ -5,9 +5,9 @@ The Magic Mouse page is available even when no Magic Mouse is connected. Prepare
 ## Prepare your setup
 
 1. Open **Magic Mouse** in the sidebar. Select **All apps**, or add/select the app you want to customize.
-2. Choose **Review suggested gestures** to inspect the starter setup. Applying it changes the listed touch gestures only; existing physical mouse button mappings remain intact. It does not turn on the engine or touch capture.
-3. Choose a gesture, finger count, tap count/direction and optional modifier keys. Select **Set action / Change action**. Record a shortcut or enter the target when the chosen action needs one, then save.
-4. **Saved touch gestures** lists this scope's saved inputs, with Edit and Delete. Undo restores a deleted mapping. Removing an app override restores inheritance from All apps.
+2. Open **Suggested gestures**, then choose **Review suggested gestures** to inspect the starter setup. Applying it changes the listed touch gestures only; existing physical mouse button mappings remain intact. It does not turn on the engine or touch capture.
+3. Click **Add gesture**, choose a gesture, finger count, tap count/direction and optional modifier keys, then add it to the list. Choose its action directly in the row; ordinary choices save automatically. Record a shortcut or enter the target in the action editor when needed, then save that editor.
+4. The gesture list shows this scope's inputs and actions. Use the trash button to remove a row, or its More menu for details. Undo restores a deleted mapping. Removing an app override restores inheritance from All apps.
 5. **See gesture examples** opens the same original illustrations used on the website, offline. Animations do not capture or inject mouse input.
 6. Open **Touch feel** only when needed. Each setting has a short explanation. Slider changes save at the end of the adjustment, rather than restarting the input adapter repeatedly during a drag.
 
@@ -75,13 +75,13 @@ Emergency pause: **Control + Option + Command + Escape**. The menu-bar Pause swi
 
 Magic Mouse မရှိသေးလည်း sidebar က **Magic Mouse** ကို ဝင်ပြီး ကြိုသတ်မှတ်ထားနိုင်ပါတယ်။ **အကြံပြု gesture များ ကြည့်ရန်** ကို နှိပ်ပြီး ပါလာမယ့် action တွေကို အရင်ကြည့်ပါ။ လက်ရှိ mouse ရဲ့ ဘေးခလုတ်ဆက်တင်တွေကို မပြောင်းပါဘူး။
 
-Gesture၊ လက်ချောင်းအရေအတွက်၊ ထိမယ့်အကြိမ်ရေ သို့မဟုတ် ဦးတည်ချက်ကို ရွေးပြီး **လုပ်ဆောင်ချက် သတ်မှတ်ရန်** ကို နှိပ်ပါ။ Action ရွေးပြီး သိမ်းပါ။ App တစ်ခုကို ရွေးထားရင် အဲဒီ app မှာပဲ ပြောင်းပါမယ်။ မပြင်ထားတဲ့ gesture တွေက App အားလုံးအတွက် ဆက်တင်ကို ဆက်သုံးပါမယ်။
+**Gesture ထည့်ရန်** ကို နှိပ်ပြီး gesture၊ လက်ချောင်းအရေအတွက်၊ ထိမယ့်အကြိမ်ရေ သို့မဟုတ် ဦးတည်ချက်ကို ရွေးကာ စာရင်းထဲ ထည့်ပါ။ တစ်ကြောင်းစီမှာ action ရွေးတာနဲ့ အလိုအလျောက် သိမ်းပေးပါတယ်။ Shortcut နဲ့ target လိုတဲ့ action တွေအတွက်တော့ ပေါ်လာတဲ့ editor မှာ ဖြည့်ပြီး သိမ်းပါ။ App တစ်ခုကို ရွေးထားရင် အဲဒီ app မှာပဲ ပြောင်းပါမယ်။ မပြင်ထားတဲ့ gesture တွေက App အားလုံးအတွက် ဆက်တင်ကို ဆက်သုံးပါမယ်။
 
 Mouse ရလာရင် အခြား mouse app တွေကို ခေတ္တပိတ်ပြီး GlideMouse နဲ့ Magic Mouse touch gesture ကို ဖွင့်ပါ။ တစ်ချက်ထိ၊ ညာခြမ်းထိ၊ နှစ်ချက်/သုံးချက်ထိတာတွေကို အရင်စမ်းပါ။ ပြီးမှ swipe၊ pinch၊ drag၊ drag လုပ်ရင်း scroll နဲ့ key တွဲနှိပ်တာတွေကို စမ်းပါ။ Mouse အစစ်နဲ့ မစမ်းရသေးလို့ လက်ရှိ touch support က စမ်းသပ်ဆဲပါ။
 
 ## 中文快速设置
 
-未连接 Magic Mouse 时也能打开侧栏的 **Magic Mouse** 页面设置手势。先查看建议手势，再选择手势、手指数、次数或方向，以及可选修饰键，设置操作并保存。建议设置不会替换其他鼠标的物理按键，也不会自动启用输入引擎。
+未连接 Magic Mouse 时也能打开侧栏的 **Magic Mouse** 页面设置手势。点击添加手势，选择手势、手指数、次数或方向，以及可选修饰键。随后在列表行中选择操作，普通更改会自动保存；需要快捷键或目标的操作则在编辑器中填写并保存。建议手势可在折叠区域中查看。建议设置不会替换其他鼠标的物理按键，也不会自动启用输入引擎。
 
 选择某个 App 后保存的覆盖设置只在该 App 前台运行时生效，其余手势继续沿用所有 App 的设置。可以编辑、删除或撤销删除。
 
