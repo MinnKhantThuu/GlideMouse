@@ -7,8 +7,9 @@
 The film uses actual SwiftUI captures with isolated sample settings, plus the
 existing GlideMouse icon. Focus outlines and camera movement are presentation
 graphics. They do not represent a physical mouse test or a recording of macOS
-switching desktops. The Smooth and Safari captures in `source/` use sample
-settings; no personal configuration is included.
+switching desktops. The 0.4.2 button list, scrolling and app-settings captures use sample
+settings; no personal configuration is included. The older `source/` files
+are preserved for reproducibility and are no longer used by the renderer.
 
 The instrumental soundtrack is an original deterministic synthesis created by
 `Scripts/render-intro.py`. It uses no sampled music, external recording,

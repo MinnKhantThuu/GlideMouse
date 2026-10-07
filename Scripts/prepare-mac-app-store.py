@@ -145,13 +145,17 @@ start = text.index('        if let i = CommandLine.arguments.firstIndex(of: "--r
 end = text.index('        if CommandLine.arguments.contains("--guide-preview")', start)
 text = text[:start] + text[end:]
 start = text.index('\nstruct MagicMouseSettingsPreview: App {')
-text = text[:start] + '\n'
+end = text.index('/// Preview fixtures', start)
+text = text[:start] + text[end:]
 launcher.write_text(text)
 harness = dest / 'Sources/GlideMouse/Core/TestHarness.swift'
 text = harness.read_text()
 start = text.index('    /// UI and persistence verification without event taps')
 end = text.index('    static func render(to directory: URL)', start)
-harness.write_text(text[:start] + text[end:])
+text = text[:start] + text[end:]
+text = text.replace(' + MagicMouseCatalog.defaults', '')
+text = text.replace('[SettingsPage.mappings, .magic, .general]', '[SettingsPage.mappings, .general]')
+harness.write_text(text)
 guide = dest / 'Sources/GlideMouse/Resources/MouseGuide/guide.html'
 text = guide.read_text()
 lines = [line for line in text.splitlines() if 'data-gesture-mode="touch"' not in line]

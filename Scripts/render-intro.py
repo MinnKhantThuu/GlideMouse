@@ -102,11 +102,11 @@ def soundtrack():
 def assets():
     return {
         'icon':Image.open(ROOT/'Assets/AppIcon-transparent.png').convert('RGBA').resize((230,230),Image.Resampling.LANCZOS),
-        'buttons':rounded_ui('Docs/media/screenshots/en-buttons.png',(203,291,1003,647),1060),
-        'gestures':rounded_ui('Docs/media/screenshots/en-buttons.png',(611,294,1002,647),630),
+        'buttons':rounded_ui('Docs/media/screenshots/en-buttons.png',(198,171,1028,640),1060),
+        'gestures':rounded_ui('Docs/media/screenshots/en-buttons.png',(203,252,618,588),630),
         'actions':rounded_ui('Docs/media/screenshots/en-actions.png',(13,19,487,491),430),
-        'scroll':rounded_ui('Docs/media/intro/source/scrolling.png',(0,0,1210,300),1100),
-        'profiles':rounded_ui('Docs/media/intro/source/app-settings.png',(0,0,1216,554),1035),
+        'scroll':rounded_ui('Docs/media/screenshots/en-scrolling.png',(197,168,1025,557),1100),
+        'profiles':rounded_ui('Docs/media/screenshots/en-profiles.png',(197,83,1025,606),1035),
     }
 
 def brand_corner(image):
@@ -141,16 +141,13 @@ def scene(index, t, a):
         if 1<t<5.7:
             alpha=ease((t-1)/.3)
             ox=x+35;oy=y+54
-            d.rounded_rectangle((ox+545,oy+175,ox+1038,oy+233),radius=13,outline=BLUE,width=3)
+            d.rounded_rectangle((ox+562,oy+170,ox+941,oy+228),radius=13,outline=BLUE,width=3)
         text(image,(1280,851),'Desktop left  /  Desktop right  /  Mission Control',26,color=MUTED,anchor='mm')
     elif index==2:
         title(image,['Click once.','Double click.','Hold.'],'Set an action for each press.',t/5)
         paste(image,a['gestures'],(730,231-9*min(t/5,1)))
         paste(image,a['actions'],(1365+14*(1-ease(t/.9)),289))
-        # Use the actual segmented control as the focal point, without selecting it.
-        pos=min(2,int(max(0,t-1)/1.2))
-        gx=730+35+(18+pos*101)*630/391;gy=231-9*min(t/5,1)+54+66*630/391
-        if t>1:d.rounded_rectangle((gx-4,gy-3,gx+102*630/391,gy+32*630/391),radius=14,outline=BLUE,width=3)
+        text(image,(1070,850),'Choose an action. It saves automatically.',27,color=MUTED,anchor='mm')
     elif index==3:
         title(image,['Adjust your','scrolling.'],'Choose the speed and direction.',t/6)
         paste(image,a['scroll'],(720,271-10*min(t/6,1)))

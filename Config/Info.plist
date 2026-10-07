@@ -46,6 +46,8 @@
 	<false/>
 	<key>SUEnableAutomaticChecks</key>
 	<false/>
+	<key>SUFeedURL</key>
+	<string>https://raw.githubusercontent.com/MinnKhantThuu/GlideMouse-updates/main/appcast.xml</string>
 	<key>SUPublicEDKey</key>
 	<string>y1AlFhD1u2jGlZGqsN7To59XvA7qHb6sHkbHzep8nR0=</string>
 </dict>
