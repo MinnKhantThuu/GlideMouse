@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.1 — local preview
+
+- Use dedicated generated mouse illustrations for standard buttons and Magic Mouse gestures.
+- Enlarge input pictures and keep button numbers, tap counts and hold indicators legible.
+- Place button highlights only at known or calibrated physical positions.
+
 ## 0.4.0 — local preview
 
 - Show button and Magic Mouse actions in editable rows with diagrams and direct removal.

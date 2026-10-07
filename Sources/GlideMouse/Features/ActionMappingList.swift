@@ -28,7 +28,7 @@ struct ActionMappingList: View {
                         Text(touch ? model.text(section) : model.buttonTitle(Int(section)!)).font(.headline).foregroundStyle(.secondary).padding(.bottom, 6)
                         ForEach(triggers.filter { touch ? group($0) == section : String($0.button) == section }, id: \.self) { trigger in
                             MappingActionRow(model: model, trigger: trigger)
-                            Divider().padding(.leading, 54)
+                            Divider().padding(.leading, 68)
                         }
                     }
                 }
@@ -74,7 +74,7 @@ struct MappingActionRow: View {
         GeometryReader { geometry in
             HStack(spacing: 12) {
                 InputGlyph(trigger: trigger, position: model.calibratedButtons.first { $0.button == trigger.button }?.position)
-                    .frame(width: 42, height: 54).accessibilityHidden(true)
+                    .frame(width: 56, height: 72).accessibilityHidden(true)
                 VStack(alignment: .leading, spacing: 3) {
                     Text(friendlyInputTitle(trigger, model: model)).fixedSize(horizontal: false, vertical: true)
                     if !model.isGlobal { Text(model.text(inherited ? "From All apps" : "Custom for this app")).font(.caption).foregroundStyle(.secondary) }
@@ -103,7 +103,7 @@ struct MappingActionRow: View {
                     .menuStyle(.borderlessButton).menuIndicator(.hidden).fixedSize().modifier(PointingHandCursor())
                     .accessibilityLabel(model.text("More options"))
             }
-        }.frame(height: model.isGlobal ? 76 : 84)
+        }.frame(height: model.isGlobal ? 84 : 92)
         .sheet(isPresented: $choosing, onDismiss: applyChoice) {
             ActionChooser(model: model, action: Binding(get: { picked ?? mapping?.action ?? .none }, set: { picked = $0 }), triggerKind: trigger.kind)
         }
@@ -119,32 +119,78 @@ struct MappingActionRow: View {
     }
 }
 
-/// Small diagrams identify input rather than act as the settings navigation.
+/// Generated mouse illustrations stay separate from precise input indicators.
 struct InputGlyph: View {
     let trigger: Trigger
     var position: ButtonPosition?
     private var touch: Bool { MagicMouseCatalog.touchKinds.contains(trigger.kind) }
-    var body: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 16).fill(Color(nsColor: .controlBackgroundColor))
-                .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.secondary.opacity(0.55), lineWidth: 1.4))
-            if !touch {
-                Path { p in p.move(to: .init(x: 21, y: 2)); p.addLine(to: .init(x: 21, y: 19)); p.move(to: .init(x: 3, y: 19)); p.addLine(to: .init(x: 39, y: 19)) }.stroke(Color.secondary.opacity(0.4), lineWidth: 1)
-                // A number alone is honest when the physical position is not known.
-                if trigger.button < 2 || position != nil {
-                    Circle().fill(Color.accentColor).frame(width: 8, height: 8)
-                        .offset(x: trigger.button == 0 ? -9 : trigger.button == 1 ? 9 : position == .upper || position == .lower ? -16 : 0, y: trigger.button < 2 ? -17 : position == .lower ? 5 : position == .upper ? -6 : -16)
-                }
-                Text("\(trigger.button + 1)").font(.system(size: 10, weight: .semibold)).offset(y: 13)
-            } else if [.tap, .rightTap].contains(trigger.kind) {
-                HStack(spacing: 3) { ForEach(0..<trigger.fingers, id: \.self) { _ in Circle().fill(Color.accentColor).frame(width: 7, height: 7) } }.offset(x: trigger.kind == .rightTap ? 9 : 0, y: -12)
-            } else {
-                Image(systemName: trigger.kind == .swipe ? (trigger.direction == .left ? "arrow.left" : trigger.direction == .right ? "arrow.right" : trigger.direction == .up ? "arrow.up" : "arrow.down") : trigger.kind == .touchHold ? "hand.draw" : trigger.kind == .pinchIn ? "arrow.down.right.and.arrow.up.left" : "arrow.up.left.and.arrow.down.right")
-                    .font(.system(size: 15, weight: .medium)).foregroundStyle(Color.accentColor)
-            }
-            if trigger.clicks > 1 { Text("\(trigger.clicks)×").font(.system(size: 10, weight: .bold)).foregroundStyle(Color.accentColor).offset(y: touch ? 15 : -3) }
-            if trigger.kind == .buttonHold { Image(systemName: "clock").font(.system(size: 9)).foregroundStyle(Color.accentColor).offset(x: 11, y: 14) }
+    private var buttonPoint: UnitPoint? {
+        if trigger.button == 0 { return .init(x: 0.37, y: 0.20) }
+        if trigger.button == 1 { return .init(x: 0.65, y: 0.20) }
+        switch position {
+        case .upper: return .init(x: 0.178, y: 0.365)
+        case .lower: return .init(x: 0.178, y: 0.505)
+        case .wheel: return .init(x: 0.50, y: 0.23)
+        default: return nil // Never guess where an uncalibrated auxiliary button sits.
         }
+    }
+    private var directionSymbol: String {
+        switch trigger.direction {
+        case .left: return "arrow.left"
+        case .right: return "arrow.right"
+        case .up: return "arrow.up"
+        default: return "arrow.down"
+        }
+    }
+    var body: some View {
+        GeometryReader { geometry in
+            let size = geometry.size
+            ZStack {
+                if let image = touch ? AppResources.touchMouseGlyph : AppResources.buttonMouseGlyph {
+                    Image(nsImage: image).resizable().interpolation(.high).scaledToFit()
+                        .frame(width: size.width, height: size.height)
+                } else {
+                    Image(systemName: "computermouse").resizable().scaledToFit().foregroundStyle(.secondary)
+                }
+                if !touch {
+                    if let point = buttonPoint {
+                        contactDot.position(x: size.width * point.x, y: size.height * point.y)
+                    }
+                    badge("\(trigger.button + 1)").position(x: size.width * 0.50, y: size.height * 0.77)
+                    if trigger.kind == .buttonHold {
+                        Image(systemName: "clock.fill").font(.system(size: 11, weight: .semibold))
+                            .foregroundStyle(Color.accentColor).padding(2).background(.white, in: Circle())
+                            .position(x: size.width * 0.80, y: size.height * 0.82)
+                    }
+                } else {
+                    if [.tap, .rightTap, .swipe, .touchHold].contains(trigger.kind) {
+                        HStack(spacing: 3) {
+                            ForEach(0..<max(1, trigger.fingers), id: \.self) { _ in contactDot }
+                        }.position(x: size.width * (trigger.kind == .rightTap ? 0.68 : 0.50), y: size.height * 0.32)
+                    }
+                    if ![.tap, .rightTap].contains(trigger.kind) {
+                        Image(systemName: trigger.kind == .swipe ? directionSymbol : trigger.kind == .touchHold ? "hand.draw.fill" : trigger.kind == .pinchIn ? "arrow.down.right.and.arrow.up.left" : "arrow.up.left.and.arrow.down.right")
+                            .font(.system(size: 17, weight: .bold)).foregroundStyle(Color.accentColor)
+                            .position(x: size.width * 0.50, y: size.height * 0.55)
+                    }
+                }
+                if trigger.clicks > 1 {
+                    badge("\(trigger.clicks)×", accent: true)
+                        .position(x: size.width * 0.50, y: size.height * (touch ? 0.77 : 0.54))
+                }
+            }
+        }
+    }
+    private var contactDot: some View {
+        Circle().fill(Color.accentColor).frame(width: 9, height: 9)
+            .overlay(Circle().stroke(.white, lineWidth: 1.5))
+    }
+    private func badge(_ text: String, accent: Bool = false) -> some View {
+        Text(text).font(.system(size: 11, weight: .bold, design: .rounded))
+            .foregroundStyle(accent ? Color.accentColor : Color.black.opacity(0.8))
+            .padding(.horizontal, 4).padding(.vertical, 1)
+            .background(.white, in: Capsule())
+            .overlay(Capsule().stroke(Color.black.opacity(0.14), lineWidth: 0.7))
     }
 }
 
@@ -200,7 +246,7 @@ struct AddInputSheet: View {
                     advanced = Mapping(trigger: trigger, action: .none)
                 }
             }
-        }.padding(24).frame(width: 540, height: 590).buttonStyle(PointingButtonStyle())
+        }.padding(24).frame(width: 540, height: touch ? 590 : 660).buttonStyle(PointingButtonStyle())
         .onDisappear { model.setMouseCaptureArea(nil) }
         .sheet(isPresented: $choosing, onDismiss: applyChoice) {
             if let captured { ActionChooser(model: model, action: Binding(get: { picked ?? model.listMapping(for: captured)?.action ?? .none }, set: { picked = $0 }), triggerKind: captured.kind) }
@@ -211,7 +257,7 @@ struct AddInputSheet: View {
     private func inputOption(_ trigger: Trigger) -> some View {
         Button { captured = trigger; picked = nil; model.setMouseCaptureArea(nil); choosing = true } label: {
             HStack(spacing: 14) {
-                InputGlyph(trigger: trigger, position: model.calibratedButtons.first { $0.button == trigger.button }?.position).frame(width: 34, height: 46).accessibilityHidden(true)
+                InputGlyph(trigger: trigger, position: model.calibratedButtons.first { $0.button == trigger.button }?.position).frame(width: 44, height: 58).accessibilityHidden(true)
                 Text(friendlyInputTitle(trigger, model: model)); Spacer()
                 Image(systemName: model.listMapping(for: trigger) == nil ? "chevron.right" : "checkmark").foregroundStyle(.secondary)
             }.padding(10).frame(maxWidth: .infinity, alignment: .leading).contentShape(Rectangle())

@@ -15,6 +15,8 @@ enum AppResources {
         return url
     }
     @MainActor static let mouseIllustration: NSImage? = bundle.url(forResource: "MouseIllustration", withExtension: "png").flatMap { NSImage(contentsOf: $0) }
+    @MainActor static let buttonMouseGlyph: NSImage? = bundle.url(forResource: "ButtonMouseGlyph-v1", withExtension: "png").flatMap { NSImage(contentsOf: $0) }
+    @MainActor static let touchMouseGlyph: NSImage? = bundle.url(forResource: "TouchMouseGlyph-v1", withExtension: "png").flatMap { NSImage(contentsOf: $0) }
     static var bundle: Bundle {
         #if SWIFT_PACKAGE
         return Bundle.module
