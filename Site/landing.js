@@ -30,7 +30,7 @@
     document.querySelectorAll('[data-screen]').forEach(image => {image.src = 'Docs/media/screenshots/'+activeLanguage+'-'+image.dataset.screen+'.png';});
     const videoLanguage = activeLanguage === 'my' ? 'my' : 'en';
     document.querySelectorAll('[data-tutorial]').forEach(link => {link.href = 'tutorials.html#'+videoLanguage+'-buttons';});
-    document.querySelector('[data-poster]').src = 'Docs/media/videos/'+videoLanguage+'-buttons.png';
+    document.querySelectorAll('[data-full-guide]').forEach(link => {link.href = 'tutorials.html#'+videoLanguage;});
     document.querySelector('[data-readme]').href = 'https://github.com/MinnKhantThuu/GlideMouse/blob/main/'+readmes[activeLanguage];
     document.title = {en:'GlideMouse — More from your mouse',my:'GlideMouse — Mouse ကို ပိုလွယ်လွယ် သုံးပါ',zh:'GlideMouse — 让鼠标更顺手'}[activeLanguage];
     showExample(example);
@@ -44,4 +44,21 @@
   setLanguage(new URLSearchParams(location.search).get('lang') || preference);
   document.querySelectorAll('[data-language]').forEach(button => button.addEventListener('click',()=>setLanguage(button.dataset.language,true)));
   document.querySelectorAll('[data-example]').forEach(button => button.addEventListener('click',()=>showExample(button.dataset.example)));
+  const video = document.getElementById('intro-video');
+  const play = document.getElementById('intro-play');
+  function updatePlaybackButton() {
+    const playing = !video.paused && !video.ended;
+    const key = playing ? 'pauseIntro' : 'playIntro';
+    const label = play.querySelector('[data-copy]');
+    label.dataset.copy = key;
+    label.textContent = copy[activeLanguage][key];
+    play.dataset.aria = playing ? 'pauseIntroAria' : 'playIntroAria';
+    play.setAttribute('aria-label', copy[activeLanguage][play.dataset.aria]);
+    play.querySelector('.intro-play-icon').textContent = playing ? 'Ⅱ' : '▶';
+  }
+  play.addEventListener('click', () => {
+    if (!video.paused && !video.ended) video.pause();
+    else video.play().catch(updatePlaybackButton);
+  });
+  ['play', 'pause', 'ended'].forEach(event => video.addEventListener(event, updatePlaybackButton));
 })();

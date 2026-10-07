@@ -7,17 +7,17 @@
 <meta name="theme-color" content="#f7faf9">
 <meta property="og:type" content="website">
 <meta property="og:title" content="GlideMouse — More from your mouse">
-<meta property="og:description" content="Set useful button actions and a comfortable scrolling feel on macOS. English, Myanmar and Chinese. Guided videos and open source.">
+<meta property="og:description" content="Set useful button actions and a comfortable scrolling feel on macOS. English, Myanmar and Chinese. See the product overview.">
 <meta property="og:url" content="https://minnkhantthuu.github.io/GlideMouse/">
 <meta property="og:image" content="https://minnkhantthuu.github.io/GlideMouse/Assets/AppIcon.png">
 <link rel="canonical" href="https://minnkhantthuu.github.io/GlideMouse/">
 <link rel="icon" href="Assets/AppIcon-transparent.png">
 <title>GlideMouse — More from your mouse</title>
 <script>function redirectLegacyTutorial(){if(/^#(?:en|my)(?:-(?:setup|buttons|profiles|scrolling|shortcuts))?$/.test(location.hash))location.replace('tutorials.html'+location.hash);} window.addEventListener('hashchange',redirectLegacyTutorial);redirectLegacyTutorial();</script>
-<link rel="stylesheet" href="Site/landing.css?v=3dbf4123ff51">
-<script src="Site/translations.js?v=bc01adfc760b" defer>
+<link rel="stylesheet" href="Site/landing.css?v=9e28ad1225ef">
+<script src="Site/translations.js?v=24e25fa66e4a" defer>
 </script>
-<script src="Site/landing.js" defer>
+<script src="Site/landing.js?v=783378c326d3" defer>
 </script>
 </head>
 <body>
@@ -49,13 +49,12 @@
 <a class="button primary" href="#download">
 <span data-copy="download" >Download for Mac</span>
 </a>
-<a class="button secondary" data-tutorial href="tutorials.html#en-buttons">
+<a class="button secondary" href="#intro">
 <span class="play-icon" aria-hidden="true">▶</span>
-<span data-copy="watch" >See how it works</span>
+<span data-copy="watch" >Watch the video</span>
 </a>
 </div>
 <p data-copy="requirements" class="meta">macOS 14 or later · Apple Silicon &amp; Intel</p>
-<p data-copy="releaseNote" class="release-note">v0.3.16 development prerelease · Signed, not notarized</p>
 </div>
 <figure class="hero-visual">
 <div class="product-stage">
@@ -89,14 +88,33 @@
 </span>
 </div>
 </div>
+<section id="intro" class="section wrap intro-section" aria-labelledby="intro-title">
+<div class="intro-heading">
+<h2 id="intro-title" data-copy="introTitle">GlideMouse overview</h2>
+<p data-copy="introBody">A look at button actions, scrolling and settings for individual apps.</p>
+</div>
+<div class="intro-player">
+<video id="intro-video" controls playsinline preload="metadata" tabindex="0" poster="Docs/media/intro/poster.jpg" aria-label="GlideMouse product overview" data-aria="introAria" aria-describedby="intro-caption" width="1920" height="1080">
+<source src="Docs/media/intro/glidemouse-intro.mp4" type="video/mp4">
+<track kind="captions" src="Docs/media/intro/english.vtt" srclang="en" label="English">
+<a href="Docs/media/intro/glidemouse-intro.mp4" data-copy="openIntro">Open the video</a>
+</video>
+
+</div>
+<div class="intro-foot">
+<button id="intro-play" type="button" class="intro-play" aria-controls="intro-video" data-aria="playIntroAria">
+<span class="intro-play-icon" aria-hidden="true">▶</span>
+<span data-copy="playIntro">Play video</span>
+</button>
+<p id="intro-caption" data-copy="introCaption">0:32 · English text and music</p>
+<a class="text-link" data-copy="readGuide" data-readme href="https://github.com/MinnKhantThuu/GlideMouse/blob/main/README.md">Read the full guide</a>
+</div>
+</section>
 <section id="features" class="section wrap button-feature">
 <div class="section-copy">
 <h2 data-copy="buttonsTitle" >A small button. A useful shortcut.</h2>
 <p data-copy="buttonsBody" >Pick a button on the mouse picture, choose how you press it, then save what it should do. Single click, double click and hold can each have their own action.</p>
 <p data-copy="buttonFoot" class="small">Buttons 1 and 2 support optional double-click and hold actions. Ordinary clicking and dragging remain available.</p>
-<a class="text-link" data-tutorial href="tutorials.html#en-buttons">
-<span data-copy="buttonGuide" >Learn button mapping</span>
-</a>
 </div>
 <div class="button-demo">
 <p class="demo-heading">
@@ -177,27 +195,11 @@
 <p data-copy="setupFoot" class="setup-foot">Start with one action. Add app-specific settings and advanced gestures when you need them.</p>
 </div>
 </section>
-<section class="section wrap guide-section">
-<div class="section-copy">
-<h2 data-copy="guideTitle" >A guide for every screen.</h2>
-<p data-copy="guideBody" >Short walkthroughs show button labels, double click and hold, app-specific settings, scrolling, shortcuts, deletion and Undo.</p>
-<div class="actions">
-<a data-copy="englishVideo" class="button secondary" href="tutorials.html#en">English videos</a>
-<a data-copy="myanmarVideo" class="button secondary" href="tutorials.html#my">မြန်မာ Video များ</a>
-</div>
-<a data-copy="readGuide" class="text-link" data-readme href="https://github.com/MinnKhantThuu/GlideMouse/blob/main/README.md">Read the full guide</a>
-<p data-copy="guideFoot" class="small">5 lessons in each language. English has local synthesized narration; Myanmar has on-screen explanations. Native app UI with sample settings, not physical-input recordings.</p>
-</div>
-<a class="guide-preview" data-tutorial href="tutorials.html#en-buttons" aria-label="Watch the button mapping guide" data-aria="watchAria">
-<img data-poster src="Docs/media/videos/en-buttons.png" width="1440" height="1080" alt="Button mapping video preview" data-alt="posterAlt" loading="lazy">
-<span class="play-circle" aria-hidden="true">▶</span>
-</a>
-</section>
 <section id="download" class="download-section">
 <div class="wrap download-layout">
 <div>
 <h2 data-copy="downloadTitle" >Your next click starts here.</h2>
-<p data-copy="downloadBody" >Download the current developer build, put GlideMouse in Applications, and follow Mouse setup.</p>
+<p data-copy="downloadBody" >Download GlideMouse, move it into Applications, and follow Mouse setup.</p>
 <div class="actions">
 <a data-copy="downloadDmg" class="button primary" href="https://github.com/MinnKhantThuu/GlideMouse/releases/download/v0.3.16/GlideMouse-0.3.16-developer.dmg">Download DMG</a>
 <a data-copy="downloadZip" class="button secondary" href="https://github.com/MinnKhantThuu/GlideMouse/releases/download/v0.3.16/GlideMouse-0.3.16-developer.zip">ZIP download</a>
@@ -205,13 +207,6 @@
 <p data-copy="requirements" class="meta">macOS 14 or later · Apple Silicon &amp; Intel</p>
 <a data-copy="releaseDetails" class="text-link" href="https://github.com/MinnKhantThuu/GlideMouse/releases/tag/v0.3.16">Release notes &amp; checksums</a>
 </div>
-<aside class="release-status">
-<h3 data-copy="downloadStatus" >Development prerelease</h3>
-<p class="version">v0.3.16 <span>Build 20</span>
-</p>
-<p data-copy="downloadLimit" >This build is Developer ID signed and universal, but it is not notarized. macOS may block it. Do not disable Gatekeeper. Building from source is an alternative.</p>
-<a data-copy="source" class="text-link" href="https://github.com/MinnKhantThuu/GlideMouse">View source on GitHub</a>
-</aside>
 </div>
 </section>
 <section id="faq" class="section wrap faq">
@@ -225,7 +220,7 @@
 <span data-copy="faq1Title" >Will this work with my mouse?</span>
 <span class="expand-icon" aria-hidden="true">+</span>
 </summary>
-<p data-copy="faq1Body" >GlideMouse works with standard reported mouse buttons and discrete wheel input. Vendor-specific buttons may not be reported normally. The universal build targets macOS 14+, but every mouse, Mac and OS version has not been physically tested. Magic Mouse touch gestures are experimental and have not been tested on real Magic Mouse hardware here.</p>
+<p data-copy="faq1Body" >Connect your mouse and use Mouse setup to identify its buttons. GlideMouse supports standard mouse buttons and scroll wheels. Some manufacturer-specific buttons may not be detected.</p>
 </details>
 <details>
 <summary>
@@ -248,13 +243,6 @@
 </summary>
 <p data-copy="faq4Body" >No. All apps provides the default. Only add an app when you want a different action or scrolling feel while that app is frontmost.</p>
 </details>
-<details>
-<summary>
-<span data-copy="faq5Title" >What about automatic updates?</span>
-<span class="expand-icon" aria-hidden="true">+</span>
-</summary>
-<p data-copy="faq5Body" >The app includes Sparkle update controls. Installation needs a newer eligible signed release in the update feed. End-to-end automatic update installation has not been verified; source commits and GitHub prereleases do not automatically update the installed app.</p>
-</details>
 </div>
 </section>
 </main>
@@ -275,6 +263,7 @@
 <div class="footer-meta">
 <p data-copy="footerLanguages" >App interface: English, မြန်မာ, 简体中文.</p>
 <p data-copy="footerLicense" >Open source under the MIT license.</p>
+<a data-copy="detailedGuide" data-full-guide href="tutorials.html#en">Detailed video guides</a>
 <a data-copy="issues" href="https://github.com/MinnKhantThuu/GlideMouse/issues">Report an issue</a>
 </div>
 </div>
