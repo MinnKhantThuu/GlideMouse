@@ -6,6 +6,10 @@ Make your mouse buttons useful and your scrolling comfortable on macOS. GlideMou
 
 **[Website](https://minnkhantthuu.github.io/GlideMouse/) · [မြန်မာလမ်းညွှန်](README_MM.md) · [Watch the tutorials](https://minnkhantthuu.github.io/GlideMouse/tutorials.html) · [简体中文](Docs/USER_GUIDE_ZH.md)**
 
+**[Download GlideMouse for macOS — DMG, v0.3.16](https://github.com/MinnKhantThuu/GlideMouse/releases/download/v0.3.16/GlideMouse-0.3.16-developer.dmg)**
+
+Download → drag GlideMouse to Applications → open and allow permissions → set your mouse actions. No Xcode or build commands needed.
+
 ![Buttons screen with a labelled mouse and action editor](Docs/media/screenshots/en-buttons.png)
 
 ## What it does
@@ -25,13 +29,13 @@ Core mouse control works locally. The app does not keep a log of what you type. 
 
 **Requirements:** macOS 14 or later; Apple Silicon or Intel. A standard USB/Bluetooth mouse with a wheel or side buttons is recommended. The universal build contains both architectures; that does not mean every Mac, OS version or mouse has been physically tested.
 
-1. Download the developer build from **[Releases](https://github.com/MinnKhantThuu/GlideMouse/releases)**. Choose the DMG or ZIP, not a source-code archive.
-2. Quit an older GlideMouse copy. Open the DMG and move GlideMouse to Applications, or extract the ZIP and move the app there.
-3. Open GlideMouse and complete Mouse setup.
+1. **[Download the DMG](https://github.com/MinnKhantThuu/GlideMouse/releases/download/v0.3.16/GlideMouse-0.3.16-developer.dmg)**.
+2. Quit an older GlideMouse copy. Double-click the downloaded DMG, then drag **GlideMouse** onto **Applications** in the window.
+3. Open GlideMouse from Applications and complete **Mouse setup**. You can eject the GlideMouse disk after copying the app.
 4. Allow the two permissions below, return to the app and click **Refresh**. Reopen GlideMouse if macOS has not applied the permissions yet.
 5. Identify your buttons, save an action, then enable GlideMouse. Test one button at a time.
 
-**Release status:** the current download is a Developer ID signed **development prerelease**, not a notarized production release. macOS may block it. Do not disable Gatekeeper; building from source is an alternative. Moving the app to a stable location before granting permissions helps avoid duplicate app entries.
+**Release status:** the current download is a Developer ID signed **development prerelease**, not a notarized production release. macOS may block it. If macOS blocks opening it, check System Settings → Privacy & Security for the app-specific **Open Anyway** option. Keep Gatekeeper enabled. [Apple’s first-launch guide](https://support.apple.com/102445) Moving the app to a stable location before granting permissions helps avoid duplicate app entries.
 
 ### Why the permissions are needed
 
@@ -44,7 +48,7 @@ GlideMouse cannot work fully without these permissions. This does not give it a 
 
 ## Video lessons
 
-Each lesson has an English version with local synthesized narration and a Myanmar version with readable on-screen explanations. Both show the actual native app UI with **isolated sample settings**. They are guided sample workflows, not recordings of physical button presses or actual desktop switching. No personal desktop or user settings appear in them.
+Optional: watch these short lessons if you want a walkthrough. English videos have narration; Myanmar videos use captions. They demonstrate the app with sample settings, rather than recording physical mouse presses or actual desktop switching.
 
 | Lesson | English | မြန်မာ | What you learn |
 |---|---|---|---|
@@ -53,8 +57,6 @@ Each lesson has an English version with local synthesized narration and a Myanma
 | 3. One app, different actions | [Watch](https://minnkhantthuu.github.io/GlideMouse/tutorials.html#en-profiles) | [ကြည့်ရန်](https://minnkhantthuu.github.io/GlideMouse/tutorials.html#my-profiles) | Inheritance, save scope, remove app and Undo |
 | 4. Scrolling and settings | [Watch](https://minnkhantthuu.github.io/GlideMouse/tutorials.html#en-scrolling) | [ကြည့်ရန်](https://minnkhantthuu.github.io/GlideMouse/tutorials.html#my-scrolling) | Speed, direction, response, language and About |
 | 5. Shortcuts, delete and help | [Watch](https://minnkhantthuu.github.io/GlideMouse/tutorials.html#en-shortcuts) | [ကြည့်ရန်](https://minnkhantthuu.github.io/GlideMouse/tutorials.html#my-shortcuts) | Shortcut recording, delete, Undo and emergency pause |
-
-Videos, posters and SRT captions are also available in [Docs/media/videos](Docs/media/videos). Use the tutorial page for in-browser playback.
 
 ## Find the right screen
 
@@ -192,37 +194,8 @@ Use [Issues](https://github.com/MinnKhantThuu/GlideMouse/issues) for reproducibl
 
 Magic Mouse touch gestures remain experimental and have not been validated on real Magic Mouse hardware here. Device-specific button/wheel overrides are unavailable until reliable device attribution exists. Native continuous desktop swipes, magnify and Smart Zoom are unavailable; some actions use keyboard shortcuts and depend on OS/app settings. Proprietary vendor buttons may not produce standard input. See [Compatibility](Docs/COMPATIBILITY.md).
 
-## Build and contribute
-
-```sh
-git clone https://github.com/MinnKhantThuu/GlideMouse.git
-cd GlideMouse
-python3 Scripts/check-localization.py
-swift test
-```
-
-Open `GlideMouse.xcodeproj` and run the GlideMouse scheme. A terminal build is also available:
-
-```sh
-Scripts/build-app.sh release
-Scripts/package-release.sh
-```
-
-The first command builds a local ad-hoc app. Packaging builds a universal app and DMG/ZIP under `build/Release`. Set your own `GLIDEMOUSE_SIGN_IDENTITY` for Developer ID signing and an existing `GLIDEMOUSE_NOTARY_PROFILE` to notarize; do not use another developer's credentials. Dependencies are pinned in Package.resolved. Network access is needed to fetch dependencies on the first build.
-
-Read [Contributing](CONTRIBUTING.md), [Architecture](Docs/ARCHITECTURE.md), [Security](SECURITY.md) and [Release checklist](Docs/RELEASE_CHECKLIST.md). Core tests, compiled resource checks, synthetic/native UI checks and physical hardware acceptance are different types of evidence.
-
-To regenerate the documentation captures and videos:
-
-```sh
-build/Release/GlideMouse.app/Contents/MacOS/GlideMouse --render-tutorials build/tutorial-scenes
-python3 Scripts/generate-tutorial-videos.py build/tutorial-scenes
-```
-
-This uses native sample UI captures, local English speech synthesis and FFmpeg. It needs no paid service. It writes temporary settings and never demonstrates real desktop actions. The private development evidence/settings are excluded from the public source snapshot.
-
 ## Developer and support
 
 **Minn Khant Thu** · [Website](https://minnkhantthu.up.railway.app/) · [Email](mailto:minnkhantthu.ucsy@gmail.com) · [Buy Me a Coffee](https://buymeacoffee.com/minnkhantthu)
 
-GlideMouse is MIT licensed. Sparkle's license and third-party notices are included. App icon and mouse illustration assets are original project assets; see [asset provenance](Assets/GENERATION.md).
+GlideMouse is [MIT licensed](LICENSE). [Third-party notices](THIRD_PARTY_NOTICES.md) are included. For development and building from source, see [Contributing](CONTRIBUTING.md).

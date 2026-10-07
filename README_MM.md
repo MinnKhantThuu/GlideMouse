@@ -6,6 +6,10 @@ Mouse ခလုတ်တွေကို ကိုယ်လိုချင်တ�
 
 **[Website](https://minnkhantthuu.github.io/GlideMouse/?lang=my) · [English guide](README.md) · [Video လမ်းညွှန်များ](https://minnkhantthuu.github.io/GlideMouse/tutorials.html#my) · [简体中文](Docs/USER_GUIDE_ZH.md)**
 
+**[GlideMouse ဒေါင်းလုဒ် — macOS DMG, v0.3.16](https://github.com/MinnKhantThuu/GlideMouse/releases/download/v0.3.16/GlideMouse-0.3.16-developer.dmg)**
+
+ဒေါင်းလုဒ်ဆွဲ → Applications ထဲရွှေ့ → App ဖွင့်ပြီး permission ပေး → Mouse လုပ်ဆောင်ချက်ရွေးပြီး သုံးပါ။ Xcode တင်တာ၊ command နဲ့ build လုပ်တာတွေ မလိုပါ။
+
 ![ခလုတ်နံပါတ်နှင့် လုပ်ဆောင်ချက်ရွေးသည့် စာမျက်နှာ](Docs/media/screenshots/my-buttons.png)
 
 ## ဘာတွေ လုပ်လို့ရလဲ
@@ -24,13 +28,13 @@ Mouse control က ဒီ Mac ပေါ်မှာပဲ အလုပ်လု�
 
 **လိုအပ်ချက်:** macOS 14 နဲ့အထက်၊ Apple Silicon သို့မဟုတ် Intel Mac ဖြစ်ရပါမယ်။ ဘီးခလုတ်/ဘေးခလုတ်ပါတဲ့ USB သို့မဟုတ် Bluetooth mouse နဲ့ သုံးရပိုအဆင်ပြေပါတယ်။ Universal build မှာ CPU နှစ်မျိုးလုံးအတွက် ပါပေမယ့် Mac၊ macOS နဲ့ mouse အမျိုးအစားအားလုံးမှာ physical test ပြီးပြီလို့ မဆိုလိုပါ။
 
-1. **[Releases](https://github.com/MinnKhantThuu/GlideMouse/releases)** ကနေ DMG ဒါမှမဟုတ် ZIP ကို download လုပ်ပါ။ Source code archive ကို app installer နဲ့ မမှားပါနဲ့။
-2. GlideMouse အဟောင်းကို ပိတ်ပါ။ DMG ထဲက app ကို Applications သို့ရွှေ့ပါ။ ZIP ဆို extract လုပ်ပြီး app ကို Applications သို့ရွှေ့ပါ။
-3. GlideMouse ဖွင့်ပြီး **Mouse သတ်မှတ်ရန်** ကို ဆက်လုပ်ပါ။
+1. **[DMG ကို ဒေါင်းလုဒ်ဆွဲပါ](https://github.com/MinnKhantThuu/GlideMouse/releases/download/v0.3.16/GlideMouse-0.3.16-developer.dmg)**။
+2. GlideMouse အဟောင်း ဖွင့်ထားရင် ပိတ်ပါ။ ဒေါင်းလုဒ်ရတဲ့ DMG ကို နှစ်ချက်နှိပ်ပြီး ဖွင့်ပါ။ ပေါ်လာတဲ့ window ထဲမှာ **GlideMouse** ကို **Applications** ပေါ် ဆွဲထည့်ပါ။
+3. Applications ထဲက GlideMouse ကိုဖွင့်ပြီး **Mouse သတ်မှတ်ရန်** ကို ဆက်လုပ်ပါ။ App ကူးပြီးရင် GlideMouse disk ကို Eject လုပ်နိုင်ပါတယ်။
 4. အောက်က permission နှစ်ခုကို Allow လုပ်ပြီး app ပြန်လာကာ Refresh နှိပ်ပါ။ မရသေးရင် app ပိတ်ပြီး ပြန်ဖွင့်ပါ။
 5. ခလုတ်တွေကို သတ်မှတ်၊ လုပ်ဆောင်ချက်ကို သိမ်း၊ GlideMouse ကို ဖွင့်ပြီး ခလုတ်တခုချင်းစီ စမ်းပါ။
 
-လက်ရှိ download က **Developer ID နဲ့ signed လုပ်ထားတဲ့ development prerelease** ပါ။ Production notarization မပြီးသေးလို့ macOS က ဖွင့်မပေးတာ ဖြစ်နိုင်ပါတယ်။ Gatekeeper ကို ပိတ်မထားပါနဲ့။ Source ကနေ build လုပ်နိုင်ပါတယ်။ Permission မပေးခင် app ကို Applications ထဲ အရင်ရွှေ့ထားရင် app entry ထပ်နေတာကို လျှော့နိုင်ပါတယ်။
+လက်ရှိ download က **Developer ID နဲ့ signed လုပ်ထားတဲ့ development prerelease** ပါ။ Production notarization မပြီးသေးလို့ macOS က ဖွင့်မပေးတာ ဖြစ်နိုင်ပါတယ်။ macOS က ဖွင့်မပေးရင် System Settings → Privacy & Security မှာ ဒီ app အတွက် **Open Anyway** ပေါ်မပေါ် ကြည့်ပါ။ Gatekeeper ကို ပိတ်စရာမလိုပါ။ [ပထမဆုံးဖွင့်ချိန်အတွက် Apple လမ်းညွှန်](https://support.apple.com/102445) Permission မပေးခင် app ကို Applications ထဲ အရင်ရွှေ့ထားရင် app entry ထပ်နေတာကို လျှော့နိုင်ပါတယ်။
 
 ### Permission ကို ဘာလို့ပေးရတာလဲ
 
@@ -43,7 +47,7 @@ Mouse control က ဒီ Mac ပေါ်မှာပဲ အလုပ်လု�
 
 ## Video နဲ့ လေ့လာရန်
 
-English video တွေမှာ ဒီ Mac ပေါ်က speech synthesis နဲ့ ရှင်းပြတဲ့အသံ ပါပါတယ်။ မြန်မာ video တွေမှာ ဖတ်ရလွယ်တဲ့ စာတန်းနဲ့ အဆင့်လိုက်ရှင်းပြထားပြီး အသံမပါပါ။ နှစ်မျိုးလုံးက **native app UI နဲ့ နမူနာ setting သုံးတဲ့ guided demo** ပါ။ Physical mouse နှိပ်တာနဲ့ Desktop အမှန်တကယ်ပြောင်းတာကို ရိုက်ထားတဲ့ hardware test မဟုတ်ပါ။ ကိုယ်ပိုင် desktop၊ user setting နဲ့ diagnostic ဖိုင်တွေ မပါပါ။
+သုံးပုံသုံးနည်းကို အဆင့်လိုက်ကြည့်ချင်ရင် အောက်က video တွေကို ကြည့်နိုင်ပါတယ်။ English video မှာ ရှင်းပြသံပါပြီး မြန်မာ video မှာ စာတန်းနဲ့ ရှင်းပြထားပါတယ်။ App ထဲက နမူနာ setting တွေနဲ့ ပြထားတာဖြစ်ပြီး mouse နှိပ်တာနဲ့ Desktop တကယ်ပြောင်းတာကို ရိုက်ထားတဲ့ video မဟုတ်ပါ။
 
 | အပိုင်း | မြန်မာ | English | လေ့လာရမည့်အရာ |
 |---|---|---|---|
@@ -52,8 +56,6 @@ English video တွေမှာ ဒီ Mac ပေါ်က speech synthesis န
 | ၃။ App အလိုက် setting | [ကြည့်ရန်](https://minnkhantthuu.github.io/GlideMouse/tutorials.html#my-profiles) | [Watch](https://minnkhantthuu.github.io/GlideMouse/tutorials.html#en-profiles) | ပုံမှန် setting၊ သီးခြားပြင်ခြင်း၊ ဖြုတ်ခြင်းနဲ့ Undo |
 | ၄။ Scroll နဲ့ ဆက်တင်များ | [ကြည့်ရန်](https://minnkhantthuu.github.io/GlideMouse/tutorials.html#my-scrolling) | [Watch](https://minnkhantthuu.github.io/GlideMouse/tutorials.html#en-scrolling) | Speed၊ direction၊ response၊ language နဲ့ About |
 | ၅။ Shortcut နဲ့ အကူအညီ | [ကြည့်ရန်](https://minnkhantthuu.github.io/GlideMouse/tutorials.html#my-shortcuts) | [Watch](https://minnkhantthuu.github.io/GlideMouse/tutorials.html#en-shortcuts) | Shortcut မှတ်တမ်းတင်ခြင်း၊ ဖျက်ခြင်း၊ Undo နဲ့ Help |
-
-Browser မှာ တိုက်ရိုက်ကြည့်ဖို့ Video လမ်းညွှန်စာမျက်နှာကို သုံးပါ။ MP4၊ poster နဲ့ SRT စာတန်းဖိုင်တွေကို [Docs/media/videos](Docs/media/videos) မှာလည်း ထားထားပါတယ်။
 
 ## ဘယ် screen ကို ဘာအတွက်သုံးရမလဲ
 
@@ -191,37 +193,8 @@ Shortcut က လက်ရှိ app မှာ သက်ရောက်တာဖ�
 
 Magic Mouse touch gesture က experimental ဖြစ်ပြီး Magic Mouse hardware အစစ်နဲ့ မစမ်းရသေးပါ။ Mouse တလုံးချင်းစီအတွက် button/wheel setting သီးခြားလုပ်တာကို reliable device attribution မရသေးလို့ မဖွင့်ထားပါ။ Native continuous desktop swipe၊ magnify နဲ့ Smart Zoom မရသေးပါ။ Shortcut သုံးတဲ့ action တွေက macOS နဲ့ app setting ပေါ်မူတည်ပါတယ်။ Vendor-specific ခလုတ်တွေက ပုံမှန် input မပို့ရင် မဖမ်းနိုင်ပါ။ [Compatibility](Docs/COMPATIBILITY.md) ကို ကြည့်နိုင်ပါတယ်။
 
-## Source ကနေ Build လုပ်ရန်
-
-```sh
-git clone https://github.com/MinnKhantThuu/GlideMouse.git
-cd GlideMouse
-python3 Scripts/check-localization.py
-swift test
-```
-
-Xcode မှာ `GlideMouse.xcodeproj` ဖွင့်ပြီး GlideMouse scheme ကို run ပါ။ Terminal ကနေလည်း build လုပ်နိုင်ပါတယ်။
-
-```sh
-Scripts/build-app.sh release
-Scripts/package-release.sh
-```
-
-ပထမ command က local ad-hoc app ထုတ်ပါတယ်။ Package command က universal app၊ DMG၊ ZIP ကို `build/Release` ထဲ ထုတ်ပါတယ်။ Developer ID signing အတွက် ကိုယ့် `GLIDEMOUSE_SIGN_IDENTITY` ကို သုံးပြီး notarize အတွက် ရှိပြီးသား `GLIDEMOUSE_NOTARY_PROFILE` ကို သတ်မှတ်ပါ။ အခြားသူရဲ့ credential ကို မသုံးပါ။ ပထမ build မှာ dependency download အတွက် internet လိုပါတယ်။
-
-[Contributing](CONTRIBUTING.md)၊ [Architecture](Docs/ARCHITECTURE.md)၊ [Security](SECURITY.md) နဲ့ [Release checklist](Docs/RELEASE_CHECKLIST.md) တွေကို ဖတ်ပါ။ Unit test၊ native UI test နဲ့ hardware အစစ် test က သီးခြားစစ်ဆေးချက်တွေ ဖြစ်ပါတယ်။
-
-Video နမူနာ ပြန်ထုတ်ရန်:
-
-```sh
-build/Release/GlideMouse.app/Contents/MacOS/GlideMouse --render-tutorials build/tutorial-scenes
-python3 Scripts/generate-tutorial-videos.py build/tutorial-scenes
-```
-
-Native UI၊ ဒီ Mac ပေါ်က English speech synthesis နဲ့ FFmpeg ကို သုံးပြီး paid service မလိုပါ။ Temporary setting နဲ့ပဲ အလုပ်လုပ်ပြီး Desktop action အမှန်တကယ် မလုပ်ပါ။ Private development evidence နဲ့ user setting တွေကို public repository မှာ မထည့်ထားပါ။
-
 ## Developer ကို ဆက်သွယ်ရန်
 
 **Minn Khant Thu** · [Website](https://minnkhantthu.up.railway.app/) · [Email](mailto:minnkhantthu.ucsy@gmail.com) · [Buy Me a Coffee](https://buymeacoffee.com/minnkhantthu)
 
-MIT license နဲ့ ဖြန့်ထားပါတယ်။ Sparkle license နဲ့ third-party notices လည်း ပါပါတယ်။ App icon နဲ့ mouse ပုံရဲ့ project asset မှတ်တမ်းကို [Asset provenance](Assets/GENERATION.md) မှာ ကြည့်နိုင်ပါတယ်။
+[MIT license](LICENSE) နဲ့ ဖြန့်ထားပြီး [Third-party notices](THIRD_PARTY_NOTICES.md) လည်း ပါပါတယ်။ Source ပြင်ပြီး ပါဝင်ကူညီချင်သူတွေအတွက် [Contributing](CONTRIBUTING.md) မှာ သီးခြားရေးထားပါတယ်။

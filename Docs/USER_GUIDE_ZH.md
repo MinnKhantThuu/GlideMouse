@@ -2,6 +2,18 @@
 
 GlideMouse 可以设置鼠标按钮操作、调整滚动手感，并为不同应用使用不同的设置。设置保存在这台 Mac 上。
 
+## 下载与安装
+
+**[下载 GlideMouse DMG — v0.3.16](https://github.com/MinnKhantThuu/GlideMouse/releases/download/v0.3.16/GlideMouse-0.3.16-developer.dmg)**
+
+需要 macOS 14 或更新版本，支持 Apple Silicon 和 Intel。无需安装 Xcode 或自行编译。
+
+1. 下载并双击打开 DMG；如果旧版 GlideMouse 正在运行，先退出。
+2. 将 GlideMouse 拖到窗口中的 Applications 文件夹。
+3. 从 Applications 打开 GlideMouse，按提示允许权限并完成鼠标设置。复制后可以推出 GlideMouse 磁盘。
+
+当前版本是 Developer ID 签名的开发预发布版本，尚未完成公证。若 macOS 阻止打开，请查看“系统设置 → 隐私与安全性”中此应用的“仍要打开”选项，无需关闭 Gatekeeper。 [Apple 首次打开应用说明](https://support.apple.com/102445)
+
 ## 选择中文
 
 打开“设置”，在“语言”中选择“简体中文”。界面会立即切换，重新打开应用后仍保留所选语言。切换语言不会修改鼠标操作。应用名称、鼠标名称、网址、快捷键符号及开发者姓名保持原样。macOS 的系统设置和第三方更新窗口使用系统支持的语言。
