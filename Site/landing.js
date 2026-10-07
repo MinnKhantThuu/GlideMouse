@@ -3,16 +3,6 @@
   const copy = window.glideCopy;
   const readmes = {en:'README.md',my:'README_MM.md',zh:'Docs/USER_GUIDE_ZH.md'};
   let activeLanguage = 'en';
-  let example = 'upper';
-  const symbols = {upper:'→',lower:'←',hold:'▦'};
-  function showExample(value) {
-    example = value;
-    const prefix = 'result' + value[0].toUpperCase() + value.slice(1);
-    document.getElementById('result-title').textContent = copy[activeLanguage][prefix];
-    document.getElementById('result-body').textContent = copy[activeLanguage][prefix+'Body'];
-    document.querySelector('.result-symbol').textContent = symbols[value];
-    document.querySelectorAll('[data-example]').forEach(button => button.setAttribute('aria-pressed',String(button.dataset.example === value)));
-  }
   function setLanguage(value, persist = false) {
     activeLanguage = Object.hasOwn(copy,value) ? value : 'en';
     document.documentElement.lang = activeLanguage === 'zh' ? 'zh-Hans' : activeLanguage;
@@ -33,7 +23,7 @@
     document.querySelectorAll('[data-full-guide]').forEach(link => {link.href = 'tutorials.html#'+videoLanguage;});
     document.querySelector('[data-readme]').href = 'https://github.com/MinnKhantThuu/GlideMouse/blob/main/'+readmes[activeLanguage];
     document.title = {en:'GlideMouse — More from your mouse',my:'GlideMouse — Mouse ကို ပိုလွယ်လွယ် သုံးပါ',zh:'GlideMouse — 让鼠标更顺手'}[activeLanguage];
-    showExample(example);
+    window.dispatchEvent(new CustomEvent('glide:language'));
     if(persist) {
       const url = new URL(location.href); url.searchParams.set('lang',activeLanguage); history.replaceState(null,'',url);
       try {localStorage.setItem('glidemouse-site-language',activeLanguage);} catch (_) { /* Preference is optional. */ }
@@ -43,7 +33,6 @@
   try {preference = localStorage.getItem('glidemouse-site-language') || 'en';} catch (_) {}
   setLanguage(new URLSearchParams(location.search).get('lang') || preference);
   document.querySelectorAll('[data-language]').forEach(button => button.addEventListener('click',()=>setLanguage(button.dataset.language,true)));
-  document.querySelectorAll('[data-example]').forEach(button => button.addEventListener('click',()=>showExample(button.dataset.example)));
   const video = document.getElementById('intro-video');
   const play = document.getElementById('intro-play');
   function updatePlaybackButton() {

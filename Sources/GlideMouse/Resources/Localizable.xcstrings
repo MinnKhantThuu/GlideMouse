@@ -13291,6 +13291,28 @@
           }
         }
       }
+    },
+    "How mouse actions work": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "How mouse actions work"
+          }
+        },
+        "my": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ခလုတ်လုပ်ပုံ ကြည့်ရန်"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "查看按键用法"
+          }
+        }
+      }
     }
   },
   "version": "1.0"

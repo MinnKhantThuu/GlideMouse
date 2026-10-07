@@ -4,7 +4,7 @@ GlideMouse 可以设置鼠标按钮操作、调整滚动手感，并为不同应
 
 ## 下载与安装
 
-**[下载 GlideMouse DMG — v0.3.16](https://github.com/MinnKhantThuu/GlideMouse/releases/download/v0.3.16/GlideMouse-0.3.16-developer.dmg)**
+**[下载 GlideMouse DMG — v0.3.17](https://github.com/MinnKhantThuu/GlideMouse/releases/download/v0.3.17/GlideMouse-0.3.17-developer.dmg)**
 
 需要 macOS 14 或更新版本，支持 Apple Silicon 和 Intel。无需安装 Xcode 或自行编译。
 
@@ -17,6 +17,10 @@ GlideMouse 可以设置鼠标按钮操作、调整滚动手感，并为不同应
 ## 选择中文
 
 打开“设置”，在“语言”中选择“简体中文”。界面会立即切换，重新打开应用后仍保留所选语言。切换语言不会修改鼠标操作。应用名称、鼠标名称、网址、快捷键符号及开发者姓名保持原样。macOS 的系统设置和第三方更新窗口使用系统支持的语言。
+
+## 查看按钮用法
+
+在“按钮”页面点击“查看按键用法”，选择示例，查看鼠标输入与操作结果的动画。可以暂停和重播。指南离线可用，也可在[网站](https://minnkhantthuu.github.io/GlideMouse/?lang=zh#mouse-guide)查看。观看动画不会修改设置或控制 Mac。Magic Mouse 触控示例仍为实验功能，尚待真实硬件验证。
 
 ## 首次设置
 

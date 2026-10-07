@@ -7,7 +7,7 @@ let package = Package(
     targets: [
         .target(name: "MouseCore"),
         .target(name: "NativeBridge", publicHeadersPath: "include", linkerSettings: [.linkedFramework("CoreFoundation")]),
-        .executableTarget(name: "GlideMouse", dependencies: ["MouseCore", "NativeBridge", .product(name: "Sparkle", package: "Sparkle")], resources: [.process("Resources")]),
+        .executableTarget(name: "GlideMouse", dependencies: ["MouseCore", "NativeBridge", .product(name: "Sparkle", package: "Sparkle")], resources: [.process("Resources/AppIcon.png"), .process("Resources/MouseIllustration.png"), .process("Resources/Localizable.xcstrings"), .process("Resources/README.txt"), .copy("Resources/MouseGuide")]),
         .testTarget(name: "MouseCoreTests", dependencies: ["MouseCore", "NativeBridge"], resources: [.copy("Fixtures")])
     ], swiftLanguageModes: [.v6]
 )

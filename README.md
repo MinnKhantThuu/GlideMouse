@@ -6,7 +6,7 @@ Make your mouse buttons useful and your scrolling comfortable on macOS. GlideMou
 
 **[Website](https://minnkhantthuu.github.io/GlideMouse/) · [မြန်မာလမ်းညွှန်](README_MM.md) · [Watch the tutorials](https://minnkhantthuu.github.io/GlideMouse/tutorials.html) · [简体中文](Docs/USER_GUIDE_ZH.md)**
 
-**[Download GlideMouse for macOS — DMG, v0.3.16](https://github.com/MinnKhantThuu/GlideMouse/releases/download/v0.3.16/GlideMouse-0.3.16-developer.dmg)**
+**[Download GlideMouse for macOS — DMG, v0.3.17](https://github.com/MinnKhantThuu/GlideMouse/releases/download/v0.3.17/GlideMouse-0.3.17-developer.dmg)**
 
 Download → drag GlideMouse to Applications → open and allow permissions → set your mouse actions. No Xcode or build commands needed.
 
@@ -29,7 +29,7 @@ Core mouse control works locally. The app does not keep a log of what you type. 
 
 **Requirements:** macOS 14 or later; Apple Silicon or Intel. A standard USB/Bluetooth mouse with a wheel or side buttons is recommended. The universal build contains both architectures; that does not mean every Mac, OS version or mouse has been physically tested.
 
-1. **[Download the DMG](https://github.com/MinnKhantThuu/GlideMouse/releases/download/v0.3.16/GlideMouse-0.3.16-developer.dmg)**.
+1. **[Download the DMG](https://github.com/MinnKhantThuu/GlideMouse/releases/download/v0.3.17/GlideMouse-0.3.17-developer.dmg)**.
 2. Quit an older GlideMouse copy. Double-click the downloaded DMG, then drag **GlideMouse** onto **Applications** in the window.
 3. Open GlideMouse from Applications and complete **Mouse setup**. You can eject the GlideMouse disk after copying the app.
 4. Allow the two permissions below, return to the app and click **Refresh**. Reopen GlideMouse if macOS has not applied the permissions yet.
@@ -71,6 +71,10 @@ Optional: watch these short lessons if you want a walkthrough. English videos ha
 | **Tuning** | Expand Advanced | Comfortable response presets and optional timing adjustments |
 | **Devices** | Expand Advanced | Inspect connected mice and compatibility information |
 | **Troubleshooting** | macOS Help menu | Permission checks and optional technical details |
+
+## Watch a mouse action
+
+On **Buttons**, click **How mouse actions work** to open the offline animated guide. Select an example to see the mouse input and its result together, then pause or replay it. The same guide is on the [website](https://minnkhantthuu.github.io/GlideMouse/#mouse-guide). Viewing it does not change mappings or perform actions on your Mac. Magic Mouse touch examples are marked experimental and still need real hardware verification.
 
 ## 1. Identify a button and its position
 

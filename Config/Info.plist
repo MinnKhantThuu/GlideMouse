@@ -23,9 +23,17 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>0.3.16</string>
+	<string>0.3.17</string>
 	<key>CFBundleVersion</key>
-	<string>20</string>
+	<string>21</string>
+	<key>GMDeveloperName</key>
+	<string>Minn Khant Thu</string>
+	<key>GMEmailURL</key>
+	<string>mailto:minnkhantthu.ucsy@gmail.com</string>
+	<key>GMSupportURL</key>
+	<string>https://buymeacoffee.com/minnkhantthu</string>
+	<key>GMWebsiteURL</key>
+	<string>https://minnkhantthu.up.railway.app/</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>14.0</string>
 	<key>LSUIElement</key>
@@ -40,13 +48,5 @@
 	<false/>
 	<key>SUPublicEDKey</key>
 	<string>y1AlFhD1u2jGlZGqsN7To59XvA7qHb6sHkbHzep8nR0=</string>
-	<key>GMDeveloperName</key>
-	<string>Minn Khant Thu</string>
-	<key>GMEmailURL</key>
-	<string>mailto:minnkhantthu.ucsy@gmail.com</string>
-	<key>GMWebsiteURL</key>
-	<string>https://minnkhantthu.up.railway.app/</string>
-	<key>GMSupportURL</key>
-	<string>https://buymeacoffee.com/minnkhantthu</string>
 </dict>
 </plist>

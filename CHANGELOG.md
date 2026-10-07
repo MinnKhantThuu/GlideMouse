@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.3.17
+
+- Add original animated input-to-result examples on the website and in the Buttons page.
+- Bundle the guide offline with English, Myanmar and Simplified Chinese text.
+- Include pause/replay, reduced-motion support and automatic pause outside the viewport.
+- Keep animation previews separate from the input runtime and device discovery.
+- Mark Magic Mouse touch examples experimental; real hardware validation is still pending.
+
 ## 0.3.16
 
 - Add Simplified Chinese across settings, button labels, actions, setup, app profiles, dialogs, menu controls and troubleshooting.

@@ -15,10 +15,12 @@
 <title>GlideMouse — More from your mouse</title>
 <script>function redirectLegacyTutorial(){if(/^#(?:en|my)(?:-(?:setup|buttons|profiles|scrolling|shortcuts))?$/.test(location.hash))location.replace('tutorials.html'+location.hash);} window.addEventListener('hashchange',redirectLegacyTutorial);redirectLegacyTutorial();</script>
 <link rel="stylesheet" href="Site/landing.css?v=9e28ad1225ef">
-<script src="Site/translations.js?v=267ad256d15a" defer>
+<script src="Site/translations.js?v=987defe2854d" defer>
 </script>
-<script src="Site/landing.js?v=783378c326d3" defer>
+<script src="Site/landing.js?v=01f9e8afe997" defer>
 </script>
+<link rel="stylesheet" href="Site/mouse-demo.css?v=30220f724170">
+<script src="Site/mouse-demo.js?v=449505935205" defer></script>
 </head>
 <body>
 <a data-copy="skip" class="skip" href="#main">Skip to content</a>
@@ -110,43 +112,109 @@
 <a class="text-link" data-copy="readGuide" data-readme href="https://github.com/MinnKhantThuu/GlideMouse/blob/main/README.md">Read the full guide</a>
 </div>
 </section>
-<section id="features" class="section wrap button-feature">
-<div class="section-copy">
-<h2 data-copy="buttonsTitle" >Mouse button actions</h2>
-<p data-copy="buttonsBody" >Pick a button on the mouse picture, choose how you press it, then save what it should do. Single click, double click and hold can each have their own action.</p>
-<p data-copy="buttonFoot" class="small">Buttons 1 and 2 support optional double-click and hold actions. Ordinary clicking and dragging remain available.</p>
+<section id="mouse-guide" class="section wrap gesture-guide" aria-labelledby="gesture-heading" data-mode="buttons" data-paused="true">
+<span id="features"></span>
+<div class="gesture-heading">
+<h2 id="gesture-heading" data-copy="gestureHeading">See how it works</h2>
+<p data-copy="gestureIntro">Choose an example to see the button press and the action together. You can change each action in GlideMouse.</p>
 </div>
-<div class="button-demo">
-<p class="demo-heading">
-<span data-copy="demoLabel" >Try the sample side buttons</span>
-</p>
-<div class="demo-layout">
-<img class="demo-mouse" src="Sources/GlideMouse/Resources/MouseIllustration.png" alt="A mouse illustration with two side buttons" data-alt="diagramAlt" width="260" height="260" loading="lazy">
-<div class="demo-controls" role="group" aria-label="Sample side-button actions" data-aria="exampleAria">
-<button type="button" data-example="upper" aria-pressed="true">
-<span class="button-number">5</span>
-<span data-copy="demoUpper" >Upper side · click</span>
-</button>
-<button type="button" data-example="lower" aria-pressed="false">
-<span class="button-number">4</span>
-<span data-copy="demoLower" >Lower side · click</span>
-</button>
-<button type="button" data-example="hold" aria-pressed="false">
-<span class="button-number">4</span>
-<span data-copy="demoHold" >Lower side · hold</span>
-</button>
+<p class="gesture-note" data-copy="buttonFoot">Buttons 1 and 2 support optional double-click and hold actions. Ordinary clicking and dragging remain available.</p>
+<div class="gesture-modes" role="group" data-aria="gestureModeAria" aria-label="Mouse type">
+<button type="button" data-gesture-mode="buttons" aria-pressed="true" data-copy="gestureButtons">Mouse buttons</button>
+<button type="button" data-gesture-mode="touch" aria-pressed="false" data-copy="gestureTouch">Magic Mouse · experimental</button>
 </div>
-</div>
-<div class="demo-result" role="status" aria-live="polite">
-<span class="result-symbol" aria-hidden="true">→</span>
+<div class="gesture-layout">
+<div class="gesture-choices" role="group" data-aria="gestureChoiceAria" aria-label="Usage examples"></div>
 <div>
-<h3 id="result-title">Desktop right</h3>
-<p id="result-body">One click on the upper-side button goes to the next desktop.</p>
+<div class="gesture-canvas">
+<div class="gesture-stage is-running" data-gesture="upper" aria-hidden="true">
+<svg viewBox="0 0 760 390" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<linearGradient id="gm-mouse-shade" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff"/><stop offset="1" stop-color="#dfece8"/></linearGradient>
+<clipPath id="gm-screen-clip"><rect x="422" y="112" width="217" height="165" rx="5"/></clipPath>
+<clipPath id="gm-page-clip"><rect x="422" y="119" width="216" height="150" rx="5"/></clipPath>
+</defs>
+<ellipse cx="198" cy="326" rx="83" ry="12" fill="#17323d" opacity=".08"/>
+<g class="button-mouse">
+<path d="M181 60 C213 44 260 58 268 98 L280 239 C284 285 260 315 217 316 C174 319 139 293 134 249 L123 111 C119 84 141 63 181 60Z" fill="#d2e3df" stroke="#738f91" stroke-width="2"/>
+<path d="M181 60 C215 45 255 61 261 100 L273 234 C277 276 255 303 216 304 C179 306 148 282 143 245 L133 109 C131 85 150 65 181 60Z" fill="url(#gm-mouse-shade)" stroke="#54727a" stroke-width="2"/>
+<path d="M194 57 L201 149 M137 148 Q201 161 265 143" fill="none" stroke="#9eb7b8" stroke-width="2"/>
+<rect x="183" y="92" width="23" height="44" rx="11" fill="#eef4f2" stroke="#789697" stroke-width="2" transform="rotate(-5 195 114)"/>
+<path d="M189 102 L200 101 M189 110 L200 109 M190 118 L201 117 M190 126 L201 125" stroke="#9fb5b4" stroke-width="2"/>
+<rect class="side-upper press-signal" x="124" y="132" width="13" height="36" rx="6" fill="#819e9c" transform="rotate(-5 130 150)"/>
+<rect class="side-lower press-signal" x="128" y="180" width="13" height="36" rx="6" fill="#819e9c" transform="rotate(-5 134 198)"/>
+<circle class="side-halo upper-halo" cx="130" cy="150" r="20" fill="none" stroke="#0672d3" stroke-width="3"/>
+<circle class="side-halo lower-halo" cx="134" cy="198" r="20" fill="none" stroke="#0672d3" stroke-width="3"/>
+<circle class="held-ring" cx="134" cy="197" r="20" fill="none" stroke="#0672d3" stroke-width="3" transform="rotate(-90 134 197)"/>
+<g class="wheel-mark" stroke="#0672d3" stroke-width="3" fill="none"><path d="M222 105 V139 M215 131 L222 139 L229 131"/></g>
+<g class="key-badge"><rect x="160" y="340" width="74" height="32" rx="8" fill="#17323d"/><text x="197" y="362" fill="#fff" font-size="17" text-anchor="middle" font-family="-apple-system,sans-serif">⇧</text></g>
+</g>
+<g class="touch-mouse">
+<path d="M185 59 C224 50 261 72 265 111 L275 244 C278 280 255 310 215 314 C177 317 148 293 144 255 L132 119 C128 84 149 64 185 59Z" fill="url(#gm-mouse-shade)" stroke="#54727a" stroke-width="2"/>
+<path d="M152 98 Q194 66 241 92" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round"/>
+<g class="touch-contact"><circle class="finger" cx="174" cy="136" r="9" fill="#0672d3"/><circle class="touch-halo" cx="174" cy="136" r="21" fill="none" stroke="#0672d3" stroke-width="3"/></g>
+<g class="touch-contact second"><circle class="finger-extra" cx="216" cy="136" r="9" fill="#0672d3"/></g>
+<path class="swipe-trace" d="M165 178 H241 M233 171 L241 178 L233 185" stroke="#0672d3" stroke-width="3" fill="none"/>
+<path class="pinch-trace" d="M168 158 L153 175 M153 164 V175 H164 M220 118 L235 101 M224 101 H235 V112" stroke="#0672d3" stroke-width="3" fill="none"/>
+</g>
+<g fill="none" stroke="#9ab0b3" stroke-width="2" stroke-linecap="round"><path d="M312 189 H351 M343 182 L351 189 L343 196"/></g>
+<rect x="399" y="70" width="264" height="229" rx="13" fill="#fff" stroke="#97adb1" stroke-width="2"/>
+<path d="M399 98 H663" stroke="#dce6e6"/>
+<g fill="#bed0d1"><circle cx="415" cy="84" r="3"/><circle cx="426" cy="84" r="3"/><circle cx="437" cy="84" r="3"/></g>
+<path d="M490 310 H572" stroke="#97adb1" stroke-width="4" stroke-linecap="round"/>
+<g class="result-pane desktop-result" clip-path="url(#gm-screen-clip)">
+<g class="desktop-track">
+<rect x="422" y="112" width="217" height="165" fill="#b6e9d2"/><path d="M422 245 L493 178 L546 222 L581 193 L639 249 V277 H422Z" fill="#83bbae"/><rect x="447" y="132" width="108" height="63" rx="6" fill="#fff" opacity=".9"/><rect x="459" y="145" width="65" height="5" rx="2" fill="#9ab7b6"/><rect x="459" y="157" width="81" height="4" rx="2" fill="#d0dfde"/>
+<rect x="639" y="112" width="217" height="165" fill="#c6e3f9"/><circle cx="805" cy="148" r="18" fill="#f7faf9"/><path d="M639 245 L704 201 L760 228 L806 189 L856 246 V277 H639Z" fill="#80b3d2"/><rect x="671" y="136" width="107" height="88" rx="6" fill="#fff" opacity=".9"/><rect x="684" y="149" width="72" height="5" rx="2" fill="#99b6c9"/><rect x="684" y="162" width="50" height="4" rx="2" fill="#d7e5ed"/>
+</g></g>
+<g class="result-pane windows-result">
+<rect x="422" y="112" width="217" height="165" rx="5" fill="#eaf2f1"/>
+<g class="window-tile" style="--tile-x:48px;--tile-y:32px"><rect x="434" y="125" width="86" height="65" rx="5" fill="#b6e9d2" stroke="#8cacaa"/><path d="M441 135 H510" stroke="#fff" stroke-width="4"/></g>
+<g class="window-tile" style="--tile-x:-35px;--tile-y:31px"><rect x="537" y="125" width="88" height="65" rx="5" fill="#c6e3f9" stroke="#8cacaa"/><path d="M544 135 H615" stroke="#fff" stroke-width="4"/></g>
+<g class="window-tile" style="--tile-x:48px;--tile-y:-40px"><rect x="434" y="207" width="86" height="55" rx="5" fill="#faf4dd" stroke="#8cacaa"/><path d="M441 217 H510" stroke="#fff" stroke-width="4"/></g>
+<g class="window-tile" style="--tile-x:-35px;--tile-y:-40px"><rect x="537" y="207" width="88" height="55" rx="5" fill="#dce9ef" stroke="#8cacaa"/><path d="M544 217 H615" stroke="#fff" stroke-width="4"/></g>
+</g>
+<g class="result-pane apps-result">
+<rect x="422" y="112" width="217" height="165" rx="5" fill="#edf4f3"/><rect x="436" y="171" width="189" height="61" rx="12" fill="#fff" stroke="#d0dfdf"/>
+<rect class="app-highlight" x="444" y="178" width="48" height="47" rx="9" fill="#e7f2fb" stroke="#0672d3" stroke-width="2"/>
+<rect x="453" y="185" width="30" height="30" rx="7" fill="#8abcac"/><circle cx="530" cy="200" r="16" fill="#81b6d6"/><path d="M579 185 H609 V215 H579Z" fill="#e8c477"/>
+</g>
+<g class="result-pane scroll-result" clip-path="url(#gm-page-clip)">
+<rect x="422" y="119" width="216" height="150" fill="#f7faf9"/>
+<g class="scroll-lines"><rect x="441" y="136" width="152" height="40" rx="5" fill="#b6e9d2"/><g stroke="#bdcecf" stroke-width="5" stroke-linecap="round"><path d="M441 194 H605 M441 211 H592 M441 228 H605 M441 245 H560 M441 275 H605 M441 292 H592 M441 309 H605"/></g><rect x="651" y="136" width="152" height="40" rx="5" fill="#c6e3f9"/></g>
+</g>
+<g class="result-pane click-result">
+<rect x="422" y="112" width="217" height="165" rx="5" fill="#edf4f3"/><rect class="click-highlight" x="477" y="139" width="104" height="102" rx="9" fill="#d7ebfc" stroke="#0672d3" stroke-width="2"/>
+<path d="M500 158 H520 L526 165 H557 V210 H500Z" fill="#86b9d6"/><rect x="500" y="171" width="57" height="39" rx="4" fill="#b7dcef"/>
+<path d="M487 225 H571" stroke="#9bb4bb" stroke-width="4" stroke-linecap="round"/>
+</g>
+<g class="result-pane context-result">
+<rect x="422" y="112" width="217" height="165" rx="5" fill="#edf4f3"/><path d="M452 146 H475 L481 153 H511 V194 H452Z" fill="#86b9d6"/>
+<g class="context-menu"><rect x="491" y="165" width="132" height="91" rx="7" fill="#fff" stroke="#97adb1"/><rect x="499" y="173" width="116" height="19" rx="4" fill="#d7ebfc"/><path d="M510 182 H572 M510 209 H598 M510 236 H567" stroke="#87a4af" stroke-width="4" stroke-linecap="round"/></g></g>
+<g class="result-pane open-result"><rect x="422" y="112" width="217" height="165" rx="5" fill="#edf4f3"/><g class="opened-folder"><rect x="439" y="130" width="183" height="129" rx="6" fill="#fff" stroke="#97adb1"/><path d="M439 151 H622" stroke="#dce6e6"/><path d="M454 144 H493" stroke="#97adb1" stroke-width="4" stroke-linecap="round"/><rect x="453" y="164" width="35" height="39" rx="3" fill="#b6e9d2"/><rect x="501" y="164" width="35" height="39" rx="3" fill="#c6e3f9"/><rect x="549" y="164" width="35" height="39" rx="3" fill="#faf4dd"/></g></g>
+<g class="result-pane zoom-result" clip-path="url(#gm-screen-clip)">
+<rect x="422" y="112" width="217" height="165" fill="#edf4f3"/>
+<g class="zoom-art"><rect x="465" y="134" width="135" height="113" rx="5" fill="#c6e3f9"/><circle cx="567" cy="161" r="13" fill="#fff"/><path d="M465 215 L510 168 L552 210 L579 185 L600 221 V247 H465Z" fill="#7eafa3"/></g>
+</g>
+</svg>
+</div>
+<div class="gesture-caption">
+<h3 data-gesture-title>Upper side button · click</h3>
+<p class="gesture-result-label" data-gesture-result>Next desktop</p>
+<p data-gesture-description>Press once to move one desktop to the right.</p>
 </div>
 </div>
-<p data-copy="demoHint" class="demo-hint">An example layout: numbers vary by mouse. Capture your own button in the app. This preview changes only the explanation below.</p>
+<div class="gesture-tools">
+<button type="button" data-motion-toggle aria-pressed="false"><span>Pause animation</span></button>
+<button type="button" data-motion-replay data-copy="gestureReplay">Replay</button>
 </div>
+</div>
+</div>
+<p class="gesture-note" data-gesture-note></p>
+<p class="gesture-visually-hidden" role="status" aria-live="polite" data-gesture-status></p>
 </section>
+
+
 <section class="section feature-row wrap">
 <figure class="feature-visual scroll-visual">
 <img data-screen="scrolling" data-alt="scrollAlt" src="Docs/media/screenshots/en-scrolling.png" width="1040" height="730" alt="GlideMouse scrolling controls with presets, speed and direction" loading="lazy">
@@ -201,11 +269,11 @@
 <h2 data-copy="downloadTitle" >Download GlideMouse</h2>
 <p data-copy="downloadBody" >Download GlideMouse, move it into Applications, and follow Mouse setup.</p>
 <div class="actions">
-<a data-copy="downloadDmg" class="button primary" href="https://github.com/MinnKhantThuu/GlideMouse/releases/download/v0.3.16/GlideMouse-0.3.16-developer.dmg">Download DMG</a>
-<a data-copy="downloadZip" class="button secondary" href="https://github.com/MinnKhantThuu/GlideMouse/releases/download/v0.3.16/GlideMouse-0.3.16-developer.zip">ZIP download</a>
+<a data-copy="downloadDmg" class="button primary" href="https://github.com/MinnKhantThuu/GlideMouse/releases/download/v0.3.17/GlideMouse-0.3.17-developer.dmg">Download DMG</a>
+<a data-copy="downloadZip" class="button secondary" href="https://github.com/MinnKhantThuu/GlideMouse/releases/download/v0.3.17/GlideMouse-0.3.17-developer.zip">ZIP download</a>
 </div>
 <p data-copy="requirements" class="meta">macOS 14 or later · Apple Silicon &amp; Intel</p>
-<a data-copy="releaseDetails" class="text-link" href="https://github.com/MinnKhantThuu/GlideMouse/releases/tag/v0.3.16">Release notes &amp; checksums</a>
+<a data-copy="releaseDetails" class="text-link" href="https://github.com/MinnKhantThuu/GlideMouse/releases/tag/v0.3.17">Release notes &amp; checksums</a>
 </div>
 </div>
 </section>

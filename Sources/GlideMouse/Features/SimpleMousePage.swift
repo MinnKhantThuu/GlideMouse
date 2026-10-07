@@ -5,6 +5,7 @@ import MouseCore
 struct SimpleMousePage: View {
     @ObservedObject var model: AppModel
     @State private var captureNote = ""
+    @State private var showingGuide = false
     private var known: [Int] { Array(Set(model.calibratedButtons.map(\.button)).union(model.runtimeReport.observedButtons).union(model.selectedButton.map { $0 >= 2 ? [$0] : [] } ?? []).union((model.configuration.globalDefaults.mappings + model.effectiveProfile.mappings).filter { [.button, .buttonHold, .buttonDrag, .buttonWheel, .buttonChord].contains($0.trigger.kind) }.map(\.button))).filter { $0 >= 2 }.sorted() }
     var body: some View {
         if !model.accessibility || !model.inputMonitoring { SectionBox(title: model.text("Allow mouse control")) { PermissionControls(model: model) } }
@@ -13,6 +14,8 @@ struct SimpleMousePage: View {
                 Text(model.currentMouse?.name ?? model.text("Connect a mouse")).font(.headline)
             }
             Spacer()
+            Button { showingGuide = true } label: { Label(model.text("How mouse actions work"), systemImage: "play.rectangle") }
+                .sheet(isPresented: $showingGuide) { MouseActionGuide(model: model) }
             Button(model.text("Label buttons")) { model.showCalibration = true }
         }
         VStack(alignment: .leading, spacing: 6) {

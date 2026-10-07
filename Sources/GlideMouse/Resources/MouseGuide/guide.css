@@ -1,0 +1,9 @@
+
+:root{--paper:#f7faf9;--ink:#17323d;--blue:#0672d3;--mint:#b6e9d2;--slate:#58707b;--line:#dce6e6;font-family:-apple-system,BlinkMacSystemFont,sans-serif;color:var(--ink);background:var(--paper);font-synthesis:none;color-scheme:light}
+*{box-sizing:border-box}body{margin:0;padding:22px;line-height:1.65}body:lang(my){font-family:'Myanmar Sangam MN','Noto Sans Myanmar',sans-serif;line-height:1.9}body:lang(zh-Hans){font-family:'PingFang SC',sans-serif}button{font:inherit;cursor:pointer;touch-action:manipulation}button:focus-visible{outline:3px solid var(--blue);outline-offset:3px}.gesture-guide{padding-top:0}.gesture-heading h2{font-size:24px}.gesture-heading p{font-size:14px}.gesture-note{font-size:12px}.gesture-layout{gap:20px}.gesture-modes{margin-bottom:18px}h3{line-height:1.5}
+:root[data-theme=dark]{--paper:#172329;--ink:#e4eeee;--slate:#abc0c8;--line:#41565e;--blue:#6ab6f5;color-scheme:dark}
+:root[data-theme=dark] .gesture-canvas,:root[data-theme=dark] .gesture-tools button,:root[data-theme=dark] .gesture-modes button[aria-pressed=true]{background:#21343e}
+:root[data-theme=dark] .gesture-modes{background:#21343e}:root[data-theme=dark] .gesture-choices button:hover{background:#293f48}:root[data-theme=dark] .gesture-choices button[aria-pressed=true]{background:#254b65}
+/* Keep input choices beside the result even in a 740-point native sheet. */
+.gesture-heading h2{display:none}.gesture-heading{margin-bottom:12px}.gesture-heading+.gesture-note{display:none}
+@media(min-width:700px){.gesture-layout{grid-template-columns:minmax(190px,.7fr) minmax(0,1.8fr)}.gesture-choices{grid-template-columns:1fr}.gesture-choices button{padding:8px 12px;min-height:60px}.gesture-choices button span{font-size:13px}.gesture-choices button small{font-size:11px}.gesture-caption{padding:14px 16px}.gesture-caption h3{font-size:17px}.gesture-caption p{font-size:13px}.gesture-stage{min-height:0}}

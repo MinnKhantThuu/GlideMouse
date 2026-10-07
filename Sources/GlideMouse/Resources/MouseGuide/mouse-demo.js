@@ -1,0 +1,63 @@
+/* Original GlideMouse instructional drawings. No device input is intercepted. */
+'use strict';
+(() => {
+  const root = document.getElementById('mouse-guide');
+  if (!root) return;
+  const stage = root.querySelector('.gesture-stage');
+  const choices = root.querySelector('.gesture-choices');
+  const motionButton = root.querySelector('[data-motion-toggle]');
+  const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+  const demos = {
+    buttons: ['upper', 'lower', 'hold', 'double', 'wheel', 'horizontal'],
+    touch: ['tap', 'righttap', 'multitap', 'fingers', 'swipe', 'pinch']
+  };
+  let mode = 'buttons', selected = 'upper', paused = reducedMotion.matches, visible = false;
+  const language = () => document.documentElement.lang === 'zh-Hans' ? 'zh' : document.documentElement.lang;
+  const t = key => window.glideCopy[language() || 'en'][key];
+  const key = (name, suffix) => 'gesture' + name[0].toUpperCase() + name.slice(1) + suffix;
+  function updateMotion() {
+    root.dataset.paused = String(paused || !visible || document.hidden);
+    root.dataset.reduced = String(reducedMotion.matches);
+    const copyKey = paused ? 'gesturePlay' : 'gesturePause';
+    motionButton.querySelector('span').textContent = t(copyKey);
+    motionButton.setAttribute('aria-pressed', String(!paused));
+  }
+  function select(name, announce = true) {
+    selected = name;
+    stage.dataset.gesture = name;
+    stage.classList.remove('is-running');
+    // Restart the illustration's CSS timeline without recording any real input.
+    void stage.offsetWidth;
+    stage.classList.add('is-running');
+    root.querySelector('[data-gesture-title]').textContent = t(key(name, 'Title'));
+    root.querySelector('[data-gesture-result]').textContent = t(key(name, 'Result'));
+    root.querySelector('[data-gesture-description]').textContent = t(key(name, 'Body'));
+    choices.querySelectorAll('button').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.gesture === name)));
+    if (announce) root.querySelector('[data-gesture-status]').textContent = t(key(name, 'Title')) + '. ' + t(key(name, 'Result'));
+  }
+  function render() {
+    root.dataset.mode = mode;
+    root.querySelectorAll('[data-gesture-mode]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.gestureMode === mode)));
+    choices.replaceChildren(...demos[mode].map(name => {
+      const button = document.createElement('button');
+      button.type = 'button'; button.dataset.gesture = name;
+      const title = document.createElement('span'); title.textContent = t(key(name, 'Title'));
+      const result = document.createElement('small'); result.textContent = t(key(name, 'Result'));
+      button.append(title, result); button.addEventListener('click', () => select(name));
+      return button;
+    }));
+    root.querySelector('[data-gesture-note]').textContent = t(mode === 'touch' ? 'gestureTouchNote' : 'gestureButtonNote');
+    select(selected, false); updateMotion();
+  }
+  root.querySelectorAll('[data-gesture-mode]').forEach(button => button.addEventListener('click', () => {
+    mode = button.dataset.gestureMode; selected = demos[mode][0]; render();
+  }));
+  motionButton.addEventListener('click', () => { paused = !paused; updateMotion(); });
+  root.querySelector('[data-motion-replay]').addEventListener('click', () => { paused = false; select(selected); updateMotion(); });
+  reducedMotion.addEventListener('change', event => { paused = event.matches; updateMotion(); });
+  document.addEventListener('visibilitychange', updateMotion);
+  window.addEventListener('glide:language', render);
+  const observer = new IntersectionObserver(entries => { visible = entries[0].isIntersecting; updateMotion(); }, {threshold: 0.15});
+  observer.observe(stage);
+  render();
+})();

@@ -15,7 +15,7 @@ files=[];sourcebuild=[];resourcebuild=[]
 for f in sources:
  rel=f.relative_to(root);ref=obj('file:'+str(rel),f'isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = {q(f.name)}; path = {q(rel)}; sourceTree = SOURCE_ROOT;');files.append(ref)
  sourcebuild.append(obj('build:'+str(rel),f'isa = PBXBuildFile; fileRef = {ref};'))
-for rel,kind in [('Sources/GlideMouse/Resources/AppIcon.png','image.png'),('Sources/GlideMouse/Resources/MouseIllustration.png','image.png'),('Sources/GlideMouse/Resources/Localizable.xcstrings','text.json.xcstrings'),('Assets/Assets.xcassets','folder.assetcatalog')]:
+for rel,kind in [('Sources/GlideMouse/Resources/AppIcon.png','image.png'),('Sources/GlideMouse/Resources/MouseIllustration.png','image.png'),('Sources/GlideMouse/Resources/Localizable.xcstrings','text.json.xcstrings'),('Assets/Assets.xcassets','folder.assetcatalog'),('Sources/GlideMouse/Resources/MouseGuide','folder')]:
  ref=obj('file:'+rel,f'isa = PBXFileReference; lastKnownFileType = {kind}; name = {q(Path(rel).name)}; path = {q(rel)}; sourceTree = SOURCE_ROOT;');files.append(ref)
  resourcebuild.append(obj('build:'+rel,f'isa = PBXBuildFile; fileRef = {ref};'))
 product=obj('product','isa = PBXFileReference; explicitFileType = wrapper.application; path = GlideMouse.app; sourceTree = BUILT_PRODUCTS_DIR;')

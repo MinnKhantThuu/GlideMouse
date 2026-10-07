@@ -5,6 +5,11 @@ import MouseCore
 
 @main enum GlideMouseLauncher {
     @MainActor static func main() {
+        if CommandLine.arguments.contains("--guide-preview") || Bundle.main.object(forInfoDictionaryKey: "GMGuidePreview") as? Bool == true {
+            NSApplication.shared.setActivationPolicy(.regular)
+            MouseActionGuidePreview.main()
+            return
+        }
         if let index = CommandLine.arguments.firstIndex(of: "--render-tutorials"), CommandLine.arguments.count > index + 1 {
             UIHarness.renderTutorials(to: URL(fileURLWithPath: CommandLine.arguments[index + 1])); exit(0)
         }
