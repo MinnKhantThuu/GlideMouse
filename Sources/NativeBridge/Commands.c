@@ -17,7 +17,7 @@ int32_t gm_command_spawn(const char *executable,const char *argument,const char 
     posix_spawn_file_actions_addopen(&files,2,"/dev/null",O_WRONLY,0);
     if (directory && directory[0]) posix_spawn_file_actions_addchdir_np(&files,directory);
     char homeValue[4096]; if (snprintf(homeValue,sizeof(homeValue),"HOME=%s",home)>=(int)sizeof(homeValue)) { posix_spawnattr_destroy(&attributes); posix_spawn_file_actions_destroy(&files); return -1; }
-    char *args[]={(char*)executable,strcmp(executable,"/bin/zsh")==0 ? "-c" : "run",(char*)argument,NULL};
+    char *args[]={(char*)executable,strcmp(executable,"/bin/zsh")==0 ? "-lc" : "run",(char*)argument,NULL};
     char *env[]={"PATH=/usr/bin:/bin:/usr/sbin:/sbin","LANG=en_US.UTF-8",homeValue,NULL};
     pid_t pid=0; int result=posix_spawn(&pid,executable,&files,&attributes,args,env);
     posix_spawnattr_destroy(&attributes); posix_spawn_file_actions_destroy(&files);

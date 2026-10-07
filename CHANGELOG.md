@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.3.18
+
+- Add an always-available Magic Mouse setup page: edit gestures before connecting hardware, review touch-only suggestions, choose finger/tap counts and directions, set modifier overrides, edit/delete and Undo.
+- Add timed forward/backward app cycling, modifier-preserving touch clicks and drags, tap-and-move drag recognition, second-finger drag scrolling, resting-contact recovery, swipe/brush tuning and an independent touch-hold delay.
+- Preserve old version-2 settings, existing ordinary mouse mappings and immediate desktop button switching. UI-only previews create no event taps or private touch probes.
+- Expand the shared EN/MY/ZH offline/website guide to fourteen touch examples in four groups, with original drawings, accessible controls and reduced-motion support.
+- Validate 94 core tests, 639 compiled translation entries and temporary-setting save/delete/Undo checks. Real Magic Mouse hardware acceptance remains pending; the adapter is experimental and requires the named-device checklist.
+
 ## 0.3.17
 
 - Add original animated input-to-result examples on the website and in the Buttons page.

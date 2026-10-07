@@ -13313,6 +13313,1221 @@
           }
         }
       }
+    },
+    "Magic Mouse connected": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Magic Mouse connected"
+          }
+        },
+        "my": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Magic Mouse ချိတ်ထားပါပြီ"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Magic Mouse 已连接"
+          }
+        }
+      }
+    },
+    "Set up now, try when connected": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Set up now, try when connected"
+          }
+        },
+        "my": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "အခု ပြင်ထားပြီး mouse ချိတ်တဲ့အခါ စမ်းပါ"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "先设置，连接后试用"
+          }
+        }
+      }
+    },
+    "See gesture examples": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "See gesture examples"
+          }
+        },
+        "my": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gesture နမူနာများ ကြည့်ရန်"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "查看手势示例"
+          }
+        }
+      }
+    },
+    "Prepare gestures here even without a Magic Mouse. These settings do not remap the buttons on your other mouse.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Prepare gestures here even without a Magic Mouse. These settings do not remap the buttons on your other mouse."
+          }
+        },
+        "my": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Magic Mouse မရှိသေးလည်း ဒီနေရာမှာ gesture တွေ ကြိုသတ်မှတ်ထားနိုင်ပါတယ်။ လက်ရှိသုံးနေတဲ့ တခြား mouse ရဲ့ ခလုတ်တွေကို မပြောင်းပါဘူး။"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "即使还没有 Magic Mouse，也可以先设置手势。这些设置不会修改其他鼠标的按键。"
+          }
+        }
+      }
+    },
+    "Use Magic Mouse touch gestures": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Use Magic Mouse touch gestures"
+          }
+        },
+        "my": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Magic Mouse touch gesture များ သုံးမည်"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "使用 Magic Mouse 触控手势"
+          }
+        }
+      }
+    },
+    "Touch input is experimental. Enable GlideMouse and allow its permissions to try it.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Touch input is experimental. Enable GlideMouse and allow its permissions to try it."
+          }
+        },
+        "my": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Touch gesture တွေကို စမ်းသပ်ဆဲပါ။ စမ်းဖို့ GlideMouse ကို ဖွင့်ပြီး လိုအပ်တဲ့ permission တွေ ပေးထားပါ။"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "触控功能仍在实验阶段。请启用 GlideMouse 并授予权限后试用。"
+          }
+        }
+      }
+    },
+    "Your setup is saved. Touch input starts only when a supported Magic Mouse is connected and GlideMouse is enabled.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your setup is saved. Touch input starts only when a supported Magic Mouse is connected and GlideMouse is enabled."
+          }
+        },
+        "my": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ဆက်တင်တွေကို သိမ်းထားနိုင်ပါတယ်။ ပံ့ပိုးထားတဲ့ Magic Mouse ချိတ်ပြီး GlideMouse ကို ဖွင့်ထားမှ touch gesture တွေ အလုပ်လုပ်ပါမယ်။"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "可以保存设置。只有连接支持的 Magic Mouse 并启用 GlideMouse 后，触控手势才会运行。"
+          }
+        }
+      }
+    },
+    "Review suggested gestures": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Review suggested gestures"
+          }
+        },
+        "my": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "အကြံပြု gesture များ ကြည့်ရန်"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "查看建议手势"
+          }
+        }
+      }
+    },
+    "Choose a gesture": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose a gesture"
+          }
+        },
+        "my": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "လုပ်မယ့် gesture ကို ရွေးပါ"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "选择手势"
+          }
+        }
+      }
+    },
+    "Gesture": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gesture"
+          }
+        },
+        "my": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gesture"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "手势"
+          }
+        }
+      }
+    },
+    "Number of taps": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Number of taps"
+          }
+        },
+        "my": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ထိမည့်အကြိမ်ရေ"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "轻点次数"
+          }
+        }
+      }
+    },
+    "Single tap": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Single tap"
+          }
+        },
+        "my": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "တစ်ချက်ထိ"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "轻点一次"
+          }
+        }
+      }
+    },
+    "Double tap": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Double tap"
+          }
+        },
+        "my": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "နှစ်ချက်ထိ"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "轻点两次"
+          }
+        }
+      }
+    },
+    "Triple tap": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Triple tap"
+          }
+        },
+        "my": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "သုံးချက်ထိ"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "轻点三次"
+          }
+        }
+      }
+    },
+    "Tap once, then touch again and hold or move. Move the mouse to drag; lift that finger to release. Use another finger to scroll while dragging.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tap once, then touch again and hold or move. Move the mouse to drag; lift that finger to release. Use another finger to scroll while dragging."
+          }
+        },
+        "my": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "တစ်ချက်ထိပြီး နောက်တစ်ချက်မှာ ဖိထားပါ၊ ဒါမှမဟုတ် ရွှေ့ပါ။ Mouse ကို ရွှေ့ရင် ဆွဲရွှေ့ပါမယ်။ အဲဒီလက်ချောင်းကို ဖယ်လိုက်ရင် လွှတ်ပါမယ်။ ဆွဲရွှေ့နေတုန်း တခြားလက်ချောင်းတစ်ချောင်းနဲ့ scroll လုပ်နိုင်ပါတယ်။"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "轻点一次，再次触摸并按住或移动。移动鼠标即可拖动，抬起该手指即可松开。拖动时可以用另一根手指滚动。"
+          }
+        }
+      }
+    },
+    "Add a modifier key": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add a modifier key"
+          }
+        },
+        "my": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "တွဲနှိပ်မည့် keyboard key"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "添加修饰键"
+          }
+        }
+      }
+    },
+    "An explicit modifier gesture overrides the ordinary one. Otherwise Command, Option, Control and Shift stay attached to click and drag actions.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "An explicit modifier gesture overrides the ordinary one. Otherwise Command, Option, Control and Shift stay attached to click and drag actions."
+          }
+        },
+        "my": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Key တွဲနှိပ်တဲ့ gesture ကို သီးသန့်သတ်မှတ်ထားရင် အဲဒီ action ကို သုံးပါမယ်။ မသတ်မှတ်ထားရင် Command၊ Option၊ Control၊ Shift တွေက click နဲ့ drag မှာ ပုံမှန်အတိုင်း ပါဝင်ပါမယ်။"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "如果单独设置了带修饰键的手势，就使用该操作。否则点击和拖动会保留 Command、Option、Control 和 Shift。"
+          }
+        }
+      }
+    },
+    "No action set": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No action set"
+          }
+        },
+        "my": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "လုပ်ဆောင်ချက် မသတ်မှတ်ရသေးပါ"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "尚未设置操作"
+          }
+        }
+      }
+    },
+    "Inherited from All apps. Save here to change it only for this app.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Inherited from All apps. Save here to change it only for this app."
+          }
+        },
+        "my": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "App အားလုံးအတွက် ဆက်တင်ကို သုံးနေပါတယ်။ ဒီနေရာမှာ သိမ်းရင် ရွေးထားတဲ့ app အတွက်ပဲ ပြောင်းပါမယ်။"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "沿用所有 App 的设置。在此保存后，只对所选 App 生效。"
+          }
+        }
+      }
+    },
+    "Set action": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Set action"
+          }
+        },
+        "my": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "လုပ်ဆောင်ချက် သတ်မှတ်ရန်"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "设置操作"
+          }
+        }
+      }
+    },
+    "Change action": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Change action"
+          }
+        },
+        "my": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "လုပ်ဆောင်ချက် ပြောင်းရန်"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "更改操作"
+          }
+        }
+      }
+    },
+    "Saved touch gestures": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Saved touch gestures"
+          }
+        },
+        "my": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "သိမ်းထားသော touch gesture များ"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "已保存的触控手势"
+          }
+        }
+      }
+    },
+    "No touch gestures saved yet. Review the suggested gestures or set an action above.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No touch gestures saved yet. Review the suggested gestures or set an action above."
+          }
+        },
+        "my": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Touch gesture မသိမ်းရသေးပါ။ အကြံပြု gesture တွေကို ကြည့်ပါ၊ ဒါမှမဟုတ် အပေါ်မှာ action တစ်ခု သတ်မှတ်ပါ။"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "尚未保存触控手势。可以查看建议手势，或在上方设置操作。"
+          }
+        }
+      }
+    },
+    "Touch feel": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Touch feel"
+          }
+        },
+        "my": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ထိတွေ့မှု ချိန်ညှိရန်"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "触控手感"
+          }
+        }
+      }
+    },
+    "Before your first test": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Before your first test"
+          }
+        },
+        "my": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ပထမဆုံး မစမ်းခင်"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "首次试用前"
+          }
+        }
+      }
+    },
+    "If a double tap also triggers macOS Smart Zoom, turn Smart Zoom off in System Settings → Mouse → More Gestures. Pause other mouse utilities while testing.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "If a double tap also triggers macOS Smart Zoom, turn Smart Zoom off in System Settings → Mouse → More Gestures. Pause other mouse utilities while testing."
+          }
+        },
+        "my": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "နှစ်ချက်ထိလိုက်လို့ macOS Smart Zoom ပါ ဖြစ်လာရင် System Settings → Mouse ထဲမှာ Smart Zoom ကို ပိတ်ပါ။ စမ်းနေတုန်း တခြား mouse app တွေကိုလည်း ခေတ္တပိတ်ထားပါ။"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "如果轻点两次还触发了 macOS 智能缩放，请在系统设置 → 鼠标中关闭智能缩放。测试时暂停其他鼠标工具。"
+          }
+        }
+      }
+    },
+    "Start with tap and right-side tap, then try swipes, pinch, drag and drag scrolling. The examples are illustrations; real Magic Mouse testing is still required.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start with tap and right-side tap, then try swipes, pinch, drag and drag scrolling. The examples are illustrations; real Magic Mouse testing is still required."
+          }
+        },
+        "my": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "တစ်ချက်ထိတာနဲ့ ညာဘက်ခြမ်းထိတာကို အရင်စမ်းပါ။ ပြီးမှ swipe၊ pinch၊ drag နဲ့ drag လုပ်ရင်း scroll တာကို စမ်းပါ။ နမူနာတွေက ရှင်းပြတဲ့ပုံတွေပါ။ Magic Mouse အစစ်နဲ့ စမ်းဖို့ ကျန်ပါသေးတယ်။"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "先试轻点和右侧轻点，再试滑动、捏合、拖动和拖动时滚动。示例仅用于演示，仍需要用真实 Magic Mouse 验证。"
+          }
+        }
+      }
+    },
+    "Change one setting at a time. Larger movement thresholds reduce accidental gestures.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Change one setting at a time. Larger movement thresholds reduce accidental gestures."
+          }
+        },
+        "my": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ဆက်တင်တစ်ခုစီ ပြောင်းပြီး စမ်းပါ။ ရွှေ့ရမယ့် အကွာအဝေးကို တိုးထားရင် မတော်တဆ gesture ဖြစ်တာ လျော့ပါမယ်။"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "每次只调整一项。增大移动距离阈值可以减少误触。"
+          }
+        }
+      }
+    },
+    "How long a touch can last and still count as a tap.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "How long a touch can last and still count as a tap."
+          }
+        },
+        "my": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "တစ်ချက်ထိတာလို့ သတ်မှတ်ဖို့ လက်ချောင်းကို အများဆုံး ဘယ်လောက်ကြာ ထားနိုင်မလဲ။"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "触摸持续多久以内仍算作轻点。"
+          }
+        }
+      }
+    },
+    "Time allowed between taps. Increase if you double-tap slowly.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Time allowed between taps. Increase if you double-tap slowly."
+          }
+        },
+        "my": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "နှစ်ချက်ထိတဲ့အခါ အကြားမှာ ခွင့်ပြုမယ့်အချိန်ပါ။ ဖြည်းဖြည်းနှိပ်တတ်ရင် တိုးထားပါ။"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "两次轻点之间允许的间隔。如果轻点较慢，可以调大。"
+          }
+        }
+      }
+    },
+    "How far your finger can move during a tap. Lower values reject more accidental touches.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "How far your finger can move during a tap. Lower values reject more accidental touches."
+          }
+        },
+        "my": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "တစ်ချက်ထိနေတုန်း လက်ချောင်း ဘယ်လောက်ရွှေ့နိုင်မလဲ။ လျှော့ထားရင် မတော်တဆ ရွှေ့ထိတာကို ပိုစစ်ထုတ်ပါမယ်။"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "轻点时允许手指移动的距离。调小后会过滤更多误触。"
+          }
+        }
+      }
+    },
+    "Tap slide speed": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tap slide speed"
+          }
+        },
+        "my": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "မတော်တဆ ပွတ်ထိမှု စစ်ရန်"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "轻点滑动速度"
+          }
+        }
+      }
+    },
+    "Reject a fast brush across the mouse even if the total movement is small.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reject a fast brush across the mouse even if the total movement is small."
+          }
+        },
+        "my": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "အကွာအဝေး နည်းနည်းပဲ ရွှေ့သွားလည်း မြန်မြန်ပွတ်ထိတာဆိုရင် click မလုပ်ပါဘူး။"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "即使总移动距离较小，也会过滤快速擦过鼠标的触摸。"
+          }
+        }
+      }
+    },
+    "Swipe speed": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Swipe speed"
+          }
+        },
+        "my": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Swipe အမြန်နှုန်း"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "滑动速度"
+          }
+        }
+      }
+    },
+    "How far to swipe before the action runs.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "How far to swipe before the action runs."
+          }
+        },
+        "my": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Action စလုပ်ဖို့ လက်ချောင်းကို ဘယ်လောက်ရွှေ့ရမလဲ။"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "滑动多远后执行操作。"
+          }
+        }
+      }
+    },
+    "Minimum swipe speed. Zero accepts slow, deliberate swipes.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Minimum swipe speed. Zero accepts slow, deliberate swipes."
+          }
+        },
+        "my": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Swipe လို့ သတ်မှတ်ဖို့ အနည်းဆုံး အမြန်နှုန်းပါ။ သုညထားရင် ဖြည်းဖြည်းရွှေ့တာကိုပါ လက်ခံပါမယ်။"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "识别滑动的最低速度。设为零时也接受缓慢滑动。"
+          }
+        }
+      }
+    },
+    "How much to pinch or spread before a zoom shortcut runs.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "How much to pinch or spread before a zoom shortcut runs."
+          }
+        },
+        "my": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zoom shortcut စလုပ်ဖို့ လက်ချောင်းနှစ်ချောင်းကို ဘယ်လောက်စု၊ ဘယ်လောက်ခွာရမလဲ။"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "两根手指捏合或张开多少距离后执行缩放快捷键。"
+          }
+        }
+      }
+    },
+    "Where the right-click zone starts, from the left edge of the mouse.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Where the right-click zone starts, from the left edge of the mouse."
+          }
+        },
+        "my": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mouse ရဲ့ ဘယ်အစွန်းကနေ စတွက်ပြီး ညာကလစ်ဧရိယာ ဘယ်နေရာက စမလဲ။"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "从鼠标左侧起，右键区域从哪个位置开始。"
+          }
+        }
+      }
+    },
+    "Right zone front": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Right zone front"
+          }
+        },
+        "my": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ညာကလစ်ဧရိယာ ရှေ့ခြမ်း"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "右键区域前端"
+          }
+        }
+      }
+    },
+    "Limit right-side taps to the front of the mouse. Zero uses the whole right side.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Limit right-side taps to the front of the mouse. Zero uses the whole right side."
+          }
+        },
+        "my": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ညာကလစ်ကို ရှေ့ခြမ်းမှာပဲ ထိလို့ရအောင် ကန့်သတ်ပါ။ သုညထားရင် ညာခြမ်းတစ်ခုလုံးမှာ သုံးနိုင်ပါတယ်။"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "把右侧轻点限制在鼠标前端。设为零时使用整个右侧区域。"
+          }
+        }
+      }
+    },
+    "How long a stationary finger waits before new touches can ignore it.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "How long a stationary finger waits before new touches can ignore it."
+          }
+        },
+        "my": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ငြိမ်နေတဲ့ လက်ချောင်းကို ချထားတာလို့ သတ်မှတ်ဖို့ စောင့်မယ့်အချိန်ပါ။ အဲဒီနောက် ထပ်ထိတဲ့ လက်ချောင်းတွေကို သီးသန့်ဖတ်ပါမယ်။"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "静止的手指停留多久后，新的触摸可以忽略它。"
+          }
+        }
+      }
+    },
+    "Drag scroll speed": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Drag scroll speed"
+          }
+        },
+        "my": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ဆွဲရွှေ့ရင်း scroll အမြန်နှုန်း"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "拖动时滚动速度"
+          }
+        }
+      }
+    },
+    "How far the page scrolls as the second finger moves during a drag.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "How far the page scrolls as the second finger moves during a drag."
+          }
+        },
+        "my": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ဆွဲရွှေ့နေတုန်း ဒုတိယလက်ချောင်းကို ရွှေ့ရင် စာမျက်နှာ ဘယ်လောက်ရွှေ့မလဲ။"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "拖动时，第二根手指移动会让页面滚动多远。"
+          }
+        }
+      }
+    },
+    "Reverse scroll while dragging": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reverse scroll while dragging"
+          }
+        },
+        "my": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ဆွဲရွှေ့ရင်း scroll ဦးတည်ချက် ပြောင်းပြန်ထားမည်"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "反转拖动时的滚动方向"
+          }
+        }
+      }
+    },
+    "App switch delay": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "App switch delay"
+          }
+        },
+        "my": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "App ရွေးပြီး ပြောင်းမည့်အချိန်"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "App 切换等待时间"
+          }
+        }
+      }
+    },
+    "Keep the app chooser open between swipes; select the highlighted app after this pause.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keep the app chooser open between swipes; select the highlighted app after this pause."
+          }
+        },
+        "my": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Swipe ထပ်လုပ်နိုင်ဖို့ app ရွေးတဲ့အကွက်ကို ဖွင့်ထားပါမယ်။ ဒီအချိန်ကြာအောင် ရပ်လိုက်ရင် ရွေးထားတဲ့ app ကို ပြောင်းပါမယ်။"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "在连续滑动之间保持 App 切换器打开，停顿这段时间后切换到选中的 App。"
+          }
+        }
+      }
+    },
+    "Tap and swipe distances are fractions of the touch surface. Timing is in seconds; drag scroll speed uses pixels per surface length.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tap and swipe distances are fractions of the touch surface. Timing is in seconds; drag scroll speed uses pixels per surface length."
+          }
+        },
+        "my": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tap နဲ့ swipe အကွာအဝေးတွေက touch ဧရိယာရဲ့ အချိုးအစားပါ။ အချိန်ကို စက္ကန့်နဲ့ တိုင်းပါတယ်။ Drag scroll အမြန်နှုန်းက touch ဧရိယာတစ်ခုစာ ရွှေ့ရင် scroll လုပ်မယ့် pixel အရေအတွက်ပါ။"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "轻点和滑动距离按触控表面的比例计算。时间单位为秒；拖动时滚动速度按整个触控表面的像素数计算。"
+          }
+        }
+      }
+    },
+    "action.cycleAppsForward": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cycle apps forward"
+          }
+        },
+        "my": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "နောက် app ကို ရွေးမည်"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "向后循环选择 App"
+          }
+        }
+      }
+    },
+    "action.cycleAppsBackward": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cycle apps backward"
+          }
+        },
+        "my": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ရှေ့ app ကို ရွေးမည်"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "向前循环选择 App"
+          }
+        }
+      }
+    },
+    "Delete": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete"
+          }
+        },
+        "my": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ဖျက်ရန်"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "删除"
+          }
+        }
+      }
+    },
+    "Touch hold delay": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Touch hold delay"
+          }
+        },
+        "my": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Touch ကို ဖိထားမည့်အချိန်"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "触控按住时间"
+          }
+        }
+      }
+    },
+    "Time to hold the second touch before dragging starts. Moving that finger also starts a drag. Mouse button holds are unchanged.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Time to hold the second touch before dragging starts. Moving that finger also starts a drag. Mouse button holds are unchanged."
+          }
+        },
+        "my": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ဒုတိယအကြိမ်ထိတဲ့အခါ drag စဖို့ ဖိထားရမယ့်အချိန်ပါ။ လက်ချောင်းကို ရွှေ့လိုက်ရင်လည်း drag စပါမယ်။ Mouse ခလုတ် ဖိထားတဲ့ဆက်တင်ကို မပြောင်းပါဘူး။"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "第二次触摸按住多久后开始拖动。移动该手指也会开始拖动，不影响鼠标按键的长按设置。"
+          }
+        }
+      }
+    },
+    "Connection and permissions": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Connection and permissions"
+          }
+        },
+        "my": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ချိတ်ဆက်မှုနှင့် permission"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "连接与权限"
+          }
+        }
+      }
     }
   },
   "version": "1.0"

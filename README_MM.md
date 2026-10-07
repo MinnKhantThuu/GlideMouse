@@ -6,7 +6,7 @@ Mouse ခလုတ်တွေကို ကိုယ်လိုချင်တ�
 
 **[Website](https://minnkhantthuu.github.io/GlideMouse/?lang=my) · [English guide](README.md) · [Video လမ်းညွှန်များ](https://minnkhantthuu.github.io/GlideMouse/tutorials.html#my) · [简体中文](Docs/USER_GUIDE_ZH.md)**
 
-**[GlideMouse ဒေါင်းလုဒ် — macOS DMG, v0.3.17](https://github.com/MinnKhantThuu/GlideMouse/releases/download/v0.3.17/GlideMouse-0.3.17-developer.dmg)**
+**[GlideMouse ဒေါင်းလုဒ် — macOS DMG, v0.3.18](https://github.com/MinnKhantThuu/GlideMouse/releases/download/v0.3.18/GlideMouse-0.3.18-developer.dmg)**
 
 ဒေါင်းလုဒ်ဆွဲ → Applications ထဲရွှေ့ → App ဖွင့်ပြီး permission ပေး → Mouse လုပ်ဆောင်ချက်ရွေးပြီး သုံးပါ။ Xcode တင်တာ၊ command နဲ့ build လုပ်တာတွေ မလိုပါ။
 
@@ -28,7 +28,7 @@ Mouse control က ဒီ Mac ပေါ်မှာပဲ အလုပ်လု�
 
 **လိုအပ်ချက်:** macOS 14 နဲ့အထက်၊ Apple Silicon သို့မဟုတ် Intel Mac ဖြစ်ရပါမယ်။ ဘီးခလုတ်/ဘေးခလုတ်ပါတဲ့ USB သို့မဟုတ် Bluetooth mouse နဲ့ သုံးရပိုအဆင်ပြေပါတယ်။ Universal build မှာ CPU နှစ်မျိုးလုံးအတွက် ပါပေမယ့် Mac၊ macOS နဲ့ mouse အမျိုးအစားအားလုံးမှာ physical test ပြီးပြီလို့ မဆိုလိုပါ။
 
-1. **[DMG ကို ဒေါင်းလုဒ်ဆွဲပါ](https://github.com/MinnKhantThuu/GlideMouse/releases/download/v0.3.17/GlideMouse-0.3.17-developer.dmg)**။
+1. **[DMG ကို ဒေါင်းလုဒ်ဆွဲပါ](https://github.com/MinnKhantThuu/GlideMouse/releases/download/v0.3.18/GlideMouse-0.3.18-developer.dmg)**။
 2. GlideMouse အဟောင်း ဖွင့်ထားရင် ပိတ်ပါ။ ဒေါင်းလုဒ်ရတဲ့ DMG ကို နှစ်ချက်နှိပ်ပြီး ဖွင့်ပါ။ ပေါ်လာတဲ့ window ထဲမှာ **GlideMouse** ကို **Applications** ပေါ် ဆွဲထည့်ပါ။
 3. Applications ထဲက GlideMouse ကိုဖွင့်ပြီး **Mouse သတ်မှတ်ရန်** ကို ဆက်လုပ်ပါ။ App ကူးပြီးရင် GlideMouse disk ကို Eject လုပ်နိုင်ပါတယ်။
 4. အောက်က permission နှစ်ခုကို Allow လုပ်ပြီး app ပြန်လာကာ Refresh နှိပ်ပါ။ မရသေးရင် app ပိတ်ပြီး ပြန်ဖွင့်ပါ။
@@ -202,3 +202,9 @@ Magic Mouse touch gesture က experimental ဖြစ်ပြီး Magic Mouse 
 **Minn Khant Thu** · [Website](https://minnkhantthu.up.railway.app/) · [Email](mailto:minnkhantthu.ucsy@gmail.com) · [Buy Me a Coffee](https://buymeacoffee.com/minnkhantthu)
 
 [MIT license](LICENSE) နဲ့ ဖြန့်ထားပြီး [Third-party notices](THIRD_PARTY_NOTICES.md) လည်း ပါပါတယ်။ Source ပြင်ပြီး ပါဝင်ကူညီချင်သူတွေအတွက် [Contributing](CONTRIBUTING.md) မှာ သီးခြားရေးထားပါတယ်။
+
+## Magic Mouse ကြိုသတ်မှတ်ရန်
+
+Mouse မရှိသေးလည်း Magic Mouse စာမျက်နှာမှာ တစ်ချက်/နှစ်ချက်/သုံးချက်ထိ၊ လက်ချောင်းတစ်ချောင်း/နှစ်ချောင်း/သုံးချောင်း၊ ညာခြမ်းထိ၊ swipe၊ pinch၊ drag၊ drag လုပ်ရင်း scroll နဲ့ key တွဲနှိပ်တာတွေကို သတ်မှတ်ထားနိုင်ပါတယ်။ ပြင်၊ ဖျက်၊ Undo နဲ့ app အလိုက်ဆက်တင်တွေ ပါပါတယ်။ Mouse အစစ်နဲ့ စမ်းဖို့ ကျန်ပါတယ်။ [သတ်မှတ်ပုံနှင့် စမ်းရမည့်အချက်များ](Docs/guides/MAGIC_MOUSE.md)။
+
+![Magic Mouse မချိတ်ရသေးချိန် ကြိုသတ်မှတ်ထားနိုင်သော စာမျက်နှာ။ နမူနာဆက်တင်များ ဖြစ်ပါတယ်။](Docs/media/screenshots/my-magic.png)

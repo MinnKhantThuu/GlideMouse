@@ -9,8 +9,11 @@
   const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
   const demos = {
     buttons: ['upper', 'lower', 'hold', 'double', 'wheel', 'horizontal'],
-    touch: ['tap', 'righttap', 'multitap', 'fingers', 'swipe', 'pinch']
+    touch: ['tap', 'righttap', 'multitap', 'triple', 'fingers', 'threefingers', 'oneswipe', 'swipe', 'threeswipe', 'pinch', 'drag', 'dragscroll', 'modifiers', 'resting']
   };
+  const families = { taps: demos.touch.slice(0, 6), movement: demos.touch.slice(6, 10), dragging: demos.touch.slice(10, 12), extras: demos.touch.slice(12) };
+  const poses = {triple: 'multitap', threefingers: 'fingers', oneswipe: 'oneswipe', threeswipe: 'threeswipe', drag: 'drag', dragscroll: 'dragscroll', modifiers: 'modifiers', resting: 'resting'};
+  let family = 'taps';
   let mode = 'buttons', selected = 'upper', paused = reducedMotion.matches, visible = false;
   const language = () => document.documentElement.lang === 'zh-Hans' ? 'zh' : document.documentElement.lang;
   const t = key => window.glideCopy[language() || 'en'][key];
@@ -24,7 +27,7 @@
   }
   function select(name, announce = true) {
     selected = name;
-    stage.dataset.gesture = name;
+    stage.dataset.gesture = name; stage.dataset.pose = poses[name] || name;
     stage.classList.remove('is-running');
     // Restart the illustration's CSS timeline without recording any real input.
     void stage.offsetWidth;
@@ -38,7 +41,10 @@
   function render() {
     root.dataset.mode = mode;
     root.querySelectorAll('[data-gesture-mode]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.gestureMode === mode)));
-    choices.replaceChildren(...demos[mode].map(name => {
+    root.querySelector('[data-touch-families]').hidden = mode !== 'touch';
+    root.querySelectorAll('[data-gesture-family]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.gestureFamily === family)));
+    const items = mode === 'touch' ? families[family] : demos.buttons;
+    choices.replaceChildren(...items.map(name => {
       const button = document.createElement('button');
       button.type = 'button'; button.dataset.gesture = name;
       const title = document.createElement('span'); title.textContent = t(key(name, 'Title'));
@@ -50,8 +56,12 @@
     select(selected, false); updateMotion();
   }
   root.querySelectorAll('[data-gesture-mode]').forEach(button => button.addEventListener('click', () => {
-    mode = button.dataset.gestureMode; selected = demos[mode][0]; render();
+    mode = button.dataset.gestureMode; family = 'taps'; selected = demos[mode][0]; render();
   }));
+  root.querySelectorAll('[data-gesture-family]').forEach(button => button.addEventListener('click', () => {
+    family = button.dataset.gestureFamily; selected = families[family][0]; render();
+  }));
+  window.showMagicMouseGuide = () => { mode = 'touch'; family = 'taps'; selected = 'tap'; render(); };
   motionButton.addEventListener('click', () => { paused = !paused; updateMotion(); });
   root.querySelector('[data-motion-replay]').addEventListener('click', () => { paused = false; select(selected); updateMotion(); });
   reducedMotion.addEventListener('change', event => { paused = event.matches; updateMotion(); });

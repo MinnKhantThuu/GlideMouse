@@ -38,7 +38,7 @@ public struct Trigger: Codable, Hashable, Sendable {
 public enum MouseAction: String, Codable, CaseIterable, Sendable {
     case none, leftClick, rightClick, middleClick, doubleClick, tripleClick, toggleDrag
     case back, forward, zoomIn, zoomOut, quickLook, smartZoom
-    case closeWindow, minimizeWindow, hideApp, cycleWindows, appSwitcher, previousApp
+    case closeWindow, minimizeWindow, hideApp, cycleWindows, appSwitcher, previousApp, cycleAppsForward, cycleAppsBackward
     case missionControl, appExpose, showDesktop, spaceLeft, spaceRight, appLauncher
     case volumeUp, volumeDown, mute, playPause, nextTrack, previousTrack, brightnessUp, brightnessDown
     case shortcut, openApp, openFolder, openURL, lockScreen, screenshot, appleShortcut, shell, canvasPan
@@ -92,8 +92,38 @@ public struct Tuning: Codable, Equatable, Sendable {
     public var rightZone: Double = 0.65
     public var contactArea: Double = 0
     public var restingDelay: Double = 0.7
+    public var touchHoldDelay: Double = 0.4
+    public var swipeSpeed: Double = 0
+    public var tapSlideSpeed: Double = 5
+    public var dragScrollSpeed: Double = 800
+    public var dragScrollReverse = false
+    public var appSwitchDelay: Double = 0.8
+    public var rightZoneFront: Double = 0
     public var dragDistance: Double = 35
     public init() {}
+    private enum CodingKeys: String, CodingKey { case tapDuration, multiTapInterval, tapMovement, swipeDistance, pinchDistance, holdDelay, edgeMargin, rightZone, contactArea, restingDelay, dragDistance, touchHoldDelay, swipeSpeed, tapSlideSpeed, dragScrollSpeed, dragScrollReverse, appSwitchDelay, rightZoneFront }
+    public init(from decoder: Decoder) throws {
+        self.init()
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        tapDuration = try c.decodeIfPresent(Double.self, forKey: .tapDuration) ?? tapDuration
+        multiTapInterval = try c.decodeIfPresent(Double.self, forKey: .multiTapInterval) ?? multiTapInterval
+        tapMovement = try c.decodeIfPresent(Double.self, forKey: .tapMovement) ?? tapMovement
+        swipeDistance = try c.decodeIfPresent(Double.self, forKey: .swipeDistance) ?? swipeDistance
+        pinchDistance = try c.decodeIfPresent(Double.self, forKey: .pinchDistance) ?? pinchDistance
+        holdDelay = try c.decodeIfPresent(Double.self, forKey: .holdDelay) ?? holdDelay
+        edgeMargin = try c.decodeIfPresent(Double.self, forKey: .edgeMargin) ?? edgeMargin
+        rightZone = try c.decodeIfPresent(Double.self, forKey: .rightZone) ?? rightZone
+        contactArea = try c.decodeIfPresent(Double.self, forKey: .contactArea) ?? contactArea
+        restingDelay = try c.decodeIfPresent(Double.self, forKey: .restingDelay) ?? restingDelay
+        dragDistance = try c.decodeIfPresent(Double.self, forKey: .dragDistance) ?? dragDistance
+        touchHoldDelay = try c.decodeIfPresent(Double.self, forKey: .touchHoldDelay) ?? holdDelay
+        swipeSpeed = try c.decodeIfPresent(Double.self, forKey: .swipeSpeed) ?? swipeSpeed
+        tapSlideSpeed = try c.decodeIfPresent(Double.self, forKey: .tapSlideSpeed) ?? tapSlideSpeed
+        dragScrollSpeed = try c.decodeIfPresent(Double.self, forKey: .dragScrollSpeed) ?? dragScrollSpeed
+        dragScrollReverse = try c.decodeIfPresent(Bool.self, forKey: .dragScrollReverse) ?? dragScrollReverse
+        appSwitchDelay = try c.decodeIfPresent(Double.self, forKey: .appSwitchDelay) ?? appSwitchDelay
+        rightZoneFront = try c.decodeIfPresent(Double.self, forKey: .rightZoneFront) ?? rightZoneFront
+    }
 }
 public struct Profile: Identifiable, Codable, Equatable, Sendable {
     public var id: UUID
@@ -130,7 +160,7 @@ public struct Configuration: Codable, Equatable, Sendable {
     public init() {}
     public static func preset(_ kind: String) -> [Mapping] {
         switch kind {
-        case "magic": return [Mapping(trigger: .init(kind: .tap), action: .leftClick), Mapping(trigger: .init(kind: .rightTap), action: .rightClick), Mapping(trigger: .init(kind: .tap, fingers: 2), action: .rightClick), Mapping(trigger: .init(kind: .swipe, fingers: 2, direction: .left), action: .back), Mapping(trigger: .init(kind: .swipe, fingers: 2, direction: .right), action: .forward)]
+        case "magic": return MagicMouseCatalog.defaults
         case "five": return [Mapping(button: 2, action: .middleClick), Mapping(button: 3, action: .back), Mapping(button: 4, action: .forward)]
         default: return [Mapping(button: 2, action: .middleClick)]
         }
@@ -172,8 +202,13 @@ public enum ProfileResolver {
             if let fallback = resolve(trigger: single, bundleID: bundleID, deviceID: deviceID, profiles: profiles) { return fallback }
             if trigger.kind == .rightTap { var generic = trigger; generic.kind = .tap
                 if let r = resolve(trigger: generic, bundleID: bundleID, deviceID: deviceID, profiles: profiles) { return r }
-                generic.clicks = 1; return resolve(trigger: generic, bundleID: bundleID, deviceID: deviceID, profiles: profiles)
+                generic.clicks = 1; if let fallback = resolve(trigger: generic, bundleID: bundleID, deviceID: deviceID, profiles: profiles) { return fallback }
             }
+        }
+        if [.tap, .rightTap, .touchHold].contains(trigger.kind), !trigger.modifiers.isEmpty {
+            var base = trigger; base.modifiers = []
+            if let fallback = resolveGesture(trigger: base, bundleID: bundleID, deviceID: deviceID, profiles: profiles),
+               fallback.paused || !fallback.mapping.enabled || [.leftClick, .rightClick, .middleClick, .doubleClick, .tripleClick, .toggleDrag].contains(fallback.mapping.action) { return fallback }
         }
         return nil
     }

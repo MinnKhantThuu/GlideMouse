@@ -29,37 +29,37 @@
 .gesture-guide[data-mode=touch] .button-mouse{display:none}
 .gesture-guide[data-mode=touch] .touch-mouse,.gesture-guide[data-mode=touch] .finger,.gesture-guide[data-mode=touch] .touch-halo{display:block}
 .gesture-stage .result-pane{display:none}
-.gesture-stage[data-gesture=upper] .desktop-result,.gesture-stage[data-gesture=lower] .desktop-result,.gesture-stage[data-gesture=swipe] .desktop-result{display:block}
-.gesture-stage[data-gesture=hold] .windows-result,.gesture-stage[data-gesture=fingers] .windows-result{display:block}
-.gesture-stage[data-gesture=double] .apps-result{display:block}
-.gesture-stage[data-gesture=wheel] .scroll-result,.gesture-stage[data-gesture=horizontal] .scroll-result{display:block}
-.gesture-stage[data-gesture=tap] .click-result,.gesture-stage[data-gesture=righttap] .click-result,.gesture-stage[data-gesture=multitap] .click-result{display:block}
-.gesture-stage[data-gesture=pinch] .zoom-result{display:block}
-.gesture-stage[data-gesture=righttap] .finger,.gesture-stage[data-gesture=righttap] .touch-halo{transform:translate(38px,0)}
-.gesture-stage[data-gesture=fingers] .finger-extra{display:block}
+.gesture-stage[data-pose=upper] .desktop-result,.gesture-stage[data-pose=lower] .desktop-result,.gesture-stage[data-pose=swipe] .desktop-result{display:block}
+.gesture-stage[data-pose=hold] .windows-result,.gesture-stage[data-pose=fingers] .windows-result{display:block}
+.gesture-stage[data-pose=double] .apps-result{display:block}
+.gesture-stage[data-pose=wheel] .scroll-result,.gesture-stage[data-pose=horizontal] .scroll-result{display:block}
+.gesture-stage[data-pose=tap] .click-result,.gesture-stage[data-pose=righttap] .click-result,.gesture-stage[data-pose=multitap] .click-result{display:block}
+.gesture-stage[data-pose=pinch] .zoom-result{display:block}
+.gesture-stage[data-pose=righttap] .finger,.gesture-stage[data-pose=righttap] .touch-halo{transform:translate(38px,0)}
+.gesture-stage[data-pose=fingers] .finger-extra{display:block}
 .gesture-stage .finger-extra{display:none}
-.gesture-stage[data-gesture=pinch] .finger-extra,.gesture-stage[data-gesture=pinch] .pinch-trace,.gesture-stage[data-gesture=swipe] .finger-extra,.gesture-stage[data-gesture=swipe] .swipe-trace{display:block}
-.gesture-stage[data-gesture=upper] .side-upper,.gesture-stage[data-gesture=double] .side-upper{fill:var(--blue)}
-.gesture-stage[data-gesture=lower] .side-lower,.gesture-stage[data-gesture=hold] .side-lower{fill:var(--blue)}
-.gesture-stage[data-gesture=hold] .held-ring{display:block}
-.gesture-stage[data-gesture=wheel] .wheel-mark,.gesture-stage[data-gesture=horizontal] .wheel-mark,.gesture-stage[data-gesture=horizontal] .key-badge{display:block}
+.gesture-stage[data-pose=pinch] .finger-extra,.gesture-stage[data-pose=pinch] .pinch-trace,.gesture-stage[data-pose=swipe] .finger-extra,.gesture-stage[data-pose=swipe] .swipe-trace{display:block}
+.gesture-stage[data-pose=upper] .side-upper,.gesture-stage[data-pose=double] .side-upper{fill:var(--blue)}
+.gesture-stage[data-pose=lower] .side-lower,.gesture-stage[data-pose=hold] .side-lower{fill:var(--blue)}
+.gesture-stage[data-pose=hold] .held-ring{display:block}
+.gesture-stage[data-pose=wheel] .wheel-mark,.gesture-stage[data-pose=horizontal] .wheel-mark,.gesture-stage[data-pose=horizontal] .key-badge{display:block}
 .gesture-stage .desktop-track{transform-origin:480px 196px}
-.gesture-stage.is-running[data-gesture=upper] .desktop-track,.gesture-stage.is-running[data-gesture=swipe] .desktop-track{animation:desktop-right 5s ease-in-out infinite}
-.gesture-stage.is-running[data-gesture=lower] .desktop-track{animation:desktop-left 5s ease-in-out infinite}
+.gesture-stage.is-running[data-pose=upper] .desktop-track,.gesture-stage.is-running[data-pose=swipe] .desktop-track{animation:desktop-right 5s ease-in-out infinite}
+.gesture-stage.is-running[data-pose=lower] .desktop-track{animation:desktop-left 5s ease-in-out infinite}
 .gesture-stage.is-running .press-signal{animation:press-signal 5s ease-in-out infinite}
 .gesture-stage.is-running .touch-halo{animation:touch-signal 5s ease-in-out infinite;transform-origin:174px 136px}
-.gesture-stage.is-running[data-gesture=hold] .held-ring{stroke-dasharray:126;animation:hold-ring 5s linear infinite}
+.gesture-stage.is-running[data-pose=hold] .held-ring{stroke-dasharray:126;animation:hold-ring 5s linear infinite}
 .gesture-stage.is-running .windows-result .window-tile{animation:window-spread 5s ease-in-out infinite;transform-origin:540px 180px}
 .gesture-stage.is-running .apps-result .app-highlight{animation:app-select 5s ease-in-out infinite}
-.gesture-stage.is-running[data-gesture=wheel] .scroll-lines{animation:scroll-page 5s ease-in-out infinite}
-.gesture-stage.is-running[data-gesture=horizontal] .scroll-lines{animation:scroll-sideways 5s ease-in-out infinite}
+.gesture-stage.is-running[data-pose=wheel] .scroll-lines{animation:scroll-page 5s ease-in-out infinite}
+.gesture-stage.is-running[data-pose=horizontal] .scroll-lines{animation:scroll-sideways 5s ease-in-out infinite}
 .gesture-stage.is-running .wheel-mark{animation:wheel-turn 5s ease-in-out infinite}
 .gesture-stage.is-running .click-result .click-highlight{animation:click-select 5s ease-in-out infinite}
-.gesture-stage.is-running[data-gesture=multitap] .touch-halo{animation:double-touch 5s ease-out infinite}
-.gesture-stage.is-running[data-gesture=pinch] .touch-contact{animation:pinch-contact 5s ease-in-out infinite}
-.gesture-stage.is-running[data-gesture=pinch] .touch-contact.second{animation-name:pinch-second}
+.gesture-stage.is-running[data-pose=multitap] .touch-halo{animation:double-touch 5s ease-out infinite}
+.gesture-stage.is-running[data-pose=pinch] .touch-contact{animation:pinch-contact 5s ease-in-out infinite}
+.gesture-stage.is-running[data-pose=pinch] .touch-contact.second{animation-name:pinch-second}
 .gesture-stage.is-running .zoom-art{animation:zoom-art 5s ease-in-out infinite;transform-origin:545px 190px}
-.gesture-stage.is-running[data-gesture=swipe] .touch-contact{animation:swipe-contact 5s ease-in-out infinite}
+.gesture-stage.is-running[data-pose=swipe] .touch-contact{animation:swipe-contact 5s ease-in-out infinite}
 .gesture-guide[data-paused=true] .gesture-stage *{animation-play-state:paused!important}
 .gesture-visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 @keyframes desktop-right{0%,22%,92%,100%{transform:translateX(0)}42%,78%{transform:translateX(-217px)}}
@@ -80,18 +80,18 @@
 @keyframes swipe-contact{0%,18%,92%,100%{transform:translateX(0)}44%,78%{transform:translateX(36px)}}
 @media(max-width:800px){.gesture-layout{grid-template-columns:1fr;gap:20px}.gesture-choices{grid-template-columns:repeat(2,minmax(0,1fr))}.gesture-stage{min-height:240px}.gesture-caption p{min-height:0}}
 @media(max-width:440px){.gesture-modes{display:flex}.gesture-modes button{flex:1;padding:9px 10px;font-size:13px}.gesture-choices button{padding:10px 12px;min-height:80px}.gesture-choices button span{font-size:13px}.gesture-choices button small{font-size:11px}.gesture-caption{padding:16px}.gesture-caption h3{font-size:18px}.gesture-stage{padding:5px;min-height:210px}.gesture-tools button{font-size:12px}}
-@media(prefers-reduced-motion:reduce){.gesture-choices button{transition:none}.gesture-stage *{animation-duration:5s!important}.gesture-stage[data-gesture=lower] .desktop-track{transform:translateX(-217px)}}
+@media(prefers-reduced-motion:reduce){.gesture-choices button{transition:none}.gesture-stage *{animation-duration:5s!important}.gesture-stage[data-pose=lower] .desktop-track{transform:translateX(-217px)}}
 .gesture-heading+.gesture-note{margin:-10px 0 20px}
 .gesture-stage .side-halo{display:none}
-.gesture-stage[data-gesture=upper] .upper-halo,.gesture-stage[data-gesture=double] .upper-halo,.gesture-stage[data-gesture=lower] .lower-halo{display:block}
+.gesture-stage[data-pose=upper] .upper-halo,.gesture-stage[data-pose=double] .upper-halo,.gesture-stage[data-pose=lower] .lower-halo{display:block}
 .gesture-stage.is-running .side-halo{animation:touch-signal 5s ease-out infinite}
-.gesture-stage.is-running[data-gesture=double] .upper-halo{animation:double-touch 5s ease-out infinite}
-.gesture-stage[data-gesture=righttap] .click-result,.gesture-stage[data-gesture=multitap] .click-result{display:none}
-.gesture-stage[data-gesture=righttap] .context-result,.gesture-stage[data-gesture=multitap] .open-result{display:block}
+.gesture-stage.is-running[data-pose=double] .upper-halo{animation:double-touch 5s ease-out infinite}
+.gesture-stage[data-pose=righttap] .click-result,.gesture-stage[data-pose=multitap] .click-result{display:none}
+.gesture-stage[data-pose=righttap] .context-result,.gesture-stage[data-pose=multitap] .open-result{display:block}
 .gesture-stage.is-running .context-menu,.gesture-stage.is-running .opened-folder{animation:click-select 5s ease-in-out infinite}
 .gesture-guide[data-reduced=true][data-paused=true] .gesture-stage *{animation:none!important}
 .gesture-guide[data-reduced=true][data-paused=true] .desktop-track{transform:translateX(-217px)}
-.gesture-guide[data-reduced=true][data-paused=true] [data-gesture=lower] .desktop-track{transform:translateX(0)}
+.gesture-guide[data-reduced=true][data-paused=true] [data-pose=lower] .desktop-track{transform:translateX(0)}
 .gesture-guide[data-reduced=true][data-paused=true] .window-tile,.gesture-guide[data-reduced=true][data-paused=true] .context-menu,.gesture-guide[data-reduced=true][data-paused=true] .opened-folder,.gesture-guide[data-reduced=true][data-paused=true] .click-highlight{opacity:1;transform:none}
 .gesture-guide[data-reduced=true][data-paused=true] .app-highlight{opacity:1;transform:translateX(60px)}
 .gesture-guide[data-reduced=true][data-paused=true] .zoom-art{transform:scale(1.22)}
@@ -99,3 +99,30 @@
 .gesture-layout>div,.gesture-choices,.gesture-choices button{min-width:0}
 .gesture-choices button span,.gesture-choices button small{max-width:100%;overflow-wrap:anywhere}
 @media(max-width:800px){.gesture-layout{grid-template-columns:minmax(0,1fr)}}
+
+.gesture-families{display:flex;gap:8px;flex-wrap:wrap;margin:-8px 0 22px}.gesture-families[hidden]{display:none}.gesture-families button{border:1px solid var(--line);border-radius:9px;min-height:44px;padding:8px 14px;background:transparent;color:var(--ink);font-size:13px}.gesture-families button[aria-pressed=true]{background:#e7f2fb;border-color:var(--blue);color:#0672d3}
+.gesture-stage .finger-third,.gesture-stage .resting-contact,.gesture-stage .touch-key,.gesture-stage .drag-trace{display:none}
+.gesture-stage[data-gesture=threefingers] .finger-third,.gesture-stage[data-pose=threeswipe] .finger-extra,.gesture-stage[data-pose=threeswipe] .finger-third,.gesture-stage[data-pose=modifiers] .touch-key,.gesture-stage[data-pose=resting] .resting-contact{display:block}
+.gesture-stage[data-pose=oneswipe] .browser-result,.gesture-stage[data-pose=threeswipe] .apps-result,.gesture-stage[data-pose=drag] .drag-result,.gesture-stage[data-pose=dragscroll] .scroll-result,.gesture-stage[data-pose=modifiers] .click-result,.gesture-stage[data-pose=resting] .click-result{display:block}
+.gesture-stage[data-pose=oneswipe] .swipe-trace,.gesture-stage[data-pose=threeswipe] .swipe-trace,.gesture-stage[data-pose=drag] .drag-trace,.gesture-stage[data-pose=dragscroll] .finger-extra{display:block}
+.gesture-stage[data-pose=dragscroll] .touch-halo{opacity:1}
+.gesture-stage.is-running[data-gesture=triple] .touch-halo{animation:triple-touch 5s ease-out infinite}
+.gesture-stage.is-running[data-pose=oneswipe] .touch-contact,.gesture-stage.is-running[data-pose=threeswipe] .touch-contact,.gesture-stage.is-running[data-pose=threeswipe] .finger-third{animation:swipe-contact 5s ease-in-out infinite}
+.gesture-stage.is-running[data-pose=oneswipe] .history-page{animation:history-page 5s ease-in-out infinite}
+.gesture-stage.is-running[data-pose=drag] .touch-contact{animation:drag-contact 5s ease-in-out infinite}.gesture-stage.is-running[data-pose=drag] .drag-file{animation:drag-file 5s ease-in-out infinite}
+.gesture-stage.is-running[data-pose=dragscroll] .second{animation:second-scroll 5s ease-in-out infinite}.gesture-stage.is-running[data-pose=dragscroll] .scroll-lines{animation:scroll-page 5s ease-in-out infinite}
+.gesture-stage.is-running[data-pose=drag] .touch-halo{animation:drag-hold 5s ease-out infinite}
+@keyframes triple-touch{0%,8%,20%,32%,44%,100%{opacity:0}14%,26%,38%{opacity:1}}
+@keyframes drag-contact{0%,18%,92%,100%{transform:translate(0,0)}48%,78%{transform:translate(32px,47px)}}
+@keyframes drag-file{0%,22%,95%,100%{transform:translate(0,0)}48%,78%{transform:translate(98px,45px)}}
+@keyframes drag-hold{0%,8%,22%,92%,100%{opacity:0}15%,30%,78%{opacity:1}}
+@keyframes second-scroll{0%,18%,92%,100%{transform:translateY(0)}48%,78%{transform:translateY(-42px)}}
+@keyframes history-page{0%,22%,95%,100%{opacity:1;transform:translateX(0)}38%{opacity:0;transform:translateX(18px)}48%,78%{opacity:1;transform:translateX(0)}}
+.gesture-guide[data-reduced=true][data-paused=true] .drag-file{transform:translate(98px,45px)}
+@media(max-width:440px){.gesture-families{display:grid;grid-template-columns:1fr 1fr;gap:6px}.gesture-families button{padding:8px;font-size:12px}}
+
+.gesture-stage[data-gesture=triple] .open-result,.gesture-stage[data-gesture=threefingers] .windows-result{display:none}
+.gesture-stage[data-gesture=triple] .text-result,.gesture-stage[data-gesture=threefingers] .showdesktop-result{display:block}
+.gesture-stage.is-running .paragraph-highlight{animation:click-select 5s ease-in-out infinite}.gesture-stage.is-running .departing-window{animation:show-desktop 5s ease-in-out infinite}
+@keyframes show-desktop{0%,22%,95%,100%{opacity:1;transform:translateY(0)}48%,78%{opacity:0;transform:translateY(-28px)}}
+.gesture-guide[data-reduced=true][data-paused=true] .paragraph-highlight{opacity:1}.gesture-guide[data-reduced=true][data-paused=true] .departing-window{opacity:0}

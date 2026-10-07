@@ -70,6 +70,53 @@ import MouseCore
         }
         window.orderOut(nil)
     }
+    /// UI and persistence verification without event taps, hardware probes or injection.
+    static func magicReadiness(to directory: URL) -> Bool {
+        try? FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        let model = AppModel(testing: true, rendering: true)
+        let physical = Mapping(button: 3, action: .spaceLeft)
+        model.configuration.globalDefaults.mappings = [physical]
+        model.preset("magic")
+        var checks: [String: Bool] = [:]
+        checks["previewHasNoInputRuntime"] = !model.hasInputRuntime
+        checks["previewHasNoUpdater"] = !model.updater.configured
+        let cycleEvents = Injection.keyEvents(48, modifiers: [.command, .shift], original: .maskCommand)?.0 ?? []
+        checks["cyclePreservesHeldCommand"] = !cycleEvents.isEmpty && !cycleEvents.contains { $0.type == .flagsChanged && $0.getIntegerValueField(.keyboardEventKeycode) == 55 }
+        checks["cycleBalancesShift"] = cycleEvents.filter { $0.type == .flagsChanged && $0.getIntegerValueField(.keyboardEventKeycode) == 56 }.count == 2
+        let desktopEvents = Injection.keyEvents(124, modifiers: .control, original: [])?.0 ?? []
+        let custom = Injection.keyEvents(49, modifiers: .command, original: .maskAlternate, preservePhysicalModifiers: false)?.0 ?? []
+        checks["customShortcutIgnoresTriggerModifier"] = custom.filter { $0.type == .keyDown || $0.type == .keyUp }.count == 2 && custom.filter { $0.type == .keyDown || $0.type == .keyUp }.allSatisfy { $0.flags.contains(.maskCommand) && !$0.flags.contains(.maskAlternate) }
+        checks["customShortcutNeverReleasesPhysicalOption"] = !custom.contains { $0.type == .flagsChanged && $0.getIntegerValueField(.keyboardEventKeycode) == 58 }
+        checks["desktopArrowIdentity"] = desktopEvents.filter { $0.type == .keyDown || $0.type == .keyUp }.allSatisfy { $0.flags.contains([.maskControl, .maskSecondaryFn, .maskNumericPad]) && !$0.flags.contains(.maskCommand) }
+        checks["physicalPreserved"] = model.configuration.globalDefaults.mappings.first == physical
+        checks["presetSaved"] = model.configuration.globalDefaults.mappings.count == MagicMouseCatalog.defaults.count + 1 && model.errorMessage == nil
+        checks["presetDoesNotEnableEngine"] = !model.configuration.engineEnabled && !model.configuration.touchEnabled
+        let app = Profile(name: "Sample editor", bundleID: "sample.editor")
+        model.update { $0.profiles.append(app) }; model.selectedProfileID = app.id
+        let mapping = Mapping(trigger: .init(kind: .tap, fingers: 2, clicks: 3, modifiers: .command), action: .shortcut)
+        model.saveMapping(mapping)
+        checks["saveAppOverride"] = model.effectiveProfile.mappings == [mapping] && model.configuration.globalDefaults.mappings.first == physical
+        model.removeMapping(mapping.id); checks["deleteAppOverride"] = model.effectiveProfile.mappings.isEmpty
+        model.undo(); checks["undoDelete"] = model.effectiveProfile.mappings == [mapping]
+        model.selectedProfileID = nil
+        let window = NSWindow(contentRect: .init(x: 0, y: 0, width: 1040, height: 780), styleMask: [.titled, .closable], backing: .buffered, defer: false)
+        NSApplication.shared.setActivationPolicy(.accessory)
+        for language in AppLanguage.allCases {
+            model.configuration.language = language
+            checks[language.rawValue + ".localized"] = model.text("Choose a gesture") != "Choose a gesture" || language == .en
+            for width in [820, 1040] { for appearance in [ColorScheme.light, .dark] {
+                let size = NSSize(width: width, height: width == 820 ? 580 : 780)
+                let view = NSHostingView(rootView: SettingsRoot(model: model, initialPage: .magic).preferredColorScheme(appearance))
+                view.sizingOptions = []; window.contentView = view; window.setContentSize(size); view.setFrameSize(size); window.orderFront(nil)
+                RunLoop.current.run(until: Date().addingTimeInterval(0.2)); view.layoutSubtreeIfNeeded(); window.display()
+                save(view, directory.appendingPathComponent("\(language.rawValue)-magic-\(width)-\(appearance == .light ? "light" : "dark").png"))
+            } }
+        }
+        window.orderOut(nil)
+        let passed = checks.values.allSatisfy { $0 }
+        if let data = try? JSONSerialization.data(withJSONObject: ["passed": passed, "checks": checks, "inputRuntimeCreated": model.hasInputRuntime], options: [.prettyPrinted, .sortedKeys]) { try? data.write(to: directory.appendingPathComponent("native-ui-checks.json")) }
+        return passed
+    }
     static func render(to directory: URL) {
         try? FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
         let model = AppModel(testing: true, rendering: true)

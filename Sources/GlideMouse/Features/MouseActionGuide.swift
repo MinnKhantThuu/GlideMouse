@@ -4,13 +4,14 @@ import WebKit
 /// A local instructional page: no real mouse capture, injected input or network.
 struct MouseActionGuide: View {
     @ObservedObject var model: AppModel
+    var initialMode = "buttons"
     @Environment(\.dismiss) private var dismiss
     @Environment(\.colorScheme) private var colorScheme
     var body: some View {
         MouseActionGuideContent(language: model.configuration.language.resourceIdentifier,
                                dark: colorScheme == .dark,
                                title: model.text("How mouse actions work"),
-                               done: model.text("Done"), close: { dismiss() })
+                               done: model.text("Done"), initialMode: initialMode, close: { dismiss() })
     }
 }
 
@@ -45,6 +46,7 @@ private struct MouseActionGuideContent: View {
     var dark: Bool?
     var title: String
     var done: String
+    var initialMode = "buttons"
     var close: () -> Void
     @Environment(\.colorScheme) private var colorScheme
     var body: some View {
@@ -55,7 +57,7 @@ private struct MouseActionGuideContent: View {
                 Button(done, action: close).keyboardShortcut(.cancelAction)
             }.padding(18)
             Divider()
-            OfflineMouseGuide(language: language, dark: dark ?? (colorScheme == .dark))
+            OfflineMouseGuide(language: language, dark: dark ?? (colorScheme == .dark), initialMode: initialMode)
         }.frame(minWidth: 740, idealWidth: 900, minHeight: 570, idealHeight: 690)
     }
 }
@@ -63,7 +65,8 @@ private struct MouseActionGuideContent: View {
 private struct OfflineMouseGuide: NSViewRepresentable {
     var language: String
     var dark: Bool
-    func makeCoordinator() -> Coordinator { Coordinator(language: language, dark: dark) }
+    var initialMode: String
+    func makeCoordinator() -> Coordinator { Coordinator(language: language, dark: dark, initialMode: initialMode) }
     func makeNSView(context: Context) -> WKWebView {
         let configuration = WKWebViewConfiguration()
         // The guide has no account, cookies, network requests or persistent state.
@@ -85,11 +88,12 @@ private struct OfflineMouseGuide: NSViewRepresentable {
     final class Coordinator: NSObject, WKNavigationDelegate {
         var language: String
         var dark: Bool
+        let initialMode: String
         var folder: URL?
         private var hasLoaded = false
         private var appliedLanguage: String?
         private var appliedDark: Bool?
-        init(language: String, dark: Bool) { self.language = language; self.dark = dark }
+        init(language: String, dark: Bool, initialMode: String) { self.language = language; self.dark = dark; self.initialMode = initialMode }
         func apply(to view: WKWebView) {
             guard hasLoaded, language != appliedLanguage || dark != appliedDark else { return }
             guard let encoded = try? JSONSerialization.data(withJSONObject: [language, dark ? "dark" : "light"]),
@@ -103,6 +107,7 @@ private struct OfflineMouseGuide: NSViewRepresentable {
             appliedLanguage = nil
             appliedDark = nil
             apply(to: webView)
+            if initialMode == "touch" { webView.evaluateJavaScript("window.showMagicMouseGuide && window.showMagicMouseGuide()", completionHandler: nil) }
         }
         func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction,
                      decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {

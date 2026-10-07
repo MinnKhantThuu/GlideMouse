@@ -5,6 +5,13 @@ import MouseCore
 
 @main enum GlideMouseLauncher {
     @MainActor static func main() {
+        if let i = CommandLine.arguments.firstIndex(of: "--render-magic"), CommandLine.arguments.count > i + 1 {
+            exit(UIHarness.magicReadiness(to: URL(fileURLWithPath: CommandLine.arguments[i + 1])) ? 0 : 1)
+        }
+        if CommandLine.arguments.contains("--magic-preview") || Bundle.main.object(forInfoDictionaryKey: "GMMagicPreview") as? Bool == true {
+            NSApplication.shared.setActivationPolicy(.regular)
+            MagicMouseSettingsPreview.main(); return
+        }
         if CommandLine.arguments.contains("--guide-preview") || Bundle.main.object(forInfoDictionaryKey: "GMGuidePreview") as? Bool == true {
             NSApplication.shared.setActivationPolicy(.regular)
             MouseActionGuidePreview.main()
@@ -167,5 +174,18 @@ private struct StartupMenuLabel: View {
                 try? await Task.sleep(for: .milliseconds(300))
                 if !NSApplication.shared.windows.contains(where: { $0.title == "GlideMouse" && $0.isVisible }) { openWindow(id: "settings") }
             }
+    }
+}
+
+struct MagicMouseSettingsPreview: App {
+    @StateObject private var model = AppModel(testing: true, rendering: true)
+    var body: some Scene {
+        WindowGroup("GlideMouse — Magic Mouse preview") {
+            SettingsRoot(model: model, initialPage: .magic).frame(minWidth: 820, minHeight: 580)
+                .onAppear {
+                    model.configuration.language = AppLanguage(rawValue: Bundle.main.object(forInfoDictionaryKey: "GMMagicPreviewLanguage") as? String ?? "en") ?? .en
+                    NSApplication.shared.activate(ignoringOtherApps: true)
+                }
+        }.defaultSize(width: 1040, height: 780)
     }
 }

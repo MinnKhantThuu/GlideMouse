@@ -32,26 +32,31 @@ import MouseCore
     @Published var dirtyRecovery = false
     private let registry = DeviceRegistry()
     private let executor = ActionExecutor()
-    let updater = UpdateController()
+    let updater: UpdateController
     private let store: ConfigurationStore
     private var runtime: InputRuntime?
+    var hasInputRuntime: Bool { runtime != nil }
     private var observations: [NSObjectProtocol] = []
     private var permissionTimer: Timer?
     private var history: [Configuration] = []
     private var lastFocus: String?
     private var feedbackPanel: NSPanel?
     init(testing: Bool = false, rendering: Bool = false) {
-        isTesting = testing
+        isTesting = testing || rendering
+        updater = UpdateController(enabled: !isTesting)
         let support = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0].appendingPathComponent("GlideMouse", isDirectory: true)
-        store = ConfigurationStore(url: testing ? FileManager.default.temporaryDirectory.appendingPathComponent("GlideMouse-test-" + UUID().uuidString).appendingPathComponent("settings.json") : support.appendingPathComponent("settings.json"))
+        store = ConfigurationStore(url: (testing || rendering) ? FileManager.default.temporaryDirectory.appendingPathComponent("GlideMouse-test-" + UUID().uuidString).appendingPathComponent("settings.json") : support.appendingPathComponent("settings.json"))
         do { configuration = try store.load(); dirtyRecovery = store.recoveredBackup }
         catch { errorMessage = localizedError(error); dirtyRecovery = true }
+        // Rendering must never create an input thread, probe private touch devices,
+        // register event taps, start updates, or read the user's settings.
+        if rendering { return }
         executor.report = { [weak self] text in self?.lastMessage = text }
         runtime = InputRuntime(report: { [weak self] report in Task { @MainActor in self?.runtimeReport = report } }, action: { [weak self] request in Task { @MainActor in
             guard let self, self.runtime?.isCurrent(request.epoch) == true, self.configuration.engineEnabled else { return }
             if !request.alreadyInjected { self.runtime?.recordDispatch(recognizedAt: request.recognizedAt) }
-            self.executor.execute(request.mapping, alreadyInjected: request.alreadyInjected)
-            self.runtime?.setDragging(self.executor.dragging)
+            self.executor.execute(request.mapping, alreadyInjected: request.alreadyInjected, switchDelay: self.configuration.tuning.appSwitchDelay)
+            self.runtime?.setDragging(self.executor.dragging, epoch: request.epoch)
             if self.configuration.showFeedback { self.showFeedback(self.text("action." + request.mapping.action.rawValue)) }
         } }, cancellation: { [weak self] in Task { @MainActor in self?.executor.cancel() } }, pause: { [weak self] in Task { @MainActor in self?.update { $0.engineEnabled = false } } }, drag: { [weak self] point, release in Task { @MainActor in if release { self?.executor.releaseDrag() } else { self?.executor.moveDrag(point) } } })
         if !testing { updater.start(automaticChecks: configuration.automaticUpdates) }
@@ -132,7 +137,7 @@ import MouseCore
             try store.save(next)
             history.append(configuration); if history.count > 20 { history.removeFirst() }
             configuration = next; dirtyRecovery = false; errorMessage = nil
-            updater.setAutomaticChecks(next.automaticUpdates)
+            if !isTesting { updater.setAutomaticChecks(next.automaticUpdates) }
             apply(); lastMessage = text("Saved")
         } catch { errorMessage = localizedError(error) }
     }

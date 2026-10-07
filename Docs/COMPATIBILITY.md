@@ -4,15 +4,15 @@ GlideMouse targets **macOS 14 or later** on **Apple Silicon and Intel**. The pac
 
 | Area | Evidence and current limit |
 |---|---|
-| Core configuration, button recognition, scrolling and app inheritance | Automated unit and replay tests; 78 tests pass for 0.3.16 |
+| Core configuration, button recognition, scrolling and app inheritance | Automated unit and replay tests; 94 tests pass for 0.3.18 |
 | Standard wheel and side buttons | Native event-tap integration checks; a user confirmed desktop left/right switching without the earlier application delay on a Bluetooth mouse |
 | Primary-button double click and hold | Unit and synthetic native integration checks preserve ordinary clicking/dragging; wider physical hardware acceptance remains necessary |
 | Button identification and picture labels | Capture identifies a number; the user confirms its physical position. HID metadata cannot infer upper/lower position reliably |
-| English, Myanmar and Simplified Chinese | 585 catalog entries validated in all three languages, compiled resources checked, native UI snapshots reviewed |
+| English, Myanmar and Simplified Chinese | 639 catalog entries validated in all three languages, compiled resources checked, native UI snapshots reviewed |
 | Apple Silicon | Local build/runtime checks available |
 | Intel and older supported macOS versions | Universal compiler build; physical runtime matrix still pending |
-| Magic Mouse touch gestures | Experimental private-framework adapter; real Magic Mouse hardware has not been tested |
-| Built-in trackpad | Excluded from touch interception; continuous native scroll is preserved |
+| Magic Mouse touch gestures | Offline-editable full touch catalog, drag/drag-scroll, modifier clicks, app cycling and synthetic replay checks; experimental private-framework adapter; [hardware checklist](guides/MAGIC_MOUSE.md) remains pending |
+| Built-in trackpad | Excluded from the raw-touch adapter; native scroll passes through unless a configured touch gesture currently owns the continuous stream. Mixed-device attribution still needs physical testing |
 | Per-device persisted overrides | Resolver exists; live button/wheel adapter lacks reliable device attribution, so these overrides are unavailable |
 | Continuous desktop swipes, magnify and Smart Zoom | Unavailable; discrete shortcut actions are not equivalent to native continuous gestures |
 | Proprietary extra buttons | Standard reported events only; no vendor-specific driver adapter |

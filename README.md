@@ -6,7 +6,7 @@ Make your mouse buttons useful and your scrolling comfortable on macOS. GlideMou
 
 **[Website](https://minnkhantthuu.github.io/GlideMouse/) · [မြန်မာလမ်းညွှန်](README_MM.md) · [Watch the tutorials](https://minnkhantthuu.github.io/GlideMouse/tutorials.html) · [简体中文](Docs/USER_GUIDE_ZH.md)**
 
-**[Download GlideMouse for macOS — DMG, v0.3.17](https://github.com/MinnKhantThuu/GlideMouse/releases/download/v0.3.17/GlideMouse-0.3.17-developer.dmg)**
+**[Download GlideMouse for macOS — DMG, v0.3.18](https://github.com/MinnKhantThuu/GlideMouse/releases/download/v0.3.18/GlideMouse-0.3.18-developer.dmg)**
 
 Download → drag GlideMouse to Applications → open and allow permissions → set your mouse actions. No Xcode or build commands needed.
 
@@ -29,7 +29,7 @@ Core mouse control works locally. The app does not keep a log of what you type. 
 
 **Requirements:** macOS 14 or later; Apple Silicon or Intel. A standard USB/Bluetooth mouse with a wheel or side buttons is recommended. The universal build contains both architectures; that does not mean every Mac, OS version or mouse has been physically tested.
 
-1. **[Download the DMG](https://github.com/MinnKhantThuu/GlideMouse/releases/download/v0.3.17/GlideMouse-0.3.17-developer.dmg)**.
+1. **[Download the DMG](https://github.com/MinnKhantThuu/GlideMouse/releases/download/v0.3.18/GlideMouse-0.3.18-developer.dmg)**.
 2. Quit an older GlideMouse copy. Double-click the downloaded DMG, then drag **GlideMouse** onto **Applications** in the window.
 3. Open GlideMouse from Applications and complete **Mouse setup**. You can eject the GlideMouse disk after copying the app.
 4. Allow the two permissions below, return to the app and click **Refresh**. Reopen GlideMouse if macOS has not applied the permissions yet.
@@ -203,3 +203,9 @@ Magic Mouse touch gestures remain experimental and have not been validated on re
 **Minn Khant Thu** · [Website](https://minnkhantthu.up.railway.app/) · [Email](mailto:minnkhantthu.ucsy@gmail.com) · [Buy Me a Coffee](https://buymeacoffee.com/minnkhantthu)
 
 GlideMouse is [MIT licensed](LICENSE). [Third-party notices](THIRD_PARTY_NOTICES.md) are included. For development and building from source, see [Contributing](CONTRIBUTING.md).
+
+## Magic Mouse setup
+
+Prepare gestures before connecting a mouse: one-/two-/three-finger single, double and triple taps; right-side taps; swipes; pinch/spread; tap-and-drag; scroll while dragging; resting fingers; modifier keys and app-specific actions. The new Magic Mouse page includes editable suggestions, delete/Undo and explained tuning. Touch hardware validation is pending. [Setup and hardware checklist](Docs/guides/MAGIC_MOUSE.md).
+
+![Magic Mouse settings with sample mappings; no mouse connected.](Docs/media/screenshots/en-magic.png)

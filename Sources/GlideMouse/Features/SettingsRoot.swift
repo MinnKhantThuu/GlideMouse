@@ -3,10 +3,10 @@ import AppKit
 import MouseCore
 
 enum SettingsPage: String, CaseIterable, Identifiable {
-    case welcome = "Welcome", devices = "Devices", mappings = "Gestures & buttons", scrolling = "Scrolling", profiles = "Profiles", tuning = "Tuning", general = "General"
+    case magic = "Magic Mouse", welcome = "Welcome", devices = "Devices", mappings = "Gestures & buttons", scrolling = "Scrolling", profiles = "Profiles", tuning = "Tuning", general = "General"
     var id: String { rawValue }
     var symbol: String {
-        switch self { case .welcome: "sparkles"; case .devices: "computermouse"; case .mappings: "hand.tap"; case .scrolling: "arrow.up.arrow.down"; case .profiles: "square.stack"; case .tuning: "slider.horizontal.3"; case .general: "gearshape" }
+        switch self { case .magic: "hand.draw"; case .welcome: "sparkles"; case .devices: "computermouse"; case .mappings: "hand.tap"; case .scrolling: "arrow.up.arrow.down"; case .profiles: "square.stack"; case .tuning: "slider.horizontal.3"; case .general: "gearshape" }
     }
 }
 struct SettingsRoot: View {
@@ -30,7 +30,7 @@ struct SettingsRoot: View {
         HStack(spacing: 0) {
             VStack(alignment: .leading, spacing: 7) {
                 Text("GlideMouse").font(.title3.bold()).padding(.horizontal, 11).padding(.vertical, 18)
-                ForEach([SettingsPage.mappings, .scrolling, .general]) { navigation($0) }
+                ForEach([SettingsPage.mappings, .magic, .scrolling, .general]) { navigation($0) }
                 Divider().padding(.vertical, 10)
                 Button { withAnimation { advancedExpanded.toggle() } } label: {
                     HStack { Label(model.text("Advanced"), systemImage: "slider.horizontal.3"); Spacer(); Image(systemName: advancedExpanded ? "chevron.down" : "chevron.right") }.padding(11).contentShape(Rectangle())
@@ -48,13 +48,14 @@ struct SettingsRoot: View {
                     Toggle(model.text("Enable"), isOn: Binding(get: { model.configuration.engineEnabled }, set: { v in model.update { $0.engineEnabled = v } })).toggleStyle(.switch).modifier(PointingHandCursor())
                 }.padding(22)
                 Divider()
-                if [.mappings, .scrolling, .profiles].contains(page) {
+                if [.mappings, .magic, .scrolling, .profiles].contains(page) {
                     AppScopeBar(model: model, scrolling: page == .scrolling).padding(.horizontal, 22).padding(.vertical, 10)
                     Divider()
                 }
                 ScrollView {
                     VStack(alignment: .leading, spacing: page == .mappings ? 12 : 22) {
                         switch page {
+                        case .magic: MagicMousePage(model: model)
                         case .welcome: WelcomePage(model: model)
                         case .devices: DevicesPage(model: model)
                         case .mappings: SimpleMousePage(model: model)

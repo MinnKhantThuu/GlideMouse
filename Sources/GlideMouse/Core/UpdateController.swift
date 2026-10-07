@@ -8,8 +8,8 @@ import Sparkle
     @Published private(set) var canCheck = false
     @Published private(set) var automaticallyDownloads = false
     var configured: Bool { controller != nil }
-    init() {
-        guard let feed = Bundle.main.object(forInfoDictionaryKey: "SUFeedURL") as? String,
+    init(enabled: Bool = true) {
+        guard enabled, let feed = Bundle.main.object(forInfoDictionaryKey: "SUFeedURL") as? String,
               let url = URL(string: feed), url.scheme == "https", url.host != nil,
               let key = Bundle.main.object(forInfoDictionaryKey: "SUPublicEDKey") as? String,
               Data(base64Encoded: key)?.count == 32 else { return }

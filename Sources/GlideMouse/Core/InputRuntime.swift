@@ -62,6 +62,10 @@ final class InputRuntime: @unchecked Sendable {
     private var allowMagic = false
     private var touchRunning = false
     private var touchHeld = false
+    private var touchDrag = TouchDragSession()
+    private var touchFrameOffset: Double?
+    private var lastTouchReceived: Double = 0
+    private var touchDeviceID: String?
     private var nativeScrollUntil: Double = 0
     private var droppedLast: UInt64 = 0
     private var dragPointer = false
@@ -124,7 +128,7 @@ final class InputRuntime: @unchecked Sendable {
         }
     }
     func focusChanged(_ id: String?) { enqueue { [weak self] in guard let self else { return }; self.reset(); self.bundleID = id } }
-    func setDragging(_ active: Bool) { enqueue { [weak self] in self?.dragPointer = active } }
+    func setDragging(_ active: Bool, epoch expected: Int? = nil) { enqueue { [weak self] in guard let self, expected == nil || expected == self.epoch else { return }; self.dragPointer = active } }
     func setCaptureArea(_ rect: CGRect?, owner: UUID? = nil) {
         enqueue { [weak self] in
             guard let self else { return }
@@ -161,7 +165,7 @@ final class InputRuntime: @unchecked Sendable {
             if let up = CGEvent(mouseEventSource: nil, mouseType: button == 0 ? .leftMouseUp : .rightMouseUp, mouseCursorPosition: Injection.pointer(), mouseButton: button == 0 ? .left : .right) { Injection.post(up) }
         }
         nativePrimaryDrags.removeAll()
-        buttons.cancel(); captureButtons.removeAll(); gestures.cancel(); taps.cancel(); touchHeld = false; panOrigin = nil; dragPointer = false
+        buttons.cancel(); captureButtons.removeAll(); gestures.cancel(); taps.cancel(); touchHeld = false; if let end = touchDrag.cancel() { Injection.scroll(end) }; touchFrameOffset = nil; panOrigin = nil; dragPointer = false
         if let end = scrolling.cancel() { Injection.scroll(end) }
         cancellationHandler()
     }
@@ -170,6 +174,7 @@ final class InputRuntime: @unchecked Sendable {
         guard configuration.engineEnabled, configuration.touchEnabled, allowMagic, AXIsProcessTrusted(), CGPreflightListenEventAccess() else { report.touchStatus = allowMagic ? "Experimental adapter disabled" : "No Magic Mouse connected"; return }
         let probe = TouchProbe.run(); report.touchDevices = probe.devices
         guard let candidate = probe.devices.first(where: { $0.candidate }), gm_touch_start(Int32(candidate.id)) else { report.touchStatus = String(cString: gm_touch_status()); return }
+        touchDeviceID = "mt:\(candidate.id)"
         touchRunning = true; report.touchStatus = String(cString: gm_touch_status())
     }
     private func startTap(listenOnly: Bool = false) {
@@ -193,7 +198,7 @@ final class InputRuntime: @unchecked Sendable {
         tap = nil; tapSource = nil; report.active = false
     }
     private func bindings(deviceID: String? = nil) -> [Trigger] {
-        let profiles = ProfileResolver.eligible(bundleID: bundleID, deviceID: nil, profiles: configuration.profiles + [configuration.globalDefaults])
+        let profiles = ProfileResolver.eligible(bundleID: bundleID, deviceID: deviceID, profiles: configuration.profiles + [configuration.globalDefaults])
         var seen = Set<Trigger>(), result: [Trigger] = []
         for p in profiles {
             if p.paused { break }
@@ -202,7 +207,7 @@ final class InputRuntime: @unchecked Sendable {
         return result
     }
     private func emit(_ trigger: Trigger, deviceID: String? = nil, touchHold: Bool = false) {
-        guard let r = ProfileResolver.resolveGesture(trigger: trigger, bundleID: bundleID, deviceID: nil, profiles: configuration.profiles + [configuration.globalDefaults]), r.mapping.enabled, !r.paused else { finishPrimary(trigger, replay: true); return }
+        guard let r = ProfileResolver.resolveGesture(trigger: trigger, bundleID: bundleID, deviceID: deviceID, profiles: configuration.profiles + [configuration.globalDefaults]), r.mapping.enabled, !r.paused else { finishPrimary(trigger, replay: true); return }
         finishPrimary(trigger, replay: false)
         if r.mapping.action == .canvasPan && trigger.kind == .buttonDrag { panOrigin = Injection.pointer(); return }
         record("recognized", detail: trigger.kind.rawValue, action: r.mapping.action.rawValue, source: r.source)
@@ -210,7 +215,8 @@ final class InputRuntime: @unchecked Sendable {
         let recognizedAt = ProcessInfo.processInfo.systemUptime
         // Space switching must not wait behind SwiftUI layout, popovers or sheets.
         // Hold/double-click recognition still runs in ButtonEngine before this point.
-        let injected = [.spaceLeft, .spaceRight].contains(effective.action) && fastDesktopAction(effective.action)
+        let touchWithModifiers = MagicMouseCatalog.touchKinds.contains(trigger.kind) && !Modifiers(cgFlags: CGEventSource.flagsState(.combinedSessionState)).isEmpty
+        let injected = !touchWithModifiers && [.spaceLeft, .spaceRight].contains(effective.action) && fastDesktopAction(effective.action)
         if injected {
             report.fastDesktopActions += 1
             report.actionDispatchMS.append((ProcessInfo.processInfo.systemUptime - recognizedAt) * 1000)
@@ -244,7 +250,7 @@ final class InputRuntime: @unchecked Sendable {
             return false
         }
         report.events += 1
-        if type == .leftMouseDown || type == .rightMouseDown { gestures.cancelForNativeScroll(); taps.cancel(); if dragPointer { dragHandler(event.location, true); dragPointer = false } }
+        if type == .leftMouseDown || type == .rightMouseDown { if touchHeld { resetTouch() }; gestures.cancelForNativeScroll(); taps.cancel(); if dragPointer { dragHandler(event.location, true); dragPointer = false } }
         let isDown = [.leftMouseDown, .rightMouseDown, .otherMouseDown].contains(type)
         let isUp = [.leftMouseUp, .rightMouseUp, .otherMouseUp].contains(type)
         let button = [.leftMouseDown, .leftMouseUp, .leftMouseDragged].contains(type) ? 0 : [.rightMouseDown, .rightMouseUp, .rightMouseDragged].contains(type) ? 1 : Int(event.getIntegerValueField(.mouseEventButtonNumber))
@@ -299,7 +305,17 @@ final class InputRuntime: @unchecked Sendable {
             return false
         case .scrollWheel:
             let continuous = event.getIntegerValueField(.scrollWheelEventIsContinuous) != 0
-            if continuous { if let end = scrolling.cancel() { Injection.scroll(end) }; nativeScrollUntil = start + 0.12; if !touchHeld { gestures.cancelForNativeScroll(); taps.cancel() } }
+            if continuous {
+                if let end = scrolling.cancel() { Injection.scroll(end) }
+                if touchRunning { taps.cancel(); drainTouchFrames(at: start, discardTaps: true) }
+                if touchHeld { return true } // Raw second-finger scrolling owns this stream.
+                let horizontal = abs(event.getDoubleValueField(.scrollWheelEventPointDeltaAxis2)) > abs(event.getDoubleValueField(.scrollWheelEventPointDeltaAxis1)) * 1.5
+                let ownsSwipe = touchRunning && gestures.activeFingers > 0 && (gestures.activeFingers > 1 || horizontal) && bindings(deviceID: touchDeviceID).contains { $0.kind == .swipe && $0.fingers == gestures.activeFingers && $0.modifiers == mods }
+                if ownsSwipe { return true }
+                nativeScrollUntil = start + 0.12
+                if touchRunning { gestures.rejectTapForNativeScroll() } else { gestures.cancelForNativeScroll() }
+                taps.cancel()
+            }
             let x = event.getDoubleValueField(.scrollWheelEventDeltaAxis2), y = event.getDoubleValueField(.scrollWheelEventDeltaAxis1)
             let r = buttons.wheel(x: x, y: y, modifiers: mods, bindings: bs); r.triggers.forEach { emit($0) }; if r.suppress { return true }
             let settings = ProfileResolver.scroll(bundleID: bundleID, deviceID: nil, configuration: configuration)
@@ -311,6 +327,67 @@ final class InputRuntime: @unchecked Sendable {
         }
     }
     private func emitZoom(_ up: Bool) { actionHandler(.init(mapping: Mapping(trigger: .init(), action: up ? .zoomIn : .zoomOut), source: "Scrolling", epoch: epoch)) }
+    private func resetTouch() {
+        // Invalidate a queued drag start before releasing. A fast lift must never
+        // let a late main-actor task leave a synthetic mouse-down behind.
+        epoch += 1; lock.lock(); currentEpoch = epoch; lock.unlock()
+        gestures.cancel(); gestures.cancelForNativeScroll(); taps.cancel(); if let end = touchDrag.cancel() { Injection.scroll(end) }; touchFrameOffset = nil
+        if touchHeld || dragPointer { cancellationHandler() }
+        touchHeld = false; dragPointer = false
+    }
+    private func drainTouchFrames(at time: Double, discardTaps: Bool = false) {
+    var frame = GMFrame(); var frames: [GMFrame] = []
+    while touchRunning && frames.count < 128 && gm_touch_next(&frame) { frames.append(frame) }
+    let drops = gm_touch_dropped()
+    if drops != droppedLast {
+        resetTouch(); droppedLast = drops
+    }
+    if let last = frames.last {
+        lastTouchReceived = time
+        if touchFrameOffset == nil { touchFrameOffset = time - last.timestamp }
+    } else if touchHeld && time - lastTouchReceived > 0.5 { resetTouch() }
+    for frame in frames {
+        if frame.overflow || !(0...16).contains(Int(frame.count)) || !frame.timestamp.isFinite { resetTouch(); continue }
+        let pts: [TouchPoint] = withUnsafePointer(to: frame.contacts) { raw in raw.withMemoryRebound(to: GMContact.self, capacity: 16) { ptr in (0..<Int(frame.count)).map { .init(id: Int(ptr[$0].identity), x: ptr[$0].x, y: ptr[$0].y, area: ptr[$0].area) } } }
+        report.contacts = pts; let deviceID = "mt:\(frame.deviceIndex)"
+        let timestamp = frame.timestamp + (touchFrameOffset ?? (time - frame.timestamp))
+        guard timestamp.isFinite, timestamp <= time + 0.1 else { resetTouch(); continue }
+        let input = TouchFrame(timestamp: timestamp, deviceID: deviceID, contacts: pts, modifiers: Modifiers(cgFlags: CGEventSource.flagsState(.combinedSessionState)))
+        if touchHeld {
+            let update = touchDrag.process(input, tuning: configuration.tuning)
+            if let scroll = update.scroll { Injection.scroll(scroll) }
+            if update.release { resetTouch() }
+            continue
+        }
+        if time < nativeScrollUntil { gestures.rejectTapForNativeScroll() }
+        let output = gestures.process(input)
+        for g in output {
+            if g.trigger.kind == .touchHold {
+                taps.cancel()
+                let resolved = ProfileResolver.resolveGesture(trigger: g.trigger, bundleID: bundleID, deviceID: deviceID, profiles: configuration.profiles + [configuration.globalDefaults])
+                if let r = resolved, !r.paused, r.mapping.enabled, r.mapping.action == .toggleDrag {
+                    touchHeld = true
+                    touchDrag.begin(owners: gestures.holdContacts, device: deviceID, time: timestamp, resting: Set(pts.map(\.id)).subtracting(gestures.holdContacts))
+                }
+                emit(g.trigger, deviceID: deviceID, touchHold: touchHeld); continue
+            }
+            if [.tap,.rightTap].contains(g.trigger.kind) {
+                if discardTaps { gestures.rejectTapForNativeScroll(); taps.cancel(); continue }
+                let profiles = configuration.profiles + [configuration.globalDefaults]
+                let resolved = ProfileResolver.resolveGesture(trigger: g.trigger, bundleID: bundleID, deviceID: deviceID, profiles: profiles)
+                // Native click counts handle double/triple clicks immediately.
+                // Delay only when a higher tap really selects a different action.
+                let higher = bindings(deviceID: deviceID).contains { trigger in
+                    guard [.tap, .rightTap].contains(trigger.kind), trigger.fingers == g.trigger.fingers, trigger.modifiers == g.trigger.modifiers, trigger.clicks > g.trigger.clicks else { return false }
+                    var next = g.trigger; next.clicks = trigger.clicks
+                    let later = ProfileResolver.resolveGesture(trigger: next, bundleID: bundleID, deviceID: deviceID, profiles: profiles)
+                    return later?.mapping.action != resolved?.mapping.action || later?.mapping.options != resolved?.mapping.options
+                }
+                taps.submit(g, hasHigherTap: higher, interval: configuration.tuning.multiTapInterval).forEach { emit($0.trigger, deviceID: $0.deviceID) }
+            } else { taps.cancel(); emit(g.trigger, deviceID: deviceID) }
+        }
+    }
+    }
     private func tick() {
         let time = ProcessInfo.processInfo.systemUptime
         if time - lastPermissionCheck > 2 {
@@ -320,31 +397,8 @@ final class InputRuntime: @unchecked Sendable {
         if configuration.engineEnabled && report.active {
             let bs = bindings(); buttons.advance(time: time, bindings: bs).forEach { emit($0) }
             if let s = scrolling.tick(time) { Injection.scroll(s) }
-            var frame = GMFrame(); var processed = 0
-            let drops = gm_touch_dropped()
-            if drops != droppedLast { gestures.cancel(); taps.cancel(); if touchHeld { cancellationHandler(); touchHeld = false }; droppedLast = drops }
-            while touchRunning && gm_touch_next(&frame) && processed < 128 {
-                processed += 1
-                if frame.overflow { gestures.cancel(); taps.cancel(); if touchHeld { cancellationHandler(); touchHeld = false } }
-                let pts: [TouchPoint] = withUnsafePointer(to: &frame.contacts) { raw in raw.withMemoryRebound(to: GMContact.self, capacity: 16) { ptr in (0..<Int(frame.count)).map { .init(id: Int(ptr[$0].identity), x: ptr[$0].x, y: ptr[$0].y, area: ptr[$0].area) } } }
-                report.contacts = pts; let deviceID = "mt:\(frame.deviceIndex)"
-                if pts.isEmpty && touchHeld { cancellationHandler(); touchHeld = false; dragPointer = false }
-                if time < nativeScrollUntil && !touchHeld { gestures.cancelForNativeScroll() }
-                let output = gestures.process(.init(timestamp: time, deviceID: deviceID, contacts: pts, modifiers: Modifiers(cgFlags: CGEventSource.flagsState(.combinedSessionState))))
-                for g in output {
-                    if g.trigger.kind == .touchHold { touchHeld = true; emit(g.trigger, deviceID: nil, touchHold: true); continue }
-                    if [.tap,.rightTap].contains(g.trigger.kind) {
-                        var actual = g
-                        if g.trigger.kind == .rightTap, ProfileResolver.resolve(trigger: g.trigger, bundleID: bundleID, deviceID: nil, profiles: configuration.profiles + [configuration.globalDefaults]) == nil {
-                            var single = g.trigger; single.clicks = 1
-                            if ProfileResolver.resolve(trigger: single, bundleID: bundleID, deviceID: nil, profiles: configuration.profiles + [configuration.globalDefaults]) == nil { actual.trigger.kind = .tap }
-                        }
-                        let higher = bindings(deviceID: nil).contains { $0.kind == actual.trigger.kind && $0.fingers == actual.trigger.fingers && $0.modifiers == actual.trigger.modifiers && $0.clicks > actual.trigger.clicks }
-                        taps.submit(actual, hasHigherTap: higher, interval: configuration.tuning.multiTapInterval).forEach { emit($0.trigger, deviceID: nil) }
-                    } else { taps.cancel(); emit(g.trigger, deviceID: nil) }
-                }
-            }
-            taps.advance(time).forEach { emit($0.trigger, deviceID: nil) }
+            drainTouchFrames(at: time)
+            taps.advance(time).forEach { emit($0.trigger, deviceID: $0.deviceID) }
         }
         if time - lastReport >= 0.25 {
             lastReport = time; report.lastPeakArea = gestures.lastPeakArea; report.touchDrops = gm_touch_dropped()

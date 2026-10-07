@@ -19,8 +19,9 @@ static int32_t (*startDevice)(void*,int32_t);
 static void (*stopDevice)(void*);
 static bool (*isBuiltIn)(void*), (*isOpaque)(void*);
 static int32_t (*familyID)(void*,int32_t*);
-static void *runningDevice;
-static int runningIndex;
+static _Atomic(void*) runningDevice;
+static CFMutableSetRef registeredDevices;
+static _Atomic int runningIndex;
 static _Atomic bool enabled;
 static _Atomic uint64_t drops;
 static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
@@ -28,8 +29,8 @@ static GMFrame ring[128];
 static int head, tail;
 static const char *status = "Not probed";
 static void onFrame(void *device, Contact *data, size_t count, double time, size_t frame, void *ref) {
-    (void)device; (void)frame; (void)ref;
-    if (!atomic_load(&enabled)) return;
+    (void)frame; (void)ref;
+    if (!atomic_load(&enabled) || device != atomic_load(&runningDevice)) return;
     if (count > GM_MAX_CONTACTS || !isfinite(time) || (count && !data)) { atomic_fetch_add(&drops,1); return; }
     GMFrame f = {0}; f.timestamp = time; f.deviceIndex = runningIndex;
     for (size_t i=0;i<count;i++) {
@@ -74,7 +75,14 @@ bool gm_touch_start(int32_t index) {
     GMDevice devices[GM_MAX_DEVICES]; int n=gm_touch_devices(devices,GM_MAX_DEVICES);
     if (index<0 || index>=n || !devices[index].mouseCandidate) { status="Selected device is not a validated Magic Mouse candidate"; return false; }
     runningDevice=(void*)CFArrayGetValueAtIndex(list,index); runningIndex=index;
-    registerCB(runningDevice,onFrame,NULL); atomic_store(&enabled,true);
+    if (!registeredDevices) registeredDevices=CFSetCreateMutable(NULL,0,&kCFTypeSetCallBacks);
+    if (!registeredDevices) { runningDevice=NULL; status="Touch callback allocation failed"; return false; }
+    if (!CFSetContainsValue(registeredDevices,runningDevice)) {
+        // Retain registered objects: callbacks survive device stop on this ABI.
+        // Register each object once, and ignore callbacks from all stopped devices.
+        CFSetAddValue(registeredDevices,runningDevice); registerCB(runningDevice,onFrame,NULL);
+    }
+    atomic_store(&enabled,true);
     if (startDevice(runningDevice,0)!=0) { atomic_store(&enabled,false); stopDevice(runningDevice); runningDevice=NULL; status="Touch device refused start"; return false; }
     status="Experimental Magic Mouse touch adapter running"; return true;
 }

@@ -14,6 +14,7 @@ struct MappingEditor: View {
         VStack(alignment: .leading, spacing: 18) {
             Text(model.text("Mapping editor")).font(.title2.bold())
             Text(String(format: model.text("Saving these changes affects: %@"), model.editingScopeName)).font(.callout).foregroundStyle(.secondary)
+            if !MagicMouseCatalog.touchKinds.contains(mapping.trigger.kind) {
             VStack(alignment: .leading, spacing: 8) {
                 HStack {
                     Text(model.text("Capture mouse input")).font(.headline)
@@ -36,6 +37,7 @@ struct MappingEditor: View {
                     else if protected { captureMessage = model.text("Left and right clicks stay native. Use a wheel or side button.") }
                 }.frame(height: 100)
                 Text(captureMessage.isEmpty ? model.text("Captured input is selected automatically. Choose an action, then Save mapping.") : captureMessage).font(.caption)
+            }
             }
             Form {
                 TextField(model.text("Mapping name (optional)"), text: Binding(get: { mapping.name ?? "" }, set: { mapping.name = $0.isEmpty ? nil : String($0.prefix(150)) }))
@@ -224,7 +226,7 @@ private enum ActionGroup: String, CaseIterable {
         case .none: .behavior
         case .leftClick,.rightClick,.middleClick,.doubleClick,.tripleClick,.toggleDrag,.canvasPan: .mouse
         case .back,.forward,.zoomIn,.zoomOut,.quickLook,.smartZoom: .navigation
-        case .closeWindow,.minimizeWindow,.hideApp,.cycleWindows,.appSwitcher,.previousApp,.missionControl,.appExpose,.showDesktop,.spaceLeft,.spaceRight: .windows
+        case .closeWindow,.minimizeWindow,.hideApp,.cycleWindows,.appSwitcher,.previousApp,.cycleAppsForward,.cycleAppsBackward,.missionControl,.appExpose,.showDesktop,.spaceLeft,.spaceRight: .windows
         case .volumeUp,.volumeDown,.mute,.playPause,.nextTrack,.previousTrack,.brightnessUp,.brightnessDown: .media
         case .shortcut,.openApp,.openFolder,.openURL,.lockScreen,.screenshot,.appleShortcut,.shell,.appLauncher: .tools
         }

@@ -11,6 +11,12 @@
 <button type="button" data-gesture-mode="buttons" aria-pressed="true" data-copy="gestureButtons">Mouse buttons</button>
 <button type="button" data-gesture-mode="touch" aria-pressed="false" data-copy="gestureTouch">Magic Mouse · experimental</button>
 </div>
+<div class="gesture-families" data-touch-families hidden role="group" data-aria="gestureFamilyAria" aria-label="Gesture type">
+<button type="button" data-gesture-family="taps" aria-pressed="true" data-copy="gestureFamilyTaps">Taps</button>
+<button type="button" data-gesture-family="movement" aria-pressed="false" data-copy="gestureFamilyMovement">Swipes &amp; zoom</button>
+<button type="button" data-gesture-family="dragging" aria-pressed="false" data-copy="gestureFamilyDragging">Drag</button>
+<button type="button" data-gesture-family="extras" aria-pressed="false" data-copy="gestureFamilyExtras">Keys &amp; resting fingers</button>
+</div>
 <div class="gesture-layout">
 <div class="gesture-choices" role="group" data-aria="gestureChoiceAria" aria-label="Usage examples"></div>
 <div>
@@ -42,6 +48,10 @@
 <path d="M152 98 Q194 66 241 92" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round"/>
 <g class="touch-contact"><circle class="finger" cx="174" cy="136" r="9" fill="#0672d3"/><circle class="touch-halo" cx="174" cy="136" r="21" fill="none" stroke="#0672d3" stroke-width="3"/></g>
 <g class="touch-contact second"><circle class="finger-extra" cx="216" cy="136" r="9" fill="#0672d3"/></g>
+<circle class="finger-third" cx="195" cy="168" r="9" fill="#0672d3"/>
+<circle class="resting-contact" cx="221" cy="224" r="13" fill="#93aaa8"/>
+<g class="touch-key"><rect x="162" y="334" width="70" height="32" rx="8" fill="#17323d"/><text x="197" y="357" fill="#fff" font-size="20" text-anchor="middle">⌘</text></g>
+<path class="drag-trace" d="M165 173 L213 225 M202 225 H213 V214" fill="none" stroke="#0672d3" stroke-width="3"/>
 <path class="swipe-trace" d="M165 178 H241 M233 171 L241 178 L233 185" stroke="#0672d3" stroke-width="3" fill="none"/>
 <path class="pinch-trace" d="M168 158 L153 175 M153 164 V175 H164 M220 118 L235 101 M224 101 H235 V112" stroke="#0672d3" stroke-width="3" fill="none"/>
 </g>
@@ -80,6 +90,10 @@
 <rect x="422" y="112" width="217" height="165" rx="5" fill="#edf4f3"/><path d="M452 146 H475 L481 153 H511 V194 H452Z" fill="#86b9d6"/>
 <g class="context-menu"><rect x="491" y="165" width="132" height="91" rx="7" fill="#fff" stroke="#97adb1"/><rect x="499" y="173" width="116" height="19" rx="4" fill="#d7ebfc"/><path d="M510 182 H572 M510 209 H598 M510 236 H567" stroke="#87a4af" stroke-width="4" stroke-linecap="round"/></g></g>
 <g class="result-pane open-result"><rect x="422" y="112" width="217" height="165" rx="5" fill="#edf4f3"/><g class="opened-folder"><rect x="439" y="130" width="183" height="129" rx="6" fill="#fff" stroke="#97adb1"/><path d="M439 151 H622" stroke="#dce6e6"/><path d="M454 144 H493" stroke="#97adb1" stroke-width="4" stroke-linecap="round"/><rect x="453" y="164" width="35" height="39" rx="3" fill="#b6e9d2"/><rect x="501" y="164" width="35" height="39" rx="3" fill="#c6e3f9"/><rect x="549" y="164" width="35" height="39" rx="3" fill="#faf4dd"/></g></g>
+<g class="result-pane text-result"><rect x="422" y="112" width="217" height="165" rx="5" fill="#edf4f3"/><rect class="paragraph-highlight" x="442" y="139" width="173" height="78" rx="3" fill="#b9dcf9"/><path d="M451 151 H601 M451 168 H584 M451 185 H601 M451 202 H560 M451 241 H584" stroke="#79999f" stroke-width="5" stroke-linecap="round"/></g>
+<g class="result-pane showdesktop-result"><rect x="422" y="112" width="217" height="165" rx="5" fill="#c6e3f9"/><path d="M422 236 L481 175 L540 230 L590 180 L639 244 V277 H422Z" fill="#8fc5b3"/><g class="departing-window"><rect x="456" y="139" width="150" height="105" rx="7" fill="#fff" stroke="#a6bdc0"/><path d="M456 158 H606" stroke="#dce6e6"/></g></g>
+<g class="result-pane drag-result"><rect x="422" y="112" width="217" height="165" rx="5" fill="#edf4f3"/><rect x="544" y="179" width="65" height="61" rx="8" fill="none" stroke="#8eb4b2" stroke-width="2" stroke-dasharray="5 4"/><g class="drag-file"><rect x="451" y="137" width="42" height="50" rx="5" fill="#c6e3f9" stroke="#0672d3"/><path d="M461 151 H482 M461 162 H482 M461 173 H475" stroke="#7da9c9" stroke-width="3"/></g></g>
+<g class="result-pane browser-result"><rect x="422" y="112" width="217" height="165" rx="5" fill="#edf4f3"/><g class="history-page"><rect x="445" y="133" width="170" height="120" rx="7" fill="#fff" stroke="#a6bdc0"/><path d="M463 154 H581 M463 174 H593 M463 194 H560" stroke="#c1d4d4" stroke-width="5"/><path d="M470 229 H510 M480 219 L470 229 L480 239" stroke="#0672d3" stroke-width="3" fill="none"/></g></g>
 <g class="result-pane zoom-result" clip-path="url(#gm-screen-clip)">
 <rect x="422" y="112" width="217" height="165" fill="#edf4f3"/>
 <g class="zoom-art"><rect x="465" y="134" width="135" height="113" rx="5" fill="#c6e3f9"/><circle cx="567" cy="161" r="13" fill="#fff"/><path d="M465 215 L510 168 L552 210 L579 185 L600 221 V247 H465Z" fill="#7eafa3"/></g>
