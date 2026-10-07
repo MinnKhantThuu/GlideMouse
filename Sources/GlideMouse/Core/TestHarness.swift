@@ -657,6 +657,36 @@ private final class HardwareCounts: @unchecked Sendable { var calibrationSeen = 
         result["missingAppSelectionDisplaysAllApps"] = model.isGlobal && model.editingScopeName == model.text("All apps")
         model.completeSetup()
         result["setupCompletionPreservesMappings"] = model.configuration.usability?.setupCompleted == true && model.configuration.globalDefaults == global
+        // Inline edits and app inheritance use the same mutation path as the new rows.
+        let listModel = AppModel(testing: true, rendering: true)
+        let input = Trigger(button: 3)
+        listModel.configuration.globalDefaults.mappings = [Mapping(trigger: input, action: .back), Mapping(trigger: .init(kind: .buttonHold, button: 3), action: .missionControl)]
+        let initialList = listModel.configuration
+        listModel.setListAction(.spaceLeft, for: input)
+        result["inlineActionSavesAndKeepsOtherGestures"] = listModel.listMapping(for: input)?.action == .spaceLeft && listModel.configuration.globalDefaults.mappings.count == 2
+        listModel.undo()
+        result["inlineActionUndoRestoresExactly"] = listModel.configuration == initialList
+        listModel.selectAppProfile(name: "List app", bundleID: "example.list")
+        let initialApp = listModel.configuration
+        let globalID = listModel.configuration.globalDefaults.mappings[0].id
+        result["listShowsInheritedRowsWithoutCopying"] = listModel.listTriggers(touch: false).count == 2 && listModel.effectiveProfile.mappings.isEmpty && !listModel.ownsListMapping(input)
+        listModel.removeListAction(for: input)
+        result["inheritedRemovalCannotDeleteGlobal"] = listModel.configuration == initialApp
+        listModel.setListAction(.forward, for: input)
+        result["inlineOverrideHasOwnIdentity"] = listModel.listMapping(for: input)?.id != globalID && listModel.configuration.globalDefaults == initialApp.globalDefaults
+        result["inlineOverrideHasNoDuplicateRow"] = listModel.listTriggers(touch: false).count == 2 && listModel.ownsListMapping(input)
+        listModel.removeListAction(for: input)
+        result["inlineRemoveOverrideRestoresDefault"] = listModel.listMapping(for: input)?.action == .back && listModel.effectiveProfile.mappings.isEmpty
+        listModel.undo()
+        result["inlineRemovalUndoRestoresOverride"] = listModel.listMapping(for: input)?.action == .forward
+        var shortcutOptions = ActionOptions(); shortcutOptions.keyCode = 49; shortcutOptions.modifiers = [.control]
+        listModel.setListAction(.shortcut, for: input, options: shortcutOptions)
+        result["inlineShortcutKeepsRecordedOptions"] = listModel.listMapping(for: input)?.options == shortcutOptions
+        listModel.setListAction(.spaceRight, for: input)
+        result["inlineNewActionClearsPreviousOptions"] = listModel.listMapping(for: input)?.options == ActionOptions()
+        listModel.selectedProfileID = nil
+        listModel.removeListAction(for: input)
+        result["inlineTrashKeepsHoldAndOtherApp"] = listModel.configuration.globalDefaults.mappings.count == 1 && listModel.configuration.profiles[0].mappings[0].action == .spaceRight
         if let data = try? JSONSerialization.data(withJSONObject: result, options: [.prettyPrinted, .sortedKeys]) { print(String(decoding: data, as: UTF8.self)) }
         return result.values.allSatisfy { $0 } ? 0 : 1
     }
@@ -867,5 +897,48 @@ private struct TutorialCard: View {
                 Text(caption).font(.system(size: language == .my ? 24 : 25, weight: .medium)).lineSpacing(5).fixedSize(horizontal: false, vertical: true).frame(maxWidth: .infinity, alignment: .leading)
             }.padding(18).frame(width: 1280, height: 158, alignment: .topLeading).background(Color.blue.opacity(0.07), in: RoundedRectangle(cornerRadius: 14))
         }.padding(.horizontal, 80).padding(.vertical, 22).frame(width: 1440, height: 1080).background(Color(red: 0.95, green: 0.97, blue: 1)).foregroundStyle(.black)
+    }
+}
+
+extension UIHarness {
+    static func configureMappingListFixture(_ model: AppModel) {
+        model.devices = [MouseDevice(id: "list-fixture", name: "Sample Mouse", transport: "Fixture", vendor: 0, product: 0, buttons: 5, stableIdentity: false, magicMouse: false)]
+        model.accessibility = true; model.inputMonitoring = true
+        model.configuration.globalDefaults.mappings = [Mapping(button: 4, action: .spaceRight), Mapping(button: 3, action: .spaceLeft), Mapping(trigger: .init(kind: .buttonHold, button: 3), action: .missionControl)] + MagicMouseCatalog.defaults
+        model.configuration.profiles = [Profile(name: "Safari", bundleID: "com.apple.Safari")]
+        model.configuration.engineEnabled = false; model.configuration.touchEnabled = false
+        var preferences = UsabilityPreferences(); preferences.setupCompleted = true
+        if let identity = model.calibrationIdentity { preferences.calibrations = [MouseCalibration(identity: identity, buttons: [.init(button: 2, position: .wheel), .init(button: 3, position: .lower), .init(button: 4, position: .upper)])] }
+        model.configuration.usability = preferences
+    }
+    static func renderMappingList(to directory: URL) {
+        try? FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        let model = AppModel(testing: true, rendering: true)
+        configureMappingListFixture(model)
+        NSApplication.shared.setActivationPolicy(.accessory)
+        let window = NSWindow(contentRect: .init(x: 0, y: 0, width: 1040, height: 760), styleMask: [.titled, .closable, .resizable], backing: .buffered, defer: false)
+        for language in AppLanguage.allCases {
+            model.configuration.language = language
+            for width in [820, 1040, 1440] {
+                for page in [SettingsPage.mappings, .magic] {
+                    let height = page == .magic ? 920 : 760
+                    let size = NSSize(width: width, height: height)
+                    window.setContentSize(size)
+                    let view = NSHostingView(rootView: SettingsRoot(model: model, initialPage: page).preferredColorScheme(.light))
+                    view.sizingOptions = []; window.contentView = view; view.setFrameSize(size); window.orderFront(nil)
+                    RunLoop.current.run(until: Date().addingTimeInterval(0.15)); view.layoutSubtreeIfNeeded(); window.display()
+                    save(view, directory.appendingPathComponent("\(language.rawValue)-\(page == .magic ? "magic" : "buttons")-\(width).png"))
+                }
+            }
+        }
+        model.configuration.language = .my; model.selectedProfileID = model.configuration.profiles.first?.id
+        for appearance in [ColorScheme.light, .dark] {
+            let size = NSSize(width: 1040, height: 760); window.setContentSize(size)
+            let view = NSHostingView(rootView: SettingsRoot(model: model).preferredColorScheme(appearance))
+            view.sizingOptions = []; window.contentView = view; view.setFrameSize(size); window.orderFront(nil)
+            RunLoop.current.run(until: Date().addingTimeInterval(0.15)); view.layoutSubtreeIfNeeded(); window.display()
+            save(view, directory.appendingPathComponent("my-app-\(appearance == .dark ? "dark" : "light").png"))
+        }
+        window.orderOut(nil)
     }
 }

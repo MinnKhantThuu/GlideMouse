@@ -23,9 +23,9 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>0.3.19</string>
+	<string>0.4.0</string>
 	<key>CFBundleVersion</key>
-	<string>23</string>
+	<string>24</string>
 	<key>GMDeveloperName</key>
 	<string>Minn Khant Thu</string>
 	<key>GMEmailURL</key>

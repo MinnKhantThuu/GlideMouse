@@ -4,59 +4,42 @@ import MouseCore
 
 struct SimpleMousePage: View {
     @ObservedObject var model: AppModel
-    @State private var captureNote = ""
+    @State private var adding = false
     @State private var showingGuide = false
-    private var known: [Int] { Array(Set(model.calibratedButtons.map(\.button)).union(model.runtimeReport.observedButtons).union(model.selectedButton.map { $0 >= 2 ? [$0] : [] } ?? []).union((model.configuration.globalDefaults.mappings + model.effectiveProfile.mappings).filter { [.button, .buttonHold, .buttonDrag, .buttonWheel, .buttonChord].contains($0.trigger.kind) }.map(\.button))).filter { $0 >= 2 }.sorted() }
+    @State private var buttonGuide = false
+    private var known: [Int] {
+        Array(Set(model.calibratedButtons.map(\.button)).union(model.runtimeReport.observedButtons)
+            .union(model.listTriggers(touch: false).map(\.button))).filter { $0 >= 2 }.sorted()
+    }
     var body: some View {
         if !model.accessibility || !model.inputMonitoring { SectionBox(title: model.text("Allow mouse control")) { PermissionControls(model: model) } }
-        HStack(alignment: .top) {
-            VStack(alignment: .leading, spacing: 5) {
-                Text(model.currentMouse?.name ?? model.text("Connect a mouse")).font(.headline)
-            }
+        HStack {
+            Text(model.currentMouse?.name ?? model.text("Mouse buttons and wheel")).font(.headline)
             Spacer()
-            Button { showingGuide = true } label: { Label(model.text("How mouse actions work"), systemImage: "play.rectangle") }
-                .sheet(isPresented: $showingGuide) { MouseActionGuide(model: model) }
-            Button(model.text("Label buttons")) { model.showCalibration = true }
+            Button { showingGuide = true } label: { Image(systemName: "questionmark.circle") }
+                .accessibilityLabel(model.text("How mouse actions work"))
+            Button { model.selectedGesture = nil; adding = true } label: { Label(model.text("Add button action"), systemImage: "plus") }
+                .buttonStyle(PointingButtonStyle(prominent: true))
         }
-        VStack(alignment: .leading, spacing: 6) {
-            MouseCaptureArea(armed: model.accessibility && model.inputMonitoring, label: model.text("Press any mouse button inside this box to select it."), holdDelay: model.configuration.tuning.holdDelay, dragDistance: model.configuration.tuning.dragDistance, areaChanged: { model.setMouseCaptureArea($1, owner: $0) }) { trigger, protected in
-                if let trigger {
-                    if trigger.button < 2, ![.button, .buttonHold].contains(trigger.kind) { captureNote = model.text("Left/right buttons support double click and hold."); return }
-                    captureNote = triggerLabel(trigger, model: model)
-                    if [.button, .buttonHold].contains(trigger.kind), [1, 2].contains(trigger.clicks), trigger.modifiers.isEmpty {
-                        model.selectedGesture = trigger; model.selectedButton = trigger.button
-                    } else {
-                        model.pendingMapping = model.effectiveProfile.mappings.first { $0.trigger.canonical == trigger.canonical } ?? Mapping(trigger: trigger, action: .none)
-                    }
-                } else if protected { captureNote = model.text("Left and right clicks stay native. Use a wheel or side button.") }
-            }.frame(height: 48)
-            if !captureNote.isEmpty { Text(captureNote).font(.caption).foregroundStyle(.secondary) }
-        }
-        HStack(alignment: .top, spacing: 18) {
-            MousePictureSelector(model: model, buttons: known).frame(minWidth: 290, maxWidth: .infinity)
-            editorPanel.frame(minWidth: 260, maxWidth: .infinity, alignment: .leading)
+        Text(model.text("Choose an action in each row. Changes save automatically.")).font(.caption).foregroundStyle(.secondary)
+        ActionMappingList(model: model, touch: false)
+        DisclosureGroup(model.text("Find a button on your mouse"), isExpanded: $buttonGuide) {
+            VStack(alignment: .leading, spacing: 12) {
+                Text(model.text("Select a label to add an action for that button.")).font(.caption).foregroundStyle(.secondary)
+                MousePictureSelector(model: model, buttons: known, selected: { _ in adding = true }).frame(maxWidth: 520)
+                Button(model.text("Label buttons")) { model.showCalibration = true }
+            }.padding(.top, 8)
         }
         DisclosureGroup(model.text("Ready-made setups")) {
-            VStack(alignment: .leading, spacing: 12) {
-                EasyDropdown(title: model.text("Starter setup")) { close in
-                    DropdownOption(title: model.text("Desktop navigation")) { model.pendingPreset = "desktop"; close() }.disabled(!hasSides)
-                    DropdownOption(title: model.text("Browser navigation")) { model.pendingPreset = "browser"; close() }.disabled(!hasSides)
-                }
-                Text(model.text(hasSides ? "Only the listed actions change. Other mappings are kept." : "Label both side buttons to use a preset.")).font(.caption).foregroundStyle(.secondary)
+            HStack {
+                Button(model.text("Desktop navigation")) { model.pendingPreset = "desktop" }.disabled(!hasSides)
+                Button(model.text("Browser navigation")) { model.pendingPreset = "browser" }.disabled(!hasSides)
             }
+            Text(model.text(hasSides ? "Only the listed actions change. Other mappings are kept." : "Label both side buttons to use a preset.")).font(.caption).foregroundStyle(.secondary)
         }
-        AdvancedBindings(model: model)
-    }
-    @ViewBuilder private var editorPanel: some View {
-        if let button = model.selectedButton, button < 2 || known.contains(button) {
-            SimpleButtonInspector(model: model, button: button).id("\(button)-\(model.selectedProfileID?.uuidString ?? "global")")
-        } else {
-            VStack(alignment: .leading, spacing: 12) {
-                Text(model.text("Choose a mouse button")).font(.headline)
-                Text(model.text("Press it in the blue box above, or select its number on the picture.")).font(.callout)
-                Text(model.text("Then choose what a click or a hold should do.")).font(.caption).foregroundStyle(.secondary)
-            }.padding(16).frame(maxWidth: .infinity, alignment: .leading)
-        }
+        .sheet(isPresented: $showingGuide) { MouseActionGuide(model: model) }
+        .sheet(isPresented: $adding) { AddInputSheet(model: model, touch: false, buttons: known) }
+
     }
     private var hasSides: Bool { model.calibratedButtons.contains { $0.position == .upper } && model.calibratedButtons.contains { $0.position == .lower } }
 }
@@ -117,6 +100,7 @@ struct DropdownOption: View {
 struct MousePictureSelector: View {
     @ObservedObject var model: AppModel
     var buttons: [Int]
+    var selected: ((Int) -> Void)? = nil
     private func location(_ button: Int) -> ButtonPosition? { model.calibratedButtons.first { $0.button == button }?.position }
     private var placed: [Int] { buttons.filter { [.wheel, .upper, .lower].contains(location($0) ?? .extra) } }
     private var unplaced: [Int] { buttons.filter { !placed.contains($0) } }
@@ -134,7 +118,7 @@ struct MousePictureSelector: View {
             .background(Color.accentColor.opacity(0.15), in: Circle())
     }
     private func label(_ button: Int, scale: CGFloat, textScale: CGFloat) -> some View {
-        Button { model.selectedGesture = nil; model.selectedButton = button; model.savedButton = nil } label: {
+        Button { model.selectedGesture = nil; model.selectedButton = button; model.savedButton = nil; selected?(button) } label: {
             HStack(spacing: 5) {
                 badge(button, textScale: textScale)
                 Text(location(button).map { model.text($0 == .wheel ? "Wheel" : $0 == .upper ? "Upper side" : $0 == .lower ? "Lower side" : "Extra") } ?? model.text("Set position")).font(.system(size: 12 * textScale)).fixedSize(horizontal: false, vertical: true)
@@ -163,7 +147,7 @@ struct MousePictureSelector: View {
                         let left = button == 0
                         let point = CGPoint(x: origin + 180 * scale * (left ? 0.40 : 0.60), y: (48 + 180 * (left ? 0.18 : 0.10)) * scale)
                         leader(point, labelX: left ? 96 * scale : width - 96 * scale, labelY: 23 * scale, color: .secondary.opacity(0.5))
-                        Button { model.selectedGesture = nil; model.selectedButton = button; model.savedButton = nil } label: {
+                        Button { model.selectedGesture = nil; model.selectedButton = button; model.savedButton = nil; selected?(button) } label: {
                             HStack(spacing: 4) { Text("\(button + 1)").bold(); Text(model.text(left ? "Left button" : "Right button")) }
                                 .font(.system(size: 12 * textScale)).frame(width: 95 * scale, height: 48 * textScale)
                                 .background(Color.accentColor.opacity(model.selectedButton == button ? 0.2 : 0.07), in: RoundedRectangle(cornerRadius: 8)).contentShape(Rectangle())
@@ -184,7 +168,7 @@ struct MousePictureSelector: View {
                         ScrollView(.horizontal) {
                             HStack(spacing: 10) {
                                 ForEach(unplaced, id: \.self) { button in
-                                    Button { model.selectedGesture = nil; model.selectedButton = button; model.savedButton = nil } label: {
+                                    Button { model.selectedGesture = nil; model.selectedButton = button; model.savedButton = nil; selected?(button) } label: {
                                         Text("\(button + 1)").font(.system(size: 14 * textScale, weight: .semibold)).frame(width: 40 * textScale, height: 40 * textScale)
                                             .background(Color.accentColor.opacity(model.selectedButton == button ? 0.22 : 0.08), in: RoundedRectangle(cornerRadius: 9)).contentShape(Rectangle())
                                     }.buttonStyle(SurfaceButtonStyle()).accessibilityLabel(model.buttonTitle(button)).help(model.text("Select this number to set its button position."))

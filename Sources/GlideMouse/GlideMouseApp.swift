@@ -5,6 +5,13 @@ import MouseCore
 
 @main enum GlideMouseLauncher {
     @MainActor static func main() {
+        if let i = CommandLine.arguments.firstIndex(of: "--render-mapping-list"), CommandLine.arguments.count > i + 1 {
+            UIHarness.renderMappingList(to: URL(fileURLWithPath: CommandLine.arguments[i + 1])); exit(0)
+        }
+        if CommandLine.arguments.contains("--list-preview") || Bundle.main.object(forInfoDictionaryKey: "GMListPreview") as? Bool == true {
+            NSApplication.shared.setActivationPolicy(.regular)
+            MappingListPreview.main(); return
+        }
         if let i = CommandLine.arguments.firstIndex(of: "--render-magic"), CommandLine.arguments.count > i + 1 {
             exit(UIHarness.magicReadiness(to: URL(fileURLWithPath: CommandLine.arguments[i + 1])) ? 0 : 1)
         }
@@ -187,5 +194,21 @@ struct MagicMouseSettingsPreview: App {
                     NSApplication.shared.activate(ignoringOtherApps: true)
                 }
         }.defaultSize(width: 1040, height: 780)
+    }
+}
+
+/// Preview fixtures never create a second input engine or read personal settings.
+struct MappingListPreview: App {
+    @StateObject private var model = AppModel(testing: true, rendering: true)
+    var body: some Scene {
+        WindowGroup("GlideMouse — Settings preview") {
+            SettingsRoot(model: model).frame(minWidth: 820, minHeight: 580)
+                .onAppear {
+                    UIHarness.configureMappingListFixture(model)
+                    model.configuration.language = .my
+                    NSApplication.shared.activate(ignoringOtherApps: true)
+                }
+        }.defaultSize(width: 1040, height: 760)
+        .commands { CommandGroup(replacing: .undoRedo) { Button(model.text("Undo")) { model.undo() }.keyboardShortcut("z").disabled(!model.canUndo) } }
     }
 }

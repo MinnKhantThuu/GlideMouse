@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.4.0 — local preview
+
+- Show button and Magic Mouse actions in editable rows with diagrams and direct removal.
+- Save ordinary action selections automatically, with Undo.
+- Simplify adding inputs and recording shortcuts; keep advanced mappings available.
+- Show app inheritance inline and preserve existing settings.
+- Update English, Burmese and Simplified Chinese text for the new flow.
+
+
 ## 0.3.19
 
 - About GlideMouse’s Website button opens the GlideMouse product website.

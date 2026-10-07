@@ -176,6 +176,34 @@ import MouseCore
         mutateProfile { p in if let i = p.mappings.firstIndex(where: { $0.id == m.id }) { p.mappings[i] = m } else { p.mappings = MappingEdits.merge([m], into: p.mappings) } }
     }
     func removeMapping(_ id: UUID) { mutateProfile { $0.mappings.removeAll { $0.id == id } } }
+    /// The list shows the effective action without copying defaults into app profiles.
+    func listMapping(for trigger: Trigger) -> Mapping? {
+        effectiveProfile.mappings.first { $0.trigger.canonical == trigger.canonical }
+            ?? (isGlobal ? nil : configuration.globalDefaults.mappings.first { $0.trigger.canonical == trigger.canonical })
+    }
+    func ownsListMapping(_ trigger: Trigger) -> Bool {
+        effectiveProfile.mappings.contains { $0.trigger.canonical == trigger.canonical }
+    }
+    func listTriggers(touch: Bool) -> [Trigger] {
+        ProfileResolver.displayTriggers(in: isGlobal ? [effectiveProfile] : [effectiveProfile, configuration.globalDefaults])
+            .filter { MagicMouseCatalog.touchKinds.contains($0.kind) == touch }
+    }
+    func setListAction(_ action: MouseAction, for trigger: Trigger, options: ActionOptions? = nil) {
+        var mapping = listMapping(for: trigger) ?? Mapping(trigger: trigger, action: action)
+        // An app override owns its identity. It must never mutate the global row.
+        if !ownsListMapping(trigger) { mapping.id = UUID() }
+        if mapping.action != action { mapping.options = ActionOptions() }
+        mapping.action = action; mapping.enabled = true
+        if let options { mapping.options = options }
+        if ownsListMapping(trigger), mapping == listMapping(for: trigger) { return }
+        mutateProfile { $0.mappings = MappingEdits.merge([mapping], into: $0.mappings) }
+        if errorMessage == nil { lastMessage = text("Saved") }
+    }
+    func removeListAction(for trigger: Trigger) {
+        guard let own = effectiveProfile.mappings.first(where: { $0.trigger.canonical == trigger.canonical }) else { return }
+        removeMapping(own.id)
+        if errorMessage == nil { lastMessage = text(!isGlobal && listMapping(for: trigger) != nil ? "From All apps" : "Action removed. Undo restores it.") }
+    }
     var currentMouse: MouseDevice? { devices.first { $0.name.localizedCaseInsensitiveContains("mouse") } ?? devices.first }
     var calibrationIdentity: String? { currentMouse.map { "\($0.vendor):\($0.product):\($0.transport):\($0.name)" } }
     var calibratedButtons: [CalibratedButton] { configuration.usability?.calibrations.first { $0.identity == calibrationIdentity }?.buttons ?? [] }

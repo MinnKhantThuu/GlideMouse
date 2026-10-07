@@ -182,7 +182,7 @@ struct AppScopeBar: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 5) {
             HStack(spacing: 10) {
-                EasyDropdown(title: String(format: model.text("Editing for: %@"), model.editingScopeName)) { close in
+                EasyDropdown(title: model.editingScopeName) { close in
                     DropdownOption(title: model.text("All apps — default actions")) { model.selectedProfileID = nil; close() }
                     ForEach(model.configuration.profiles.filter { $0.bundleID != nil && $0.deviceID == nil }) { profile in
                         DropdownOption(title: profile.name + (model.selectedProfileID == profile.id ? "  ✓" : "")) { model.selectedProfileID = profile.id; close() }

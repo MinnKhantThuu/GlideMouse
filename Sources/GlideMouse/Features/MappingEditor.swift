@@ -43,7 +43,7 @@ struct MappingEditor: View {
                 TextField(model.text("Mapping name (optional)"), text: Binding(get: { mapping.name ?? "" }, set: { mapping.name = $0.isEmpty ? nil : String($0.prefix(150)) }))
                 EasyPicker(label: model.text("Input"), selection: $mapping.trigger.kind, values: TriggerKind.allCases) { model.text("trigger." + $0.rawValue) }
                 if [.button,.buttonHold,.buttonDrag,.buttonWheel,.buttonChord].contains(mapping.trigger.kind) {
-                    Stepper(model.text("Button") + ": \(mapping.trigger.button + 1)", value: $mapping.trigger.button, in: 2...31)
+                    Stepper(model.text("Button") + ": \(mapping.trigger.button + 1)", value: $mapping.trigger.button, in: 0...31)
                 }
                 if mapping.trigger.kind == .buttonChord { Stepper(model.text("Second button") + ": \(mapping.trigger.chordButton + 1)", value: $mapping.trigger.chordButton, in: 2...31) }
                 if [.tap,.rightTap,.swipe,.touchHold].contains(mapping.trigger.kind) { Stepper(model.text("Fingers") + ": \(mapping.trigger.fingers)", value: $mapping.trigger.fingers, in: 1...3) }
