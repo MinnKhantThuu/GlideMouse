@@ -1,20 +1,284 @@
 <!doctype html>
-<html lang="en"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="GlideMouse is a native macOS mouse utility: useful side buttons, smooth scrolling, app-specific actions, and clear English, Myanmar and Chinese controls.">
-<meta name="theme-color" content="#f7faf9"><meta property="og:type" content="website"><meta property="og:title" content="GlideMouse — More from your mouse"><meta property="og:description" content="Set useful button actions and a comfortable scrolling feel on macOS. English, Myanmar and Chinese. Guided videos and open source."><meta property="og:url" content="https://minnkhantthuu.github.io/GlideMouse/"><meta property="og:image" content="https://minnkhantthuu.github.io/GlideMouse/Assets/AppIcon.png"><link rel="canonical" href="https://minnkhantthuu.github.io/GlideMouse/"><link rel="icon" href="Assets/AppIcon-transparent.png"><title>GlideMouse — More from your mouse</title>
-<script>if(/^#(?:en|my)(?:-(?:setup|buttons|profiles|scrolling|shortcuts))?$/.test(location.hash))location.replace('tutorials.html'+location.hash);</script>
-<link rel="stylesheet" href="Site/landing.css"><script src="Site/translations.js" defer></script><script src="Site/landing.js" defer></script>
-</head><body><a data-copy="skip" class="skip" href="#main">Skip to content</a>
-<header class="header"><div class="nav wrap"><a class="brand" href="./" aria-label="GlideMouse home"><img src="Assets/AppIcon-transparent.png" width="38" height="38" alt=""><span>GlideMouse</span></a><nav class="nav-links" aria-label="Main navigation" data-aria="navAria"><a data-copy="navFeatures" href="#features">Features</a><a data-copy="navGuide" href="#how-to">How to use</a><a data-copy="navDownload" href="#download">Download</a></nav><div class="locale" role="group" aria-label="Language" data-aria="localeAria"><button type="button" data-language="en" aria-pressed="true" lang="en">EN</button><button type="button" data-language="my" aria-pressed="false" lang="my">မြန်မာ</button><button type="button" data-language="zh" aria-pressed="false" lang="zh-Hans">中文</button></div></div></header>
-<main id="main"><section class="hero wrap"><div class="hero-copy"><h1 data-copy="heroTitle" >More from the mouse you already use.</h1><p data-copy="heroBody" class="lead">Switch desktops with a side button. Hold to see your windows. Find a scrolling feel that suits you. GlideMouse makes everyday mouse controls easier to set up on your Mac.</p><div class="actions"><a class="button primary" href="#download"><span data-copy="download" >Download for Mac</span></a><a class="button secondary" data-tutorial href="tutorials.html#en-buttons"><span class="play-icon" aria-hidden="true">▶</span><span data-copy="watch" >See how it works</span></a></div><p data-copy="requirements" class="meta">macOS 14 or later · Apple Silicon &amp; Intel</p><p data-copy="releaseNote" class="release-note">v0.3.16 development prerelease · Signed, not notarized</p></div><figure class="hero-visual"><div class="product-stage"><div class="window-top" aria-hidden="true"><span></span><span></span><span></span><b>GlideMouse</b></div><img class="hero-screen" data-screen="buttons" data-alt="heroAlt" src="Docs/media/screenshots/en-buttons.png" width="1040" height="730" alt="GlideMouse Buttons screen showing numbered mouse labels and saved actions" fetchpriority="high"></div><figcaption data-copy="screenCaption" >The real GlideMouse Buttons screen, with sample settings.</figcaption></figure></section>
-<div class="benefit-band"><div class="wrap benefit-row"><span class="benefit"><span class="check" aria-hidden="true">✓</span><span data-copy="benefit1" >Your buttons, your actions</span></span><span class="benefit"><span class="check" aria-hidden="true">✓</span><span data-copy="benefit2" >A comfortable wheel</span></span><span class="benefit"><span class="check" aria-hidden="true">✓</span><span data-copy="benefit3" >Defaults, with room for each app</span></span></div></div>
-<section id="features" class="section wrap button-feature"><div class="section-copy"><h2 data-copy="buttonsTitle" >A small button. A useful shortcut.</h2><p data-copy="buttonsBody" >Pick a button on the mouse picture, choose how you press it, then save what it should do. Single click, double click and hold can each have their own action.</p><p data-copy="buttonFoot" class="small">Buttons 1 and 2 support optional double-click and hold actions. Ordinary clicking and dragging remain available.</p><a class="text-link" data-tutorial href="tutorials.html#en-buttons"><span data-copy="buttonGuide" >Learn button mapping</span></a></div><div class="button-demo"><p class="demo-heading"><span data-copy="demoLabel" >Try the sample side buttons</span></p><div class="demo-layout"><img class="demo-mouse" src="Sources/GlideMouse/Resources/MouseIllustration.png" alt="A mouse illustration with two side buttons" data-alt="diagramAlt" width="260" height="260" loading="lazy"><div class="demo-controls" role="group" aria-label="Sample side-button actions" data-aria="exampleAria"><button type="button" data-example="upper" aria-pressed="true"><span class="button-number">5</span><span data-copy="demoUpper" >Upper side · click</span></button><button type="button" data-example="lower" aria-pressed="false"><span class="button-number">4</span><span data-copy="demoLower" >Lower side · click</span></button><button type="button" data-example="hold" aria-pressed="false"><span class="button-number">4</span><span data-copy="demoHold" >Lower side · hold</span></button></div></div><div class="demo-result" role="status" aria-live="polite"><span class="result-symbol" aria-hidden="true">→</span><div><h3 id="result-title">Desktop right</h3><p id="result-body">One click on the upper-side button goes to the next desktop.</p></div></div><p data-copy="demoHint" class="demo-hint">An example layout: numbers vary by mouse. Capture your own button in the app. This preview changes only the explanation below.</p></div></section>
-<section class="section feature-row wrap"><figure class="feature-visual scroll-visual"><img data-screen="scrolling" data-alt="scrollAlt" src="Docs/media/screenshots/en-scrolling.png" width="1040" height="730" alt="GlideMouse scrolling controls with presets, speed and direction" loading="lazy"></figure><div class="section-copy"><h2 data-copy="scrollTitle" >Scroll the way that feels right.</h2><p data-copy="scrollBody" >Start with Standard or Smooth. Adjust speed and direction first; open the finer controls when you need them. Continuous trackpad scrolling stays native.</p><ul class="plain-list"><li data-copy="scrollItem1" >Make each wheel step shorter or longer.</li><li data-copy="scrollItem2" >Choose a direct response or softer movement.</li><li data-copy="scrollItem3" >Turn momentum off for a more precise stop.</li></ul></div></section>
-<section class="section feature-row reverse wrap"><figure class="feature-visual"><img data-screen="profiles" data-alt="profileAlt" src="Docs/media/screenshots/en-profiles.png" width="1040" height="730" alt="GlideMouse app-specific settings showing inherited defaults and custom actions" loading="lazy"></figure><div class="section-copy"><h2 data-copy="profileTitle" >One mouse. Different jobs.</h2><p data-copy="profileBody" >All apps is your starting point. Change an action for Safari, your editor or another app when it needs something different. Everything else keeps the default.</p><blockquote data-copy="profileExample" >For example: lower-side click switches desktops normally, but goes Back when Safari is in front.</blockquote><p data-copy="profileFoot" class="small">Remove an app setup whenever you like. It removes its GlideMouse settings; it does not uninstall the app. Undo brings the setup back.</p></div></section>
-<section id="how-to" class="setup"><div class="wrap"><h2 data-copy="setupTitle" >Three steps to make it yours.</h2><ol class="steps"><li><span class="step-number" aria-hidden="true">1</span><h3 data-copy="step1Title" >Connect and allow</h3><p data-copy="step1Body" >Connect your mouse. Allow Accessibility for your chosen actions and Input Monitoring to recognize buttons and wheel input.</p></li><li><span class="step-number" aria-hidden="true">2</span><h3 data-copy="step2Title" >Identify a button</h3><p data-copy="step2Body" >Press inside the blue capture box. Confirm the detected button’s physical position on the mouse picture.</p></li><li><span class="step-number" aria-hidden="true">3</span><h3 data-copy="step3Title" >Choose, save, try</h3><p data-copy="step3Body" >Choose Click once, Double click or Hold. Pick an action, save it, and test outside the capture box.</p></li></ol><p data-copy="setupFoot" class="setup-foot">Start with one action. Add app-specific settings and advanced gestures when you need them.</p></div></section>
-<section class="section wrap guide-section"><div class="section-copy"><h2 data-copy="guideTitle" >A guide for every screen.</h2><p data-copy="guideBody" >Short walkthroughs show button labels, double click and hold, app-specific settings, scrolling, shortcuts, deletion and Undo.</p><div class="actions"><a data-copy="englishVideo" class="button secondary" href="tutorials.html#en">English videos</a><a data-copy="myanmarVideo" class="button secondary" href="tutorials.html#my">မြန်မာ Video များ</a></div><a data-copy="readGuide" class="text-link" data-readme href="https://github.com/MinnKhantThuu/GlideMouse/blob/main/README.md">Read the full guide</a><p data-copy="guideFoot" class="small">5 lessons in each language. English has local synthesized narration; Myanmar has on-screen explanations. Native app UI with sample settings, not physical-input recordings.</p></div><a class="guide-preview" data-tutorial href="tutorials.html#en-buttons" aria-label="Watch the button mapping guide" data-aria="watchAria"><img data-poster src="Docs/media/videos/en-buttons.png" width="1440" height="1080" alt="Button mapping video preview" data-alt="posterAlt" loading="lazy"><span class="play-circle" aria-hidden="true">▶</span></a></section>
-<section id="download" class="download-section"><div class="wrap download-layout"><div><h2 data-copy="downloadTitle" >Your next click starts here.</h2><p data-copy="downloadBody" >Download the current developer build, put GlideMouse in Applications, and follow Mouse setup.</p><div class="actions"><a data-copy="downloadDmg" class="button primary" href="https://github.com/MinnKhantThuu/GlideMouse/releases/download/v0.3.16/GlideMouse-0.3.16-developer.dmg">Download DMG</a><a data-copy="downloadZip" class="button secondary" href="https://github.com/MinnKhantThuu/GlideMouse/releases/download/v0.3.16/GlideMouse-0.3.16-developer.zip">ZIP download</a></div><p data-copy="requirements" class="meta">macOS 14 or later · Apple Silicon &amp; Intel</p><a data-copy="releaseDetails" class="text-link" href="https://github.com/MinnKhantThuu/GlideMouse/releases/tag/v0.3.16">Release notes &amp; checksums</a></div><aside class="release-status"><h3 data-copy="downloadStatus" >Development prerelease</h3><p class="version">v0.3.16 <span>Build 20</span></p><p data-copy="downloadLimit" >This build is Developer ID signed and universal, but it is not notarized. macOS may block it. Do not disable Gatekeeper. Building from source is an alternative.</p><a data-copy="source" class="text-link" href="https://github.com/MinnKhantThuu/GlideMouse">View source on GitHub</a></aside></div></section>
-<section id="faq" class="section wrap faq"><div><h2 data-copy="faqTitle" >Before you get started.</h2><p data-copy="pause" class="small">Pause: ⌃⌥⌘ Esc</p></div><div class="faq-list"><details><summary><span data-copy="faq1Title" >Will this work with my mouse?</span><span class="expand-icon" aria-hidden="true">+</span></summary><p data-copy="faq1Body" >GlideMouse works with standard reported mouse buttons and discrete wheel input. Vendor-specific buttons may not be reported normally. The universal build targets macOS 14+, but every mouse, Mac and OS version has not been physically tested. Magic Mouse touch gestures are experimental and have not been tested on real Magic Mouse hardware here.</p></details><details><summary><span data-copy="faq2Title" >Why does it need two permissions?</span><span class="expand-icon" aria-hidden="true">+</span></summary><p data-copy="faq2Body" >Accessibility lets GlideMouse perform actions you chose. Input Monitoring lets it recognize button and wheel input. Mouse control works locally, and the app does not keep a log of what you type. Update checks contact the configured update host.</p></details><details><summary><span data-copy="faq3Title" >Can I get my normal mouse back?</span><span class="expand-icon" aria-hidden="true">+</span></summary><p data-copy="faq3Body" >Yes. Pause from the menu bar or press Control + Option + Command + Escape. Remove an action or use Undo to restore a recent change. Export your settings when you want a backup.</p></details><details><summary><span data-copy="faq4Title" >Do I need to set up every app?</span><span class="expand-icon" aria-hidden="true">+</span></summary><p data-copy="faq4Body" >No. All apps provides the default. Only add an app when you want a different action or scrolling feel while that app is frontmost.</p></details><details><summary><span data-copy="faq5Title" >What about automatic updates?</span><span class="expand-icon" aria-hidden="true">+</span></summary><p data-copy="faq5Body" >The app includes Sparkle update controls. Installation needs a newer eligible signed release in the update feed. End-to-end automatic update installation has not been verified; source commits and GitHub prereleases do not automatically update the installed app.</p></details></div></section>
-</main><footer class="footer"><div class="wrap footer-layout"><div><a class="brand" href="./"><img src="Assets/AppIcon-transparent.png" width="32" height="32" alt=""><span>GlideMouse</span></a><h3 data-copy="developer" >Developed by Minn Khant Thu</h3><p data-copy="developerBody" >Building useful apps and tools. Have a question, found a bug, or want to support the work?</p><div class="footer-links"><a data-copy="contact" href="mailto:minnkhantthu.ucsy@gmail.com">Email</a><a data-copy="website" href="https://minnkhantthu.up.railway.app/">Developer website</a><a data-copy="coffee" href="https://buymeacoffee.com/minnkhantthu">Buy Me a Coffee</a></div></div><div class="footer-meta"><p data-copy="footerLanguages" >App interface: English, မြန်မာ, 简体中文.</p><p data-copy="footerLicense" >Open source under the MIT license.</p><a data-copy="issues" href="https://github.com/MinnKhantThuu/GlideMouse/issues">Report an issue</a></div></div></footer>
-</body></html>
+<meta name="theme-color" content="#f7faf9">
+<meta property="og:type" content="website">
+<meta property="og:title" content="GlideMouse — More from your mouse">
+<meta property="og:description" content="Set useful button actions and a comfortable scrolling feel on macOS. English, Myanmar and Chinese. Guided videos and open source.">
+<meta property="og:url" content="https://minnkhantthuu.github.io/GlideMouse/">
+<meta property="og:image" content="https://minnkhantthuu.github.io/GlideMouse/Assets/AppIcon.png">
+<link rel="canonical" href="https://minnkhantthuu.github.io/GlideMouse/">
+<link rel="icon" href="Assets/AppIcon-transparent.png">
+<title>GlideMouse — More from your mouse</title>
+<script>function redirectLegacyTutorial(){if(/^#(?:en|my)(?:-(?:setup|buttons|profiles|scrolling|shortcuts))?$/.test(location.hash))location.replace('tutorials.html'+location.hash);} window.addEventListener('hashchange',redirectLegacyTutorial);redirectLegacyTutorial();</script>
+<link rel="stylesheet" href="Site/landing.css">
+<script src="Site/translations.js" defer>
+</script>
+<script src="Site/landing.js" defer>
+</script>
+</head>
+<body>
+<a data-copy="skip" class="skip" href="#main">Skip to content</a>
+<header class="header">
+<div class="nav wrap">
+<a class="brand" href="./" aria-label="GlideMouse home">
+<img src="Assets/AppIcon-transparent.png" width="38" height="38" alt="">
+<span>GlideMouse</span>
+</a>
+<nav class="nav-links" aria-label="Main navigation" data-aria="navAria">
+<a data-copy="navFeatures" href="#features">Features</a>
+<a data-copy="navGuide" href="#how-to">How to use</a>
+<a data-copy="navDownload" href="#download">Download</a>
+</nav>
+<div class="locale" role="group" aria-label="Language" data-aria="localeAria">
+<button type="button" data-language="en" aria-pressed="true" lang="en">EN</button>
+<button type="button" data-language="my" aria-pressed="false" lang="my">မြန်မာ</button>
+<button type="button" data-language="zh" aria-pressed="false" lang="zh-Hans">中文</button>
+</div>
+</div>
+</header>
+<main id="main">
+<section class="hero wrap">
+<div class="hero-copy">
+<h1 data-copy="heroTitle" >More from the mouse you already use.</h1>
+<p data-copy="heroBody" class="lead">Switch desktops with a side button. Hold to see your windows. Find a scrolling feel that suits you. GlideMouse makes everyday mouse controls easier to set up on your Mac.</p>
+<div class="actions">
+<a class="button primary" href="#download">
+<span data-copy="download" >Download for Mac</span>
+</a>
+<a class="button secondary" data-tutorial href="tutorials.html#en-buttons">
+<span class="play-icon" aria-hidden="true">▶</span>
+<span data-copy="watch" >See how it works</span>
+</a>
+</div>
+<p data-copy="requirements" class="meta">macOS 14 or later · Apple Silicon &amp; Intel</p>
+<p data-copy="releaseNote" class="release-note">v0.3.16 development prerelease · Signed, not notarized</p>
+</div>
+<figure class="hero-visual">
+<div class="product-stage">
+<div class="window-top" aria-hidden="true">
+<span>
+</span>
+<span>
+</span>
+<span>
+</span>
+<b>GlideMouse</b>
+</div>
+<img class="hero-screen" data-screen="buttons" data-alt="heroAlt" src="Docs/media/screenshots/en-buttons.png" width="1040" height="730" alt="GlideMouse Buttons screen showing numbered mouse labels and saved actions" fetchpriority="high">
+</div>
+<figcaption data-copy="screenCaption" >The real GlideMouse Buttons screen, with sample settings.</figcaption>
+</figure>
+</section>
+<div class="benefit-band">
+<div class="wrap benefit-row">
+<span class="benefit">
+<span class="check" aria-hidden="true">✓</span>
+<span data-copy="benefit1" >Your buttons, your actions</span>
+</span>
+<span class="benefit">
+<span class="check" aria-hidden="true">✓</span>
+<span data-copy="benefit2" >A comfortable wheel</span>
+</span>
+<span class="benefit">
+<span class="check" aria-hidden="true">✓</span>
+<span data-copy="benefit3" >Defaults, with room for each app</span>
+</span>
+</div>
+</div>
+<section id="features" class="section wrap button-feature">
+<div class="section-copy">
+<h2 data-copy="buttonsTitle" >A small button. A useful shortcut.</h2>
+<p data-copy="buttonsBody" >Pick a button on the mouse picture, choose how you press it, then save what it should do. Single click, double click and hold can each have their own action.</p>
+<p data-copy="buttonFoot" class="small">Buttons 1 and 2 support optional double-click and hold actions. Ordinary clicking and dragging remain available.</p>
+<a class="text-link" data-tutorial href="tutorials.html#en-buttons">
+<span data-copy="buttonGuide" >Learn button mapping</span>
+</a>
+</div>
+<div class="button-demo">
+<p class="demo-heading">
+<span data-copy="demoLabel" >Try the sample side buttons</span>
+</p>
+<div class="demo-layout">
+<img class="demo-mouse" src="Sources/GlideMouse/Resources/MouseIllustration.png" alt="A mouse illustration with two side buttons" data-alt="diagramAlt" width="260" height="260" loading="lazy">
+<div class="demo-controls" role="group" aria-label="Sample side-button actions" data-aria="exampleAria">
+<button type="button" data-example="upper" aria-pressed="true">
+<span class="button-number">5</span>
+<span data-copy="demoUpper" >Upper side · click</span>
+</button>
+<button type="button" data-example="lower" aria-pressed="false">
+<span class="button-number">4</span>
+<span data-copy="demoLower" >Lower side · click</span>
+</button>
+<button type="button" data-example="hold" aria-pressed="false">
+<span class="button-number">4</span>
+<span data-copy="demoHold" >Lower side · hold</span>
+</button>
+</div>
+</div>
+<div class="demo-result" role="status" aria-live="polite">
+<span class="result-symbol" aria-hidden="true">→</span>
+<div>
+<h3 id="result-title">Desktop right</h3>
+<p id="result-body">One click on the upper-side button goes to the next desktop.</p>
+</div>
+</div>
+<p data-copy="demoHint" class="demo-hint">An example layout: numbers vary by mouse. Capture your own button in the app. This preview changes only the explanation below.</p>
+</div>
+</section>
+<section class="section feature-row wrap">
+<figure class="feature-visual scroll-visual">
+<img data-screen="scrolling" data-alt="scrollAlt" src="Docs/media/screenshots/en-scrolling.png" width="1040" height="730" alt="GlideMouse scrolling controls with presets, speed and direction" loading="lazy">
+</figure>
+<div class="section-copy">
+<h2 data-copy="scrollTitle" >Scroll the way that feels right.</h2>
+<p data-copy="scrollBody" >Start with Standard or Smooth. Adjust speed and direction first; open the finer controls when you need them. Continuous trackpad scrolling stays native.</p>
+<ul class="plain-list">
+<li data-copy="scrollItem1" >Make each wheel step shorter or longer.</li>
+<li data-copy="scrollItem2" >Choose a direct response or softer movement.</li>
+<li data-copy="scrollItem3" >Turn momentum off for a more precise stop.</li>
+</ul>
+</div>
+</section>
+<section class="section feature-row reverse wrap">
+<figure class="feature-visual">
+<img data-screen="profiles" data-alt="profileAlt" src="Docs/media/screenshots/en-profiles.png" width="1040" height="730" alt="GlideMouse app-specific settings showing inherited defaults and custom actions" loading="lazy">
+</figure>
+<div class="section-copy">
+<h2 data-copy="profileTitle" >One mouse. Different jobs.</h2>
+<p data-copy="profileBody" >All apps is your starting point. Change an action for Safari, your editor or another app when it needs something different. Everything else keeps the default.</p>
+<blockquote data-copy="profileExample" >For example: lower-side click switches desktops normally, but goes Back when Safari is in front.</blockquote>
+<p data-copy="profileFoot" class="small">Remove an app setup whenever you like. It removes its GlideMouse settings; it does not uninstall the app. Undo brings the setup back.</p>
+</div>
+</section>
+<section id="how-to" class="setup">
+<div class="wrap">
+<h2 data-copy="setupTitle" >Three steps to make it yours.</h2>
+<ol class="steps">
+<li>
+<span class="step-number" aria-hidden="true">1</span>
+<h3 data-copy="step1Title" >Connect and allow</h3>
+<p data-copy="step1Body" >Connect your mouse. Allow Accessibility for your chosen actions and Input Monitoring to recognize buttons and wheel input.</p>
+</li>
+<li>
+<span class="step-number" aria-hidden="true">2</span>
+<h3 data-copy="step2Title" >Identify a button</h3>
+<p data-copy="step2Body" >Press inside the blue capture box. Confirm the detected button’s physical position on the mouse picture.</p>
+</li>
+<li>
+<span class="step-number" aria-hidden="true">3</span>
+<h3 data-copy="step3Title" >Choose, save, try</h3>
+<p data-copy="step3Body" >Choose Click once, Double click or Hold. Pick an action, save it, and test outside the capture box.</p>
+</li>
+</ol>
+<p data-copy="setupFoot" class="setup-foot">Start with one action. Add app-specific settings and advanced gestures when you need them.</p>
+</div>
+</section>
+<section class="section wrap guide-section">
+<div class="section-copy">
+<h2 data-copy="guideTitle" >A guide for every screen.</h2>
+<p data-copy="guideBody" >Short walkthroughs show button labels, double click and hold, app-specific settings, scrolling, shortcuts, deletion and Undo.</p>
+<div class="actions">
+<a data-copy="englishVideo" class="button secondary" href="tutorials.html#en">English videos</a>
+<a data-copy="myanmarVideo" class="button secondary" href="tutorials.html#my">မြန်မာ Video များ</a>
+</div>
+<a data-copy="readGuide" class="text-link" data-readme href="https://github.com/MinnKhantThuu/GlideMouse/blob/main/README.md">Read the full guide</a>
+<p data-copy="guideFoot" class="small">5 lessons in each language. English has local synthesized narration; Myanmar has on-screen explanations. Native app UI with sample settings, not physical-input recordings.</p>
+</div>
+<a class="guide-preview" data-tutorial href="tutorials.html#en-buttons" aria-label="Watch the button mapping guide" data-aria="watchAria">
+<img data-poster src="Docs/media/videos/en-buttons.png" width="1440" height="1080" alt="Button mapping video preview" data-alt="posterAlt" loading="lazy">
+<span class="play-circle" aria-hidden="true">▶</span>
+</a>
+</section>
+<section id="download" class="download-section">
+<div class="wrap download-layout">
+<div>
+<h2 data-copy="downloadTitle" >Your next click starts here.</h2>
+<p data-copy="downloadBody" >Download the current developer build, put GlideMouse in Applications, and follow Mouse setup.</p>
+<div class="actions">
+<a data-copy="downloadDmg" class="button primary" href="https://github.com/MinnKhantThuu/GlideMouse/releases/download/v0.3.16/GlideMouse-0.3.16-developer.dmg">Download DMG</a>
+<a data-copy="downloadZip" class="button secondary" href="https://github.com/MinnKhantThuu/GlideMouse/releases/download/v0.3.16/GlideMouse-0.3.16-developer.zip">ZIP download</a>
+</div>
+<p data-copy="requirements" class="meta">macOS 14 or later · Apple Silicon &amp; Intel</p>
+<a data-copy="releaseDetails" class="text-link" href="https://github.com/MinnKhantThuu/GlideMouse/releases/tag/v0.3.16">Release notes &amp; checksums</a>
+</div>
+<aside class="release-status">
+<h3 data-copy="downloadStatus" >Development prerelease</h3>
+<p class="version">v0.3.16 <span>Build 20</span>
+</p>
+<p data-copy="downloadLimit" >This build is Developer ID signed and universal, but it is not notarized. macOS may block it. Do not disable Gatekeeper. Building from source is an alternative.</p>
+<a data-copy="source" class="text-link" href="https://github.com/MinnKhantThuu/GlideMouse">View source on GitHub</a>
+</aside>
+</div>
+</section>
+<section id="faq" class="section wrap faq">
+<div>
+<h2 data-copy="faqTitle" >Before you get started.</h2>
+<p data-copy="pause" class="small">Pause: ⌃⌥⌘ Esc</p>
+</div>
+<div class="faq-list">
+<details>
+<summary>
+<span data-copy="faq1Title" >Will this work with my mouse?</span>
+<span class="expand-icon" aria-hidden="true">+</span>
+</summary>
+<p data-copy="faq1Body" >GlideMouse works with standard reported mouse buttons and discrete wheel input. Vendor-specific buttons may not be reported normally. The universal build targets macOS 14+, but every mouse, Mac and OS version has not been physically tested. Magic Mouse touch gestures are experimental and have not been tested on real Magic Mouse hardware here.</p>
+</details>
+<details>
+<summary>
+<span data-copy="faq2Title" >Why does it need two permissions?</span>
+<span class="expand-icon" aria-hidden="true">+</span>
+</summary>
+<p data-copy="faq2Body" >Accessibility lets GlideMouse perform actions you chose. Input Monitoring lets it recognize button and wheel input. Mouse control works locally, and the app does not keep a log of what you type. Update checks contact the configured update host.</p>
+</details>
+<details>
+<summary>
+<span data-copy="faq3Title" >Can I get my normal mouse back?</span>
+<span class="expand-icon" aria-hidden="true">+</span>
+</summary>
+<p data-copy="faq3Body" >Yes. Pause from the menu bar or press Control + Option + Command + Escape. Remove an action or use Undo to restore a recent change. Export your settings when you want a backup.</p>
+</details>
+<details>
+<summary>
+<span data-copy="faq4Title" >Do I need to set up every app?</span>
+<span class="expand-icon" aria-hidden="true">+</span>
+</summary>
+<p data-copy="faq4Body" >No. All apps provides the default. Only add an app when you want a different action or scrolling feel while that app is frontmost.</p>
+</details>
+<details>
+<summary>
+<span data-copy="faq5Title" >What about automatic updates?</span>
+<span class="expand-icon" aria-hidden="true">+</span>
+</summary>
+<p data-copy="faq5Body" >The app includes Sparkle update controls. Installation needs a newer eligible signed release in the update feed. End-to-end automatic update installation has not been verified; source commits and GitHub prereleases do not automatically update the installed app.</p>
+</details>
+</div>
+</section>
+</main>
+<footer class="footer">
+<div class="wrap footer-layout">
+<div>
+<a class="brand" href="./">
+<img src="Assets/AppIcon-transparent.png" width="32" height="32" alt="">
+<span>GlideMouse</span>
+</a>
+<h3 data-copy="developer" >Developed by Minn Khant Thu</h3>
+<p data-copy="developerBody" >Building useful apps and tools. Have a question, found a bug, or want to support the work?</p>
+<div class="footer-links">
+<a data-copy="contact" href="mailto:minnkhantthu.ucsy@gmail.com">Email</a>
+<a data-copy="website" href="https://minnkhantthu.up.railway.app/">Developer website</a>
+<a data-copy="coffee" href="https://buymeacoffee.com/minnkhantthu">Buy Me a Coffee</a>
+</div>
+</div>
+<div class="footer-meta">
+<p data-copy="footerLanguages" >App interface: English, မြန်မာ, 简体中文.</p>
+<p data-copy="footerLicense" >Open source under the MIT license.</p>
+<a data-copy="issues" href="https://github.com/MinnKhantThuu/GlideMouse/issues">Report an issue</a>
+</div>
+</div>
+</footer>
+</body>
+</html>
