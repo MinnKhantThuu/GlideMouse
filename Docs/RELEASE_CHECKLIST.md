@@ -1,7 +1,7 @@
 # Release checklist
 
 Source: https://github.com/MinnKhantThuu/GlideMouse  
-Tutorials: https://minnkhantthuu.github.io/GlideMouse/  
+Tutorials: https://minnkhantthuu.github.io/GlideMouse/tutorials.html  
 Update infrastructure: https://github.com/MinnKhantThuu/GlideMouse-updates
 
 Public developer downloads are **development prereleases** until notarization and the distribution checks below pass. Publishing source or a GitHub release does not automatically publish an eligible Sparkle update.

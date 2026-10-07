@@ -4,7 +4,7 @@
 
 Mouse ခလုတ်တွေကို ကိုယ်လိုချင်တဲ့အလုပ် လုပ်ခိုင်းပြီး scroll ကို သုံးရအဆင်ပြေအောင် ချိန်နိုင်တဲ့ macOS app ပါ။ **Minn Khant Thu** က develop လုပ်ထားပြီး English၊ မြန်မာ၊ 简体中文 သုံးဘာသာနဲ့ သုံးနိုင်ပါတယ်။
 
-**[English guide](README.md) · [Video လမ်းညွှန်များ](https://minnkhantthuu.github.io/GlideMouse/#my) · [简体中文](Docs/USER_GUIDE_ZH.md)**
+**[Website](https://minnkhantthuu.github.io/GlideMouse/?lang=my) · [English guide](README.md) · [Video လမ်းညွှန်များ](https://minnkhantthuu.github.io/GlideMouse/tutorials.html#my) · [简体中文](Docs/USER_GUIDE_ZH.md)**
 
 ![ခလုတ်နံပါတ်နှင့် လုပ်ဆောင်ချက်ရွေးသည့် စာမျက်နှာ](Docs/media/screenshots/my-buttons.png)
 
@@ -47,11 +47,11 @@ English video တွေမှာ ဒီ Mac ပေါ်က speech synthesis န
 
 | အပိုင်း | မြန်မာ | English | လေ့လာရမည့်အရာ |
 |---|---|---|---|
-| ၁။ စတင်သုံးရန် | [ကြည့်ရန်](https://minnkhantthuu.github.io/GlideMouse/#my-setup) | [Watch](https://minnkhantthuu.github.io/GlideMouse/#en-setup) | Permission၊ ခလုတ်နံပါတ်၊ နေရာနဲ့ starter setup |
-| ၂။ ခလုတ်လုပ်ဆောင်ချက် | [ကြည့်ရန်](https://minnkhantthuu.github.io/GlideMouse/#my-buttons) | [Watch](https://minnkhantthuu.github.io/GlideMouse/#en-buttons) | Click၊ double click၊ hold နဲ့ Desktop ဘယ်/ညာ |
-| ၃။ App အလိုက် setting | [ကြည့်ရန်](https://minnkhantthuu.github.io/GlideMouse/#my-profiles) | [Watch](https://minnkhantthuu.github.io/GlideMouse/#en-profiles) | ပုံမှန် setting၊ သီးခြားပြင်ခြင်း၊ ဖြုတ်ခြင်းနဲ့ Undo |
-| ၄။ Scroll နဲ့ ဆက်တင်များ | [ကြည့်ရန်](https://minnkhantthuu.github.io/GlideMouse/#my-scrolling) | [Watch](https://minnkhantthuu.github.io/GlideMouse/#en-scrolling) | Speed၊ direction၊ response၊ language နဲ့ About |
-| ၅။ Shortcut နဲ့ အကူအညီ | [ကြည့်ရန်](https://minnkhantthuu.github.io/GlideMouse/#my-shortcuts) | [Watch](https://minnkhantthuu.github.io/GlideMouse/#en-shortcuts) | Shortcut မှတ်တမ်းတင်ခြင်း၊ ဖျက်ခြင်း၊ Undo နဲ့ Help |
+| ၁။ စတင်သုံးရန် | [ကြည့်ရန်](https://minnkhantthuu.github.io/GlideMouse/tutorials.html#my-setup) | [Watch](https://minnkhantthuu.github.io/GlideMouse/tutorials.html#en-setup) | Permission၊ ခလုတ်နံပါတ်၊ နေရာနဲ့ starter setup |
+| ၂။ ခလုတ်လုပ်ဆောင်ချက် | [ကြည့်ရန်](https://minnkhantthuu.github.io/GlideMouse/tutorials.html#my-buttons) | [Watch](https://minnkhantthuu.github.io/GlideMouse/tutorials.html#en-buttons) | Click၊ double click၊ hold နဲ့ Desktop ဘယ်/ညာ |
+| ၃။ App အလိုက် setting | [ကြည့်ရန်](https://minnkhantthuu.github.io/GlideMouse/tutorials.html#my-profiles) | [Watch](https://minnkhantthuu.github.io/GlideMouse/tutorials.html#en-profiles) | ပုံမှန် setting၊ သီးခြားပြင်ခြင်း၊ ဖြုတ်ခြင်းနဲ့ Undo |
+| ၄။ Scroll နဲ့ ဆက်တင်များ | [ကြည့်ရန်](https://minnkhantthuu.github.io/GlideMouse/tutorials.html#my-scrolling) | [Watch](https://minnkhantthuu.github.io/GlideMouse/tutorials.html#en-scrolling) | Speed၊ direction၊ response၊ language နဲ့ About |
+| ၅။ Shortcut နဲ့ အကူအညီ | [ကြည့်ရန်](https://minnkhantthuu.github.io/GlideMouse/tutorials.html#my-shortcuts) | [Watch](https://minnkhantthuu.github.io/GlideMouse/tutorials.html#en-shortcuts) | Shortcut မှတ်တမ်းတင်ခြင်း၊ ဖျက်ခြင်း၊ Undo နဲ့ Help |
 
 Browser မှာ တိုက်ရိုက်ကြည့်ဖို့ Video လမ်းညွှန်စာမျက်နှာကို သုံးပါ။ MP4၊ poster နဲ့ SRT စာတန်းဖိုင်တွေကို [Docs/media/videos](Docs/media/videos) မှာလည်း ထားထားပါတယ်။
 

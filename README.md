@@ -4,7 +4,7 @@
 
 Make your mouse buttons useful and your scrolling comfortable on macOS. GlideMouse is a native SwiftUI app by **Minn Khant Thu**, with English, Myanmar and Simplified Chinese interfaces.
 
-**[မြန်မာလမ်းညွှန်](README_MM.md) · [Watch the tutorials](https://minnkhantthuu.github.io/GlideMouse/) · [简体中文](Docs/USER_GUIDE_ZH.md)**
+**[Website](https://minnkhantthuu.github.io/GlideMouse/) · [မြန်မာလမ်းညွှန်](README_MM.md) · [Watch the tutorials](https://minnkhantthuu.github.io/GlideMouse/tutorials.html) · [简体中文](Docs/USER_GUIDE_ZH.md)**
 
 ![Buttons screen with a labelled mouse and action editor](Docs/media/screenshots/en-buttons.png)
 
@@ -48,11 +48,11 @@ Each lesson has an English version with local synthesized narration and a Myanma
 
 | Lesson | English | မြန်မာ | What you learn |
 |---|---|---|---|
-| 1. Start and identify buttons | [Watch](https://minnkhantthuu.github.io/GlideMouse/#en-setup) | [ကြည့်ရန်](https://minnkhantthuu.github.io/GlideMouse/#my-setup) | Permissions, button numbers, positions and starter setup |
-| 2. Click, double click, hold | [Watch](https://minnkhantthuu.github.io/GlideMouse/#en-buttons) | [ကြည့်ရန်](https://minnkhantthuu.github.io/GlideMouse/#my-buttons) | Desktop left/right, Mission Control and primary buttons |
-| 3. One app, different actions | [Watch](https://minnkhantthuu.github.io/GlideMouse/#en-profiles) | [ကြည့်ရန်](https://minnkhantthuu.github.io/GlideMouse/#my-profiles) | Inheritance, save scope, remove app and Undo |
-| 4. Scrolling and settings | [Watch](https://minnkhantthuu.github.io/GlideMouse/#en-scrolling) | [ကြည့်ရန်](https://minnkhantthuu.github.io/GlideMouse/#my-scrolling) | Speed, direction, response, language and About |
-| 5. Shortcuts, delete and help | [Watch](https://minnkhantthuu.github.io/GlideMouse/#en-shortcuts) | [ကြည့်ရန်](https://minnkhantthuu.github.io/GlideMouse/#my-shortcuts) | Shortcut recording, delete, Undo and emergency pause |
+| 1. Start and identify buttons | [Watch](https://minnkhantthuu.github.io/GlideMouse/tutorials.html#en-setup) | [ကြည့်ရန်](https://minnkhantthuu.github.io/GlideMouse/tutorials.html#my-setup) | Permissions, button numbers, positions and starter setup |
+| 2. Click, double click, hold | [Watch](https://minnkhantthuu.github.io/GlideMouse/tutorials.html#en-buttons) | [ကြည့်ရန်](https://minnkhantthuu.github.io/GlideMouse/tutorials.html#my-buttons) | Desktop left/right, Mission Control and primary buttons |
+| 3. One app, different actions | [Watch](https://minnkhantthuu.github.io/GlideMouse/tutorials.html#en-profiles) | [ကြည့်ရန်](https://minnkhantthuu.github.io/GlideMouse/tutorials.html#my-profiles) | Inheritance, save scope, remove app and Undo |
+| 4. Scrolling and settings | [Watch](https://minnkhantthuu.github.io/GlideMouse/tutorials.html#en-scrolling) | [ကြည့်ရန်](https://minnkhantthuu.github.io/GlideMouse/tutorials.html#my-scrolling) | Speed, direction, response, language and About |
+| 5. Shortcuts, delete and help | [Watch](https://minnkhantthuu.github.io/GlideMouse/tutorials.html#en-shortcuts) | [ကြည့်ရန်](https://minnkhantthuu.github.io/GlideMouse/tutorials.html#my-shortcuts) | Shortcut recording, delete, Undo and emergency pause |
 
 Videos, posters and SRT captions are also available in [Docs/media/videos](Docs/media/videos). Use the tutorial page for in-browser playback.
 
