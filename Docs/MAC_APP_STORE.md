@@ -2,7 +2,7 @@
 
 The direct-download edition remains the shipping app. A separate Store candidate
 uses `app.glidemouse.store` and the App Sandbox, with its own settings container.
-Version 0.3.19 (23) has been signed by the Minn Khant Thu developer team and uploaded to App Store Connect. Review submission and approval are still pending.
+Version 0.3.19 (23) has been signed by the Minn Khant Thu developer team and uploaded to App Store Connect. It was submitted on 7 October 2026 and is **Waiting for Review**. App Store availability depends on Apple's review; it is not yet publicly released.
 
 ## Generate and archive
 
@@ -28,8 +28,10 @@ compilation; it deliberately does not produce a Store-signed upload.
 
 The candidate retains the button/hold/double-press recognition and Core Graphics
 shortcuts used for desktop switching, Mission Control, scroll processing, URL
-opening, and app-specific mappings. These still require runtime testing under the
-sandbox with explicit user permission; a successful build does not prove them.
+opening, and app-specific mappings. The signed sandboxed build passed the runtime
+integration checks for button remapping, scroll phases/momentum, capture isolation,
+native continuous-scroll passthrough, pause and emergency stop. These checks used
+generated events; physical-device and clean-Mac checks remain separate.
 
 The candidate excludes private Magic Mouse touch gestures and the Sparkle updater.
 Updates for a published Store release would be handled by the App Store. Shell
@@ -55,12 +57,14 @@ promise of App Review approval.
 See [Apple DTS's explanation](https://developer.apple.com/forums/thread/820594)
 and [Review Guidelines 2.4.5 and 2.5.1](https://developer.apple.com/app-store/review/guidelines/).
 
-Before submitting for review, verify regular clicks and dragging, side-button mappings,
+For release regression testing, verify regular clicks and dragging, side-button mappings,
 desktop switching, hold/double press, scrolling, app profiles, learning/recording,
 permission denial/revocation and restart persistence on a clean macOS setup.
 Use the isolated Store identity and pause the direct edition during input tests.
 Never replace the user's working direct edition to test this candidate.
 
-The enrolled developer team, explicit Bundle ID, App Store Connect record and signed package are in place. Final privacy/review metadata, screenshots and sandbox runtime checks must be completed before review submission. Keep descriptions
-and screenshots aligned with the features actually verified in the Store edition.
+The signed universal package, English and Simplified Chinese screenshots and
+metadata, published Data Not Collected privacy declaration, export compliance,
+and free pricing are in place. Keep future descriptions and screenshots aligned
+with the features actually verified in the Store edition.
 Do not mark an unsigned archive or a local ad-hoc build as upload ready.

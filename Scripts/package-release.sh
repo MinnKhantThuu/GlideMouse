@@ -16,6 +16,16 @@ codesign --force --options runtime --sign "$SIGN_ID" "$APP/Contents/Frameworks/S
 codesign --force --options runtime --entitlements Config/GlideMouse.entitlements --sign "$SIGN_ID" "$APP"
 codesign --verify --deep --strict "$APP"
 lipo -info "$APP/Contents/MacOS/GlideMouse"
+# Notarize and staple the app before copying it into the installer. A DMG
+# created before this step would contain an app without its offline ticket.
+if [[ -n "${GLIDEMOUSE_NOTARY_PROFILE:-}" && "$SIGN_ID" != "-" ]]; then
+    NOTARY_ZIP="build/Release/GlideMouse-notary-submission.zip"
+    ditto -c -k --sequesterRsrc --keepParent "$APP" "$NOTARY_ZIP"
+    xcrun notarytool submit "$NOTARY_ZIP" --keychain-profile "$GLIDEMOUSE_NOTARY_PROFILE" --wait
+    xcrun stapler staple "$APP"
+    xcrun stapler validate "$APP"
+    spctl --assess --type execute --verbose=4 "$APP"
+fi
 STAGE=$(mktemp -d "$PWD/build/dmg-stage.XXXXXX")
 trap 'rm -rf "$STAGE"' EXIT
 ditto "$APP" "$STAGE/GlideMouse.app"
@@ -25,13 +35,14 @@ RELEASE_VERSION=$(/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString'
 DMG="build/Release/GlideMouse-$RELEASE_VERSION-developer.dmg"
 ZIP="build/Release/GlideMouse-$RELEASE_VERSION-developer.zip"
 hdiutil create -volname GlideMouse -srcfolder "$STAGE" -ov -format UDZO "$DMG"
+if [[ "$SIGN_ID" != "-" ]]; then codesign --timestamp --sign "$SIGN_ID" "$DMG"; fi
 ditto -c -k --sequesterRsrc --keepParent "$APP" "$ZIP"
 shasum -a 256 "$DMG" "$ZIP" > build/Release/SHA256SUMS.txt
 if [[ -n "${GLIDEMOUSE_NOTARY_PROFILE:-}" && "$SIGN_ID" != "-" ]]; then
     xcrun notarytool submit "$DMG" --keychain-profile "$GLIDEMOUSE_NOTARY_PROFILE" --wait
-    xcrun stapler staple "$APP"
     xcrun stapler staple "$DMG"
     xcrun stapler validate "$DMG"
+    spctl --assess --type open --context context:primary-signature --verbose=4 "$DMG"
     ditto -c -k --sequesterRsrc --keepParent "$APP" "$ZIP"
     shasum -a 256 "$DMG" "$ZIP" > build/Release/SHA256SUMS.txt
 fi

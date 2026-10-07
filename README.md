@@ -170,7 +170,7 @@ A shortcut acts in the current application. Check that it works from your keyboa
 - **Appearance:** system, light or dark.
 - **Launch at login:** start with your macOS session.
 - **Show action name on screen:** optional feedback. Turn it off if you do not want labels appearing during use.
-- **Updates:** manually check or enable automatic checks/downloads. Installation requires a newer signed release offered by the feed. The current feed may have no eligible update; automatic update installation has not been fully verified.
+- **Updates:** manually check or enable automatic checks/downloads. Installation requires a newer signed release offered by the feed. Version 0.3.19 is offered through the signed update feed. Background download and installation from 0.3.18 to 0.3.19 were verified with an isolated app copy, followed by relaunch and Gatekeeper validation.
 - **Your settings:** Export saves a JSON backup. Import shows a review before Merge or Replace. Replace pauses the engine; imported command automation starts disabled. Merge rejects conflicts rather than silently replacing rules.
 - **About:** developer, version, email, website and Buy Me a Coffee.
 

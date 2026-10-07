@@ -169,7 +169,7 @@ Shortcut က လက်ရှိ app မှာ သက်ရောက်တာဖ�
 - **အရောင်ပုံစံ:** System အတိုင်း၊ အလင်း၊ အမှောင်။
 - **Mac စဖွင့်ချိန် run:** Login လုပ်တာနဲ့ app စရန်။
 - **Screen ပေါ် action နာမည်ပြရန်:** လိုမှဖွင့်ပါ။ စာတန်းမပေါ်စေချင်ရင် ပိတ်နိုင်ပါတယ်။
-- **Updates:** ကိုယ်တိုင်စစ်နိုင်သလို အလိုအလျောက်စစ်/ဒေါင်းလုဒ်လုပ်နိုင်ပါတယ်။ Feed ထဲမှာ signed version အသစ်ရှိမှ install ဖြစ်ပါမယ်။ လက်ရှိ feed မှာ သင့်အတွက် update မရှိနိုင်ပါ။ Auto install အဆုံးအထိ မစမ်းပြီးသေးပါ။
+- **Updates:** ကိုယ်တိုင်စစ်နိုင်သလို အလိုအလျောက်စစ်/ဒေါင်းလုဒ်လုပ်နိုင်ပါတယ်။ Feed ထဲမှာ signed version အသစ်ရှိမှ install ဖြစ်ပါမယ်။ Signed update feed မှာ 0.3.19 ရှိပါပြီ။ သီးခြား app မိတ္တူနဲ့ 0.3.18 ကနေ 0.3.19 ကို အလိုအလျောက် ဒေါင်းလုဒ်လုပ်၊ install လုပ်ပြီး app ပြန်ဖွင့်နိုင်တာ စမ်းထားပါတယ်။ Apple ရဲ့ Gatekeeper စစ်ဆေးမှုလည်း အောင်မြင်ပါတယ်။
 - **သင့် setting:** Export က JSON backup ထုတ်ပေးပါတယ်။ Import မှာ အရင် review ပြပြီး Merge/Replace ရွေးရပါတယ်။ Replace က engine ကို pause လုပ်ပြီး imported command automation ကို ပိတ်ထားပါတယ်။ Merge က rule ထပ်နေမှုကို လက်မခံပါ။
 - **About:** Developer၊ version၊ email၊ website နဲ့ Buy Me a Coffee။
 
