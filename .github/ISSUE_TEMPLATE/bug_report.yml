@@ -1,0 +1,44 @@
+name: Bug or crash report
+description: Report reproducible input, settings, or crash behavior.
+title: '[Bug]: '
+body:
+  - type: markdown
+    attributes:
+      value: 'Use emergency pause (Control–Option–Command–Escape) if input behaves unexpectedly. Do not attach device serials, typed text, credentials, signing material, or screenshots of unrelated applications.'
+  - type: input
+    id: version
+    attributes:
+      label: GlideMouse version and build
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: macOS version and CPU architecture
+      placeholder: macOS 26.6.2, Apple Silicon
+    validations:
+      required: true
+  - type: input
+    id: device
+    attributes:
+      label: Mouse model, generation, and connection
+      placeholder: BT4.0 Mouse, Bluetooth; omit serial number
+    validations:
+      required: true
+  - type: textarea
+    id: setup
+    attributes:
+      label: Permissions, profile, mappings, and competing utilities
+      description: Include whether Accessibility/Input Monitoring are granted and whether other mouse utilities are paused.
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Reproduction steps
+      description: Include expected and actual behavior, frequency, affected application, and whether it occurs with GlideMouse paused.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Sanitized evidence
+      description: Add relevant GlideMouse diagnostics or a sanitized crash stack. Distinguish real hardware input from synthetic tests.

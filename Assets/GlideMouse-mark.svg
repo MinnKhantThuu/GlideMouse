@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+<title>GlideMouse editable companion mark</title>
+<defs><linearGradient id="tile" x2="0" y2="1"><stop stop-color="#239cff"/><stop offset="1" stop-color="#0640d9"/></linearGradient><linearGradient id="motion"><stop stop-color="#03c5ef"/><stop offset="1" stop-color="#8cfbff"/></linearGradient></defs>
+<rect x="24" y="24" width="976" height="976" rx="220" fill="url(#tile)"/>
+<path d="M512 158c-125 0-195 90-195 229v264c0 142 75 217 195 217s195-75 195-217V387c0-139-70-229-195-229z" fill="#fff"/>
+<path d="M512 158v105" stroke="#176be4" stroke-width="9"/><rect x="483" y="257" width="58" height="119" rx="29" fill="#08c5f0" stroke="#176be4" stroke-width="9"/>
+<path d="M729 383c193 78 126 225-229 333-234 72-364 31-293-40" fill="none" stroke="url(#motion)" stroke-width="38" stroke-linecap="round"/>
+</svg>

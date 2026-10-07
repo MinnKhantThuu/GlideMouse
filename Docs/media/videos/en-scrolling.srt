@@ -1,0 +1,23 @@
+1
+00:00:00,000 --> 00:00:07,000
+Open Scrolling. Choose Standard or Smooth first; use Custom only for fine adjustments.
+
+2
+00:00:07,000 --> 00:00:16,000
+Speed controls distance per wheel step. Higher moves farther. Direction switches reverse the scroll direction.
+
+3
+00:00:16,000 --> 00:00:25,000
+In an app profile, enable its scrolling override to customize only that app. Leave it off to inherit All apps.
+
+4
+00:00:25,000 --> 00:00:34,000
+Advanced → Button response: choose Fast, Normal or Relaxed. Fine-tune hold/double-click timing only if needed.
+
+5
+00:00:34,000 --> 00:00:43,000
+Settings contains language, appearance, login launch and updates. Show action name on screen is optional.
+
+6
+00:00:43,000 --> 00:00:50,667
+About contains developer contact and Buy Me a Coffee. Export/import your settings before moving to another Mac.

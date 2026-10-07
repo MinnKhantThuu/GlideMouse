@@ -1,0 +1,29 @@
+name: Device compatibility report
+description: Record evidence for one named device and operating system.
+title: '[Device]: '
+body:
+  - type: input
+    id: build
+    attributes:
+      label: GlideMouse build, macOS version, and architecture
+    validations:
+      required: true
+  - type: input
+    id: model
+    attributes:
+      label: Device model, generation, and connection
+      description: Do not include serial numbers or Bluetooth addresses.
+    validations:
+      required: true
+  - type: textarea
+    id: cases
+    attributes:
+      label: Cases actually tested and results
+      description: Record button IDs/remaps, scroll directions/phases, drag release, pause, reconnect, sleep/wake, conflicts, and affected apps. Mark untested cases explicitly.
+    validations:
+      required: true
+  - type: textarea
+    id: traces
+    attributes:
+      label: Sanitized observations and limitations
+      description: Separate descriptor detection, synthetic replay, and user-operated hardware evidence. Do not infer stable device attribution from timing.

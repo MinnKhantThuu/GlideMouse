@@ -1,0 +1,23 @@
+1
+00:00:00,000 --> 00:00:07,000
+Open Settings → Language. Choose English, မြန်မာ or 简体中文.
+
+2
+00:00:07,000 --> 00:00:16,000
+Open Mouse setup. Allow Accessibility and Input Monitoring in macOS System Settings, then return and Refresh.
+
+3
+00:00:16,000 --> 00:00:25,000
+In Identify buttons, start capture. Press one wheel or side button inside the box. Select its position and confirm.
+
+4
+00:00:25,000 --> 00:00:34,167
+This sample mouse uses 3 = wheel, 4 = lower side, 5 = upper side. Your mouse may report different numbers.
+
+5
+00:00:34,167 --> 00:00:43,167
+Keep your existing settings, or choose a starter setup. Only the listed inputs change; Undo can restore them.
+
+6
+00:00:43,167 --> 00:00:50,167
+Return to Buttons. Select a numbered label to edit its action. Enable GlideMouse when ready.

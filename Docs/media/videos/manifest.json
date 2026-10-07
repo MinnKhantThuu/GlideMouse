@@ -1,0 +1,102 @@
+[
+  {
+    "language": "en",
+    "topic": "setup",
+    "title": "01 · Start and label your mouse",
+    "file": "en-setup.mp4",
+    "seconds": 50.19,
+    "bytes": 774146,
+    "narration": "local English text-to-speech",
+    "captureType": "native SwiftUI guided sample workflow; not a physical-input recording"
+  },
+  {
+    "language": "en",
+    "topic": "buttons",
+    "title": "02 · Click, double click and hold",
+    "file": "en-buttons.mp4",
+    "seconds": 51.15,
+    "bytes": 905463,
+    "narration": "local English text-to-speech",
+    "captureType": "native SwiftUI guided sample workflow; not a physical-input recording"
+  },
+  {
+    "language": "en",
+    "topic": "profiles",
+    "title": "03 · Different actions in one app",
+    "file": "en-profiles.mp4",
+    "seconds": 47.21,
+    "bytes": 807421,
+    "narration": "local English text-to-speech",
+    "captureType": "native SwiftUI guided sample workflow; not a physical-input recording"
+  },
+  {
+    "language": "en",
+    "topic": "scrolling",
+    "title": "04 · Scrolling, response and language",
+    "file": "en-scrolling.mp4",
+    "seconds": 50.69,
+    "bytes": 813493,
+    "narration": "local English text-to-speech",
+    "captureType": "native SwiftUI guided sample workflow; not a physical-input recording"
+  },
+  {
+    "language": "en",
+    "topic": "shortcuts",
+    "title": "05 · Shortcuts, delete, Undo and help",
+    "file": "en-shortcuts.mp4",
+    "seconds": 54.85,
+    "bytes": 932352,
+    "narration": "local English text-to-speech",
+    "captureType": "native SwiftUI guided sample workflow; not a physical-input recording"
+  },
+  {
+    "language": "my",
+    "topic": "setup",
+    "title": "01 · စတင်သုံးရန်နှင့် ခလုတ်နေရာ သတ်မှတ်ရန်",
+    "file": "my-setup.mp4",
+    "seconds": 50.0,
+    "bytes": 364637,
+    "narration": "Myanmar captions, no narration",
+    "captureType": "native SwiftUI guided sample workflow; not a physical-input recording"
+  },
+  {
+    "language": "my",
+    "topic": "buttons",
+    "title": "02 · တချက်နှိပ်၊ နှစ်ချက်နှိပ်နှင့် ဖိထား",
+    "file": "my-buttons.mp4",
+    "seconds": 51.0,
+    "bytes": 513902,
+    "narration": "Myanmar captions, no narration",
+    "captureType": "native SwiftUI guided sample workflow; not a physical-input recording"
+  },
+  {
+    "language": "my",
+    "topic": "profiles",
+    "title": "03 · App တခုအတွက် သီးခြားလုပ်ဆောင်ချက်",
+    "file": "my-profiles.mp4",
+    "seconds": 47.0,
+    "bytes": 480904,
+    "narration": "Myanmar captions, no narration",
+    "captureType": "native SwiftUI guided sample workflow; not a physical-input recording"
+  },
+  {
+    "language": "my",
+    "topic": "scrolling",
+    "title": "04 · Scroll၊ နှိပ်ချိန်နှင့် ဘာသာစကား",
+    "file": "my-scrolling.mp4",
+    "seconds": 50.0,
+    "bytes": 396407,
+    "narration": "Myanmar captions, no narration",
+    "captureType": "native SwiftUI guided sample workflow; not a physical-input recording"
+  },
+  {
+    "language": "my",
+    "topic": "shortcuts",
+    "title": "05 · Shortcut၊ ဖျက်ရန်၊ Undo နှင့် အကူအညီ",
+    "file": "my-shortcuts.mp4",
+    "seconds": 53.0,
+    "bytes": 464641,
+    "narration": "Myanmar captions, no narration",
+    "captureType": "native SwiftUI guided sample workflow; not a physical-input recording"
+  }
+]

@@ -1,0 +1,27 @@
+1
+00:00:00,000 --> 00:00:09,000
+Choose Keyboard shortcut as the action. Record while its field is focused; this sample uses ⌘C.
+
+2
+00:00:09,000 --> 00:00:17,417
+Press Record shortcut, focus this field, then press the key combination. It stops recording after one shortcut.
+
+3
+00:00:17,417 --> 00:00:24,417
+Save the shortcut. Normal actions outside the mouse capture box keep working while you edit a mapping.
+
+4
+00:00:24,417 --> 00:00:33,417
+To delete, select the button AND its press type, then Remove action. Click, double click and hold are separate.
+
+5
+00:00:33,417 --> 00:00:40,417
+The single-click action is removed. Undo restores it; other gestures on this button remain saved.
+
+6
+00:00:40,417 --> 00:00:47,542
+Help → Troubleshooting checks permissions. Technical details are collapsed; expand them only when needed.
+
+7
+00:00:47,542 --> 00:00:54,833
+Need to stop quickly? Press Control + Option + Command + Escape, or Pause from the menu bar.

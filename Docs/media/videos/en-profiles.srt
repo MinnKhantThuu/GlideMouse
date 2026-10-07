@@ -1,0 +1,23 @@
+1
+00:00:00,000 --> 00:00:07,000
+All apps is the default. Add an app only when it needs different actions.
+
+2
+00:00:07,000 --> 00:00:16,000
+Choose Add app and select Safari.app. The editing scope now says Safari. Existing buttons inherit All apps.
+
+3
+00:00:16,000 --> 00:00:26,000
+Save for this app: lower-side click → Back. It works in Safari; other apps still use Desktop left.
+
+4
+00:00:26,000 --> 00:00:33,187
+Advanced → App-specific settings lists the actions used by the selected app, including inherited defaults.
+
+5
+00:00:33,187 --> 00:00:40,187
+Remove app deletes its GlideMouse setup, not the installed app. All apps defaults apply again.
+
+6
+00:00:40,187 --> 00:00:47,187
+Undo restores the app setup. Choose Safari again from the scope dropdown to continue editing it.

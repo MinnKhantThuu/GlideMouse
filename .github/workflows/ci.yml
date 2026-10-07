@@ -1,0 +1,17 @@
+name: macOS validation
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Toolchain
+        run: swift --version
+      - name: Translation coverage and format arguments
+        run: python3 Scripts/check-localization.py
+      - name: Core and replay tests
+        run: swift test
+      - name: Native universal app
+        run: xcodebuild -project GlideMouse.xcodeproj -scheme GlideMouse -configuration Release -destination 'generic/platform=macOS' CODE_SIGNING_ALLOWED=NO build

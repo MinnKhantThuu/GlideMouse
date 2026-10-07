@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>en</string>
+	<key>CFBundleDisplayName</key>
+	<string>GlideMouse</string>
+	<key>CFBundleExecutable</key>
+	<string>GlideMouse</string>
+	<key>CFBundleIconFile</key>
+	<string>AppIcon</string>
+	<key>CFBundleIdentifier</key>
+	<string>app.glidemouse.desktop</string>
+	<key>CFBundleLocalizations</key>
+	<array>
+		<string>en</string>
+		<string>my</string>
+		<string>zh-Hans</string>
+	</array>
+	<key>CFBundleName</key>
+	<string>GlideMouse</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>0.3.16</string>
+	<key>CFBundleVersion</key>
+	<string>20</string>
+	<key>LSMinimumSystemVersion</key>
+	<string>14.0</string>
+	<key>LSUIElement</key>
+	<true/>
+	<key>NSHighResolutionCapable</key>
+	<true/>
+	<key>NSHumanReadableCopyright</key>
+	<string>Copyright © 2026 GlideMouse contributors. MIT License.</string>
+	<key>SUAutomaticallyUpdate</key>
+	<false/>
+	<key>SUEnableAutomaticChecks</key>
+	<false/>
+	<key>SUPublicEDKey</key>
+	<string>y1AlFhD1u2jGlZGqsN7To59XvA7qHb6sHkbHzep8nR0=</string>
+	<key>GMDeveloperName</key>
+	<string>Minn Khant Thu</string>
+	<key>GMEmailURL</key>
+	<string>mailto:minnkhantthu.ucsy@gmail.com</string>
+	<key>GMWebsiteURL</key>
+	<string>https://minnkhantthu.up.railway.app/</string>
+	<key>GMSupportURL</key>
+	<string>https://buymeacoffee.com/minnkhantthu</string>
+</dict>
+</plist>

@@ -1,0 +1,27 @@
+1
+00:00:00,000 --> 00:00:07,000
+Choose the lower-side label. Select Click once. The first control describes how YOU press the button.
+
+2
+00:00:07,000 --> 00:00:14,126
+Open the action chooser. Pick Desktop left. This is what the APP will do after your button press.
+
+3
+00:00:14,126 --> 00:00:21,126
+Save for all apps. Lower-side single click now has Desktop left as its saved action.
+
+4
+00:00:21,126 --> 00:00:28,126
+Choose the upper-side label. Set Click once → Desktop right, then Save for all apps.
+
+5
+00:00:28,126 --> 00:00:35,126
+Choose Hold → Mission Control and save. The same button can have separate click and hold actions.
+
+6
+00:00:35,126 --> 00:00:44,126
+Double click can use a third action. It adds a short wait so single and double clicks can be distinguished.
+
+7
+00:00:44,126 --> 00:00:51,126
+Buttons 1 and 2 support double click and hold. Ordinary left/right clicks and dragging stay available.
