@@ -649,16 +649,15 @@ details>p{
   justify-content:space-between;
   gap:65px
 }
-.footer h3{
-  font-size:15px;
-  margin:20px 0 8px;
-  font-weight:600
-}
 .footer p{
   font-size:13px;
   max-width:510px;
   color:var(--slate);
   margin:0 0 17px
+}
+.footer .developer-credit{
+  margin:20px 0 17px;
+  font-weight:400
 }
 .footer-links{
   display:flex;
