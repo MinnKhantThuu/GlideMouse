@@ -3,21 +3,72 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="GlideMouse is a native macOS mouse utility: useful side buttons, smooth scrolling, app-specific actions, and clear English, Myanmar and Chinese controls.">
+<meta name="description" content="GlideMouse is an open-source Mac mouse app for button remapping, smooth scrolling and app-specific shortcuts. Download for macOS 14+, Apple Silicon and Intel.">
 <meta name="theme-color" content="#f7faf9">
 <meta property="og:type" content="website">
-<meta property="og:title" content="GlideMouse — More from your mouse">
-<meta property="og:description" content="Set useful button actions and a comfortable scrolling feel on macOS. English, Myanmar and Chinese. See the product overview.">
+<meta property="og:title" content="GlideMouse — Mouse Button Remapping &amp; Smooth Scrolling for Mac">
+<meta property="og:description" content="Customize mouse buttons, switch desktops and adjust scrolling on macOS. Open source, with English, Myanmar and Chinese controls.">
 <meta property="og:url" content="https://minnkhantthuu.github.io/GlideMouse/">
-<meta property="og:image" content="https://minnkhantthuu.github.io/GlideMouse/Assets/AppIcon.png">
+<meta property="og:image" content="https://minnkhantthuu.github.io/GlideMouse/Docs/media/screenshots/en-guide-buttons-light-455fc41b54f3.png">
+<meta property="og:image:width" content="1040">
+<meta property="og:image:height" content="760">
+<meta property="og:image:alt" content="GlideMouse mouse-button settings on macOS">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="GlideMouse — Mouse Button Remapping &amp; Smooth Scrolling for Mac">
+<meta name="twitter:description" content="Customize mouse buttons, desktop shortcuts and wheel scrolling. A native, open-source macOS app by Minn Khant Thu.">
+<meta name="twitter:image" content="https://minnkhantthuu.github.io/GlideMouse/Docs/media/screenshots/en-guide-buttons-light-455fc41b54f3.png">
 <link rel="canonical" href="https://minnkhantthuu.github.io/GlideMouse/">
 <link rel="icon" href="Assets/AppIcon-transparent.png">
-<title>GlideMouse — More from your mouse</title>
+<title>GlideMouse — Mouse Button Remapping &amp; Smooth Scrolling for Mac</title>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": "https://minnkhantthuu.github.io/GlideMouse/#webpage",
+      "url": "https://minnkhantthuu.github.io/GlideMouse/",
+      "name": "GlideMouse — Mouse Button Remapping & Smooth Scrolling for Mac",
+      "description": "A native, open-source macOS app for mouse button actions, wheel scrolling and app-specific settings.",
+      "inLanguage": "en",
+      "mainEntity": {"@id": "https://minnkhantthuu.github.io/GlideMouse/#app"},
+      "author": {"@id": "https://minnkhantthuu.github.io/GlideMouse/#developer"}
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://minnkhantthuu.github.io/GlideMouse/#app",
+      "name": "GlideMouse",
+      "url": "https://minnkhantthuu.github.io/GlideMouse/",
+      "description": "Remap mouse buttons, switch desktops, open Mission Control, run keyboard shortcuts, adjust wheel scrolling and set actions for individual apps on macOS.",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "macOS 14 or later",
+      "softwareRequirements": "Apple Silicon or Intel Mac; Accessibility and Input Monitoring permissions",
+      "softwareVersion": "0.4.2",
+      "inLanguage": ["en", "my", "zh-Hans"],
+      "isAccessibleForFree": true,
+      "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD", "url": "https://minnkhantthuu.github.io/GlideMouse/#download"},
+      "downloadUrl": "https://github.com/MinnKhantThuu/GlideMouse/releases/download/v0.4.2/GlideMouse-0.4.2.dmg",
+      "screenshot": "https://minnkhantthuu.github.io/GlideMouse/Docs/media/screenshots/en-guide-buttons-light-455fc41b54f3.png",
+      "image": "https://minnkhantthuu.github.io/GlideMouse/Assets/AppIcon.png",
+      "license": "https://github.com/MinnKhantThuu/GlideMouse/blob/main/LICENSE",
+      "sameAs": ["https://github.com/MinnKhantThuu/GlideMouse"],
+      "author": {"@id": "https://minnkhantthuu.github.io/GlideMouse/#developer"}
+    },
+    {
+      "@type": "Person",
+      "@id": "https://minnkhantthuu.github.io/GlideMouse/#developer",
+      "name": "Minn Khant Thu",
+      "url": "https://minnkhantthu.up.railway.app/",
+      "sameAs": ["https://github.com/MinnKhantThuu", "https://minnkhantthuu.github.io/"]
+    }
+  ]
+}
+</script>
 <script>function redirectLegacyTutorial(){if(/^#(?:en|my)(?:-(?:setup|buttons|profiles|scrolling|shortcuts))?$/.test(location.hash))location.replace('tutorials.html'+location.hash);} window.addEventListener('hashchange',redirectLegacyTutorial);redirectLegacyTutorial();</script>
-<link rel="stylesheet" href="Site/landing.css?v=ce2684c935b3">
+<link rel="stylesheet" href="Site/landing.css?v=c33a72bd99d2">
 <script src="Site/translations.js?v=73e1bacc5bd2" defer>
 </script>
-<script src="Site/landing.js?v=cf496c87ff43" defer>
+<script src="Site/landing.js?v=cdfab8cceccf" defer>
 </script>
 <link rel="stylesheet" href="Site/mouse-demo.css?v=0c4a3ee64f97">
 <script src="Site/mouse-demo.js?v=9ef7550aa702" defer></script>
@@ -45,6 +96,7 @@
 <main id="main">
 <section class="hero wrap">
 <div class="hero-copy">
+<p class="product-name">GlideMouse · macOS</p>
 <h1 data-copy="heroTitle" >More from the mouse you already use.</h1>
 <p data-copy="heroBody" class="lead">Switch desktops with a side button. Hold to see your windows. Find a scrolling feel that suits you. GlideMouse makes everyday mouse controls easier to set up on your Mac.</p>
 <div class="actions">

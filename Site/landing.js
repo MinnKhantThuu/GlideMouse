@@ -15,7 +15,7 @@
     document.querySelectorAll('[data-tutorial]').forEach(link => {link.href = 'tutorials.html#'+videoLanguage+'-buttons';});
     document.querySelectorAll('[data-full-guide]').forEach(link => {link.href = 'tutorials.html#'+videoLanguage;});
     document.querySelector('[data-readme]').href = 'https://github.com/MinnKhantThuu/GlideMouse/blob/main/'+readmes[activeLanguage];
-    document.title = {en:'GlideMouse — More from your mouse',my:'GlideMouse — Mouse ကို စိတ်ကြိုက် သုံးပါ',zh:'GlideMouse — 让鼠标更顺手'}[activeLanguage];
+    document.title = {en:'GlideMouse — Mouse Button Remapping & Smooth Scrolling for Mac',my:'GlideMouse — Mac မှာ mouse ခလုတ်နဲ့ ဘီးလှည့်ပုံကို စိတ်ကြိုက်သုံးပါ',zh:'GlideMouse — Mac 鼠标按键映射与平滑滚动'}[activeLanguage];
     window.dispatchEvent(new CustomEvent('glide:language'));
     if(persist) {
       const url = new URL(location.href); url.searchParams.set('lang',activeLanguage); history.replaceState(null,'',url);
