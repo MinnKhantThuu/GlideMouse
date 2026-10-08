@@ -5,7 +5,7 @@ function followHash(){
   document.querySelectorAll('.language').forEach(section=>section.hidden=section.id!==lang);
   document.querySelectorAll('[data-lang]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.lang===lang)));
   const target=document.getElementById(hash);
-  if(target)target.scrollIntoView({block:'start'});
+  if(target)target.scrollIntoView({block:'start',behavior:'instant'});
 }
 document.querySelectorAll('[data-lang]').forEach(button=>button.addEventListener('click',()=>{
   const chapter=location.hash.match(/^#(?:en|my)-(setup|buttons|profiles|scrolling|shortcuts)$/)?.[1];
