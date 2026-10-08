@@ -4,7 +4,7 @@
 
 Set mouse button actions, adjust scrolling and use different settings in individual apps on macOS. A native app by Minn Khant Thu, available in English, Myanmar and Simplified Chinese.
 
-**[Website](https://minnkhantthuu.github.io/GlideMouse/) · [မြန်မာ](README_MM.md) · [简体中文](Docs/USER_GUIDE_ZH.md)**
+**[Website](https://minnkhantthuu.github.io/GlideMouse/) · [Step-by-step guide](https://minnkhantthuu.github.io/GlideMouse/tutorials.html#en-buttons) · [မြန်မာ](README_MM.md) · [简体中文](Docs/USER_GUIDE_ZH.md)**
 
 **[Download for macOS — DMG](https://github.com/MinnKhantThuu/GlideMouse/releases/download/v0.4.2/GlideMouse-0.4.2.dmg)**
 
@@ -22,6 +22,8 @@ Open **Mouse setup**, allow the permissions, then return and refresh. Reopen the
 |---|---|
 | Accessibility | Perform the action you chose, such as a shortcut or desktop change |
 | Input Monitoring | Recognize mouse buttons and wheel input |
+
+![Mouse setup and permission controls](Docs/media/screenshots/en-setup.png)
 
 Mouse settings stay on your Mac. GlideMouse does not keep a log of what you type. Update checks contact the update host; selected website or automation actions may contact their own destinations.
 
@@ -128,7 +130,7 @@ Open app/folder/website actions need a target. Shell commands and Apple Shortcut
 
 **Emergency pause: ⌃⌥⌘ Esc** (Control + Option + Command + Escape). Pause is also available from the menu bar. Re-enable when ready.
 
-The **? button on Buttons** opens an offline animated guide. The [website](https://minnkhantthuu.github.io/GlideMouse/#mouse-guide) has the same examples. Viewing them does not perform actions or change settings. The overview film uses sample app screens, English text and original music. Older tutorial recordings are archived and show an earlier interface.
+The **? button on Buttons** opens an animated guide. You can also follow the [step-by-step guide with screenshots](https://minnkhantthuu.github.io/GlideMouse/tutorials.html#en-buttons) or see the [animated examples](https://minnkhantthuu.github.io/GlideMouse/#mouse-guide) on the website.
 
 ## Troubleshooting
 

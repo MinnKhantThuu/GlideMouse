@@ -87,7 +87,7 @@
 
 设置中可更改语言、外观、登录启动及动作提示，导入/导出备份。建议按钮操作是可选的折叠区域，查看不会自动添加；先预览再应用。更新来自签名发布源，源码提交不会直接更新安装的应用。Store 版本由 App Store 更新。
 
-“按钮”页面的问号打开离线动画指南，[网站](https://minnkhantthuu.github.io/GlideMouse/?lang=zh#mouse-guide)也有示例。观看不会执行操作或修改设置。概览视频使用示例界面、英文文字和原创音乐；旧教程展示较早版本。
+“按钮”页面的问号打开离线动画指南，[网站](https://minnkhantthuu.github.io/GlideMouse/?lang=zh#mouse-guide)也有示例。也可阅读带有当前界面图片的[分步指南（英文 / 缅甸语）](https://minnkhantthuu.github.io/GlideMouse/tutorials.html#en-buttons)。
 
 紧急暂停：**Control + Option + Command + Escape**。也可从菜单栏暂停。Help → 排查问题可检查权限，技术详情默认收起。分享诊断前请检查内容，不要公开私密文件或凭据。
 
