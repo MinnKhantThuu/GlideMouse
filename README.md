@@ -10,7 +10,7 @@ Set mouse button actions, adjust scrolling and use different settings in individ
 
 The screenshots and instructions below show **0.4.2**. [Releases](https://github.com/MinnKhantThuu/GlideMouse/releases) lists the available installers.
 
-![GlideMouse button actions with input icons, action selectors and delete buttons](Docs/media/screenshots/en-buttons.png)
+![GlideMouse button actions with input icons, action selectors and delete buttons](Docs/media/screenshots/en-guide-buttons-light-455fc41b54f3.png)
 
 ## Install
 
@@ -69,7 +69,7 @@ Use your own captured buttons. Desktop switching needs more than one macOS Space
 
 Click the action selector **anywhere in its rectangle**, then choose another action. The row saves automatically. You can search the action chooser by name.
 
-![Searchable action chooser](Docs/media/screenshots/en-actions.png)
+![Searchable action chooser](Docs/media/screenshots/en-guide-actions-light-2126f0b25bed.png)
 
 Click the **trash button in that row** to remove just that input. Removing Click once does not remove Hold or Double click. **Undo** restores a recent change. The **… menu** contains action details, advanced mapping and, for app overrides, **Reset to All apps action**.
 
@@ -86,13 +86,13 @@ Actions have explicit names: **Increase volume**, **Decrease volume**, **Mute / 
 
 **From All apps** means the row inherits the default. Choosing another action creates **Custom for this app**. Inputs you leave alone keep their defaults. For example, a side button can switch desktops normally and go Back while Safari is frontmost.
 
-![App-specific settings and inherited actions](Docs/media/screenshots/en-profiles.png)
+![App-specific settings and inherited actions](Docs/media/screenshots/en-guide-profiles-light-009ba8ba0273.png)
 
 Select the app and use **Remove app** to remove its GlideMouse setup. This does not uninstall the application. The default actions apply again; Undo can restore the setup. An inherited row cannot be deleted from one app as though it were its own mapping—edit All apps to remove the default, or choose a custom action for this app.
 
 ## 4. Adjust scrolling
 
-![Scrolling controls](Docs/media/screenshots/en-scrolling.png)
+![Scrolling controls](Docs/media/screenshots/en-guide-scrolling-light-68d65840c332.png)
 
 Start with **Standard** or **Smooth**, then change speed and direction. Open finer adjustments only if needed.
 
@@ -119,7 +119,7 @@ Open app/folder/website actions need a target. Shell commands and Apple Shortcut
 
 ## 6. Settings and help
 
-![Settings](Docs/media/screenshots/en-settings.png)
+![Settings](Docs/media/screenshots/en-guide-settings-light-6380b98fda6e.png)
 
 - Choose **English, မြန်မာ or 简体中文** and system/light/dark appearance without changing your actions.
 - Enable launch at login or optional action-name feedback.

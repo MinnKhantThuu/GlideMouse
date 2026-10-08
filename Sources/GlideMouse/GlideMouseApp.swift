@@ -5,6 +5,9 @@ import MouseCore
 
 @main enum GlideMouseLauncher {
     @MainActor static func main() {
+        if let i = CommandLine.arguments.firstIndex(of: "--render-guide-screenshots"), CommandLine.arguments.count > i + 1 {
+            exit(GuideScreenshotRenderer.render(to: URL(fileURLWithPath: CommandLine.arguments[i + 1])) ? 0 : 1)
+        }
         if let i = CommandLine.arguments.firstIndex(of: "--render-mapping-list"), CommandLine.arguments.count > i + 1 {
             UIHarness.renderMappingList(to: URL(fileURLWithPath: CommandLine.arguments[i + 1])); exit(0)
         }

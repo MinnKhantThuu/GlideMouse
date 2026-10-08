@@ -19,3 +19,16 @@ user guide. `Scripts/generate-tutorial-videos.py` is their historical encoder.
 The landing-page overview film is documented separately in `intro/README.md`.
 Project artwork and media are covered by the project license and third-party
 notices where applicable.
+
+## Consistent guide captures
+
+All current guide images use the light appearance. The new PNG filenames include
+their content hash so older browser caches do not select an earlier dark capture.
+The earlier PNG and JPEG paths remain available for cached pages and old links.
+The guide uses an accessible in-page viewer with zoom, Close, Escape, and focus
+restoration; direct image links remain the fallback when JavaScript is unavailable.
+
+Regenerate the captures with `Scripts/build-app.sh debug`, then
+`build/GlideMouse.app/Contents/MacOS/GlideMouse --render-guide-screenshots build/guide-screenshots-light`.
+`GuideScreenshotRenderer` fixes the appearance in both AppKit and SwiftUI and
+verifies that no input runtime is created. It does not change live mouse settings.

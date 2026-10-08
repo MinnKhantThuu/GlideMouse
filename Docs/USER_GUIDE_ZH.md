@@ -6,7 +6,7 @@
 
 **[下载 DMG](https://github.com/MinnKhantThuu/GlideMouse/releases/download/v0.4.2/GlideMouse-0.4.2.dmg)**。本指南及图片展示 0.4.2；可用安装包见[发布列表](https://github.com/MinnKhantThuu/GlideMouse/releases)。
 
-![按钮操作列表](media/screenshots/zh-buttons.png)
+![按钮操作列表](media/screenshots/zh-guide-buttons-light-728e8f693ea5.png)
 
 ## 安装与授权
 
@@ -54,13 +54,13 @@
 
 “来自所有应用”表示继承默认；选择另一操作会变成该应用的自定义操作。未修改的输入继续使用默认。比如侧键通常切换桌面，而 Safari 位于前台时执行后退。
 
-![应用专属设置](media/screenshots/zh-profiles.png)
+![应用专属设置](media/screenshots/zh-guide-profiles-light-eb03d0ee0703.png)
 
 选择应用并点击“移除应用”只移除 GlideMouse 配置，不会卸载应用。默认操作恢复生效，可撤销。继承行不能当作本应用自己的操作删除；要移除默认需切换到“所有应用”，或为当前应用选择自定义操作。
 
 ## 滚动
 
-![滚动设置](media/screenshots/zh-scrolling.png)
+![滚动设置](media/screenshots/zh-guide-scrolling-light-aa8dee28ad34.png)
 
 先选标准或平滑，再调整速度与方向。需要时展开细调。
 
@@ -83,7 +83,7 @@
 
 高级映射提供按住并移动、按住并滚动及修饰键组合。高级标题的文字和空白区域均可点击展开/收起。
 
-![设置](media/screenshots/zh-settings.png)
+![设置](media/screenshots/zh-guide-settings-light-953b7aa6f438.png)
 
 设置中可更改语言、外观、登录启动及动作提示，导入/导出备份。建议按钮操作是可选的折叠区域，查看不会自动添加；先预览再应用。更新来自签名发布源，源码提交不会直接更新安装的应用。Store 版本由 App Store 更新。
 
