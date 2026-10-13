@@ -2,7 +2,7 @@
 
 The direct-download edition remains the shipping app. A separate Store candidate
 uses `app.glidemouse.store` and the App Sandbox, with its own settings container.
-Version 0.4.2 (26), submitted on 7 October 2026, was rejected on 13 October under Guidelines 2.1 and 2.4.5. Apple specifically rejected mouse-control use of the requested permissions. The onboarding correction is prepared as build 28; technical Sandbox compatibility does not resolve that policy objection. See [the review investigation](REVIEW_2026_10_13.md). The app is not publicly released on the Mac App Store.
+Version 0.4.2 (26), submitted on 7 October 2026, was rejected on 13 October under Guidelines 2.1 and 2.4.5. Apple specifically rejected mouse-control use of the requested permissions. Build 28 was resubmitted on 14 October 2026 and App Store Connect shows **Waiting for Review**. Updated notes explain the onboarding correction and public Core Graphics event APIs. Technical Sandbox compatibility does not resolve the policy objection; approval is still pending. See [the review investigation](REVIEW_2026_10_13.md). The app is not publicly released on the Mac App Store.
 
 ## Generate and archive
 
