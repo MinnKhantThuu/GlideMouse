@@ -37,6 +37,7 @@ import MouseCore
     private var runtime: InputRuntime?
     var hasInputRuntime: Bool { runtime != nil }
     private var observations: [NSObjectProtocol] = []
+    private var activationObservation: NSObjectProtocol?
     private var permissionTimer: Timer?
     private var history: [Configuration] = []
     private var lastFocus: String?
@@ -72,7 +73,12 @@ import MouseCore
         observations.append(center.addObserver(forName: NSWorkspace.didWakeNotification, object: nil, queue: .main) { [weak self] _ in Task { @MainActor in self?.refresh() } })
         observations.append(center.addObserver(forName: NSWorkspace.screensDidSleepNotification, object: nil, queue: .main) { [weak self] _ in Task { @MainActor in self?.runtime?.suspend(); self?.executor.cancel() } })
         observations.append(center.addObserver(forName: NSWorkspace.screensDidWakeNotification, object: nil, queue: .main) { [weak self] _ in Task { @MainActor in self?.refresh() } })
-        permissionTimer = Timer.scheduledTimer(withTimeInterval: 3, repeats: true) { [weak self] _ in Task { @MainActor in self?.pollPermissions() } }
+        activationObservation = NotificationCenter.default.addObserver(forName: NSApplication.didBecomeActiveNotification, object: nil, queue: .main) { [weak self] _ in
+            Task { @MainActor in self?.refresh() }
+        }
+        let timer = Timer(timeInterval: 3, repeats: true) { [weak self] _ in Task { @MainActor in self?.pollPermissions() } }
+        RunLoop.main.add(timer, forMode: .common)
+        permissionTimer = timer
         loginEnabled = SMAppService.mainApp.status == .enabled
     }
     func text(_ key: String) -> String {
@@ -218,7 +224,20 @@ import MouseCore
         }
         selectedButton = button
     }
-    func completeSetup() { update { var ui = $0.usability ?? UsabilityPreferences(); ui.setupCompleted = true; $0.usability = ui }; showMouseSetup = false }
+    var mouseAccessReady: Bool { accessibility && inputMonitoring }
+    /// Configuration and local button identification work without global input access.
+    /// Completing setup must never imply that macOS granted permission.
+    func finishMouseSetup(_ setup: String) {
+        if setup == "smooth" { update { $0.scroll = ScrollPreset.smooth.applying(to: $0.scroll) } }
+        else if setup != "keep" { preset(setup) }
+        guard errorMessage == nil else { return }
+        if setup != "keep" || (!mouseAccessReady && configuration.engineEnabled) {
+            update { $0.engineEnabled = mouseAccessReady }
+        }
+        guard errorMessage == nil else { return }
+        completeSetup()
+    }
+    func completeSetup() { update { var ui = $0.usability ?? UsabilityPreferences(); ui.setupCompleted = true; $0.usability = ui }; if errorMessage == nil { showMouseSetup = false } }
     func proposedPreset(_ kind: String) -> [Mapping] { ["keep", "smooth"].contains(kind) ? [] : MappingEdits.starter(kind, buttons: calibratedButtons) }
     func preset(_ kind: String) { let additions = proposedPreset(kind); guard !additions.isEmpty else { return }; mutateProfile { $0.mappings = MappingEdits.merge(additions, into: $0.mappings) } }
     func buttonTitle(_ button: Int) -> String { if button < 2 { return text(button == 0 ? "Left button" : "Right button") + " · \(button + 1)" }; return calibratedButtons.first { $0.button == button }.map { text($0.position.rawValue) + " · \(button + 1)" } ?? text("Button") + " \(button + 1)" }
@@ -315,5 +334,5 @@ import MouseCore
         let encoder = JSONEncoder(); encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
         if let data = try? encoder.encode(snapshot) { try? data.write(to: url, options: .atomic) }
     }
-    func quit() { registry.stop(); permissionTimer?.invalidate(); executor.cancel(); runtime?.shutdown(); observations.forEach { NSWorkspace.shared.notificationCenter.removeObserver($0) }; NSApplication.shared.terminate(nil) }
+    func quit() { registry.stop(); permissionTimer?.invalidate(); if let activationObservation { NotificationCenter.default.removeObserver(activationObservation) }; executor.cancel(); runtime?.shutdown(); observations.forEach { NSWorkspace.shared.notificationCenter.removeObserver($0) }; NSApplication.shared.terminate(nil) }
 }

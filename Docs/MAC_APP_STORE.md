@@ -2,27 +2,42 @@
 
 The direct-download edition remains the shipping app. A separate Store candidate
 uses `app.glidemouse.store` and the App Sandbox, with its own settings container.
-Version 0.4.2 (26) has been signed by the Minn Khant Thu developer team and uploaded to App Store Connect. English and Simplified Chinese descriptions, current screenshots and review instructions have been updated. The earlier 0.3.19 submission was withdrawn to replace it with this build. Version 0.4.2 (26) was submitted on 7 October 2026 and is **Waiting for Review**. App Store availability depends on Apple's review; it is not yet publicly released.
+Version 0.4.2 (26), submitted on 7 October 2026, was rejected on 13 October under Guidelines 2.1 and 2.4.5. Apple specifically rejected mouse-control use of the requested permissions. The onboarding correction is prepared as build 28; technical Sandbox compatibility does not resolve that policy objection. See [the review investigation](REVIEW_2026_10_13.md). The app is not publicly released on the Mac App Store.
 
 ## Generate and archive
 
 From the repository root, with Xcode selected:
 
 ```sh
-python3 Scripts/prepare-mac-app-store.py --output build/MacAppStore/candidate
+python3 Scripts/prepare-mac-app-store.py --output build/MacAppStore/candidate --build-number 28
 xcodebuild -project build/MacAppStore/candidate/GlideMouse.xcodeproj \
   -scheme GlideMouse -configuration Release \
   -derivedDataPath build/MacAppStore/DerivedData \
   -archivePath build/MacAppStore/GlideMouse.xcarchive \
   -destination 'generic/platform=macOS' \
-  ARCHS='arm64 x86_64' ONLY_ACTIVE_ARCH=NO CODE_SIGNING_ALLOWED=NO archive
+  ARCHS='arm64 x86_64' ONLY_ACTIVE_ARCH=NO \
+  DEVELOPMENT_TEAM=YOUR_TEAM_ID -allowProvisioningUpdates archive
 ```
 
 The generator refuses an existing output directory, checks source transformations,
 and fails if private touch APIs, AX trust calls, or Sparkle implementations remain.
 It changes the generated source only. It does not install an app, alter permissions,
-publish anything, or read signing credentials. The archive command above verifies
-compilation; it deliberately does not produce a Store-signed upload.
+publish anything, or read signing credentials. The signed archive uses the developer
+account configured in Xcode. An unsigned archive with `CODE_SIGNING_ALLOWED=NO`
+is useful for compilation checks only: exporting it can lose Sandbox entitlements.
+Do not use an unsigned compilation artifact as the release archive.
+
+After exporting with Xcode's `app-store-connect` method, validate the actual package:
+
+```sh
+python3 Scripts/validate-store-package.py build/MacAppStore/export/GlideMouse.pkg \
+  --team-id YOUR_TEAM_ID --build-number 28
+```
+
+This extracts the payload without installing it, verifies the installer/app signing,
+checks App Sandbox in the signed payload, and rejects preview flags, AX trust/UI
+calls, private touch symbols and Sparkle. Run it before upload. Packaging checks
+do not establish App Review approval or a real-device permission result.
 
 ## Edition differences
 

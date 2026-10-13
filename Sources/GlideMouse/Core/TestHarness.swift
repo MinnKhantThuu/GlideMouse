@@ -657,6 +657,24 @@ private final class HardwareCounts: @unchecked Sendable { var calibrationSeen = 
         result["missingAppSelectionDisplaysAllApps"] = model.isGlobal && model.editingScopeName == model.text("All apps")
         model.completeSetup()
         result["setupCompletionPreservesMappings"] = model.configuration.usability?.setupCompleted == true && model.configuration.globalDefaults == global
+        // Setup must stay usable with denied, partial, or stale TCC states,
+        // while permission checks continue to protect system-wide actions.
+        for postAccess in [false, true] {
+            for listenAccess in [false, true] {
+                let setupModel = AppModel(testing: true, rendering: true)
+                setupModel.accessibility = postAccess; setupModel.inputMonitoring = listenAccess
+                setupModel.configuration.globalDefaults.mappings = [click]
+                setupModel.configuration.engineEnabled = true
+                setupModel.showMouseSetup = true
+                setupModel.finishMouseSetup("keep")
+                let name = "setup-post-\(postAccess)-listen-\(listenAccess)"
+                result[name] = setupModel.configuration.usability?.setupCompleted == true && !setupModel.showMouseSetup && setupModel.configuration.globalDefaults.mappings == [click] && setupModel.configuration.engineEnabled == (postAccess && listenAccess) && setupModel.accessibility == postAccess && setupModel.inputMonitoring == listenAccess && !setupModel.hasInputRuntime
+                let smoothModel = AppModel(testing: true, rendering: true)
+                smoothModel.accessibility = postAccess; smoothModel.inputMonitoring = listenAccess
+                smoothModel.finishMouseSetup("smooth")
+                result[name + "-smooth"] = smoothModel.configuration.usability?.setupCompleted == true && smoothModel.configuration.engineEnabled == (postAccess && listenAccess) && smoothModel.errorMessage == nil
+            }
+        }
         // Inline edits and app inheritance use the same mutation path as the new rows.
         let listModel = AppModel(testing: true, rendering: true)
         let input = Trigger(button: 3)

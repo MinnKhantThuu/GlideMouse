@@ -79,8 +79,14 @@ import MouseCore
 struct GlideMouseApp: App {
     @StateObject private var model: AppModel
     init() {
-        if CommandLine.arguments.contains("--ui-test") || CommandLine.arguments.contains("--ui-cursor-report") { NSApplication.shared.setActivationPolicy(.regular) }
-        let instance = AppModel(testing: CommandLine.arguments.contains("--ui-test"))
+        let onboardingPreview = CommandLine.arguments.contains("--onboarding-preview") || Bundle.main.object(forInfoDictionaryKey: "GMOnboardingPreview") as? Bool == true
+        if CommandLine.arguments.contains("--ui-test") || CommandLine.arguments.contains("--ui-cursor-report") || onboardingPreview { NSApplication.shared.setActivationPolicy(.regular) }
+        let instance = AppModel(testing: CommandLine.arguments.contains("--ui-test"), rendering: onboardingPreview)
+        if onboardingPreview {
+            instance.configuration.language = .en
+            instance.devices = [MouseDevice(id: "onboarding-fixture", name: "Preview Mouse", transport: "Fixture", vendor: 0, product: 0, buttons: 5, stableIdentity: false, magicMouse: false)]
+            Task { @MainActor in try? await Task.sleep(for: .milliseconds(600)); instance.showMouseSetup = true }
+        }
         if instance.isTesting && CommandLine.arguments.contains("--ui-app-scope-test") {
             instance.configuration.globalDefaults.mappings = [Mapping(button: 3, action: .spaceLeft), Mapping(button: 4, action: .spaceRight)]
             instance.configuration.profiles = [Profile(name: "Microsoft PowerPoint", bundleID: "com.microsoft.Powerpoint")]
@@ -126,7 +132,7 @@ struct GlideMouseApp: App {
         WindowGroup("GlideMouse", id: "settings") {
             SettingsRoot(model: model).frame(minWidth: 820, minHeight: 580).preferredColorScheme(model.colorScheme)
                 .onAppear {
-                    if CommandLine.arguments.contains("--ui-test") || CommandLine.arguments.contains("--ui-cursor-report") {
+                    if CommandLine.arguments.contains("--ui-test") || CommandLine.arguments.contains("--ui-cursor-report") || CommandLine.arguments.contains("--onboarding-preview") || Bundle.main.object(forInfoDictionaryKey: "GMOnboardingPreview") as? Bool == true {
                         NSApplication.shared.setActivationPolicy(.regular)
                         NSApplication.shared.activate(ignoringOtherApps: true)
                     }

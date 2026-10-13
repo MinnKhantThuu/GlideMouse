@@ -7,7 +7,8 @@ struct CalibrationControls: View {
     @State private var detected: Int?
     @State private var position: ButtonPosition = .extra
     @State private var confirmed = false
-    private var canCapture: Bool { model.devices.count == 1 && model.accessibility && model.inputMonitoring }
+    // CaptureView handles events delivered to our own window; no global access is needed.
+    private var canCapture: Bool { model.devices.count == 1 }
     var body: some View {
         VStack(alignment: .leading, spacing: 14) {
             Text(model.text("Press a real button, then tell us where it is.")).font(.headline)
@@ -64,7 +65,7 @@ struct MouseSetupWizard: View {
                     if step == 0 {
                         Text(model.text("Allow mouse control")).font(.headline)
                         PermissionControls(model: model)
-                        Text(model.text("After access is granted, you can identify a button and choose its action.")).foregroundStyle(.secondary)
+                        Text(model.text("You can continue setup now. Mouse actions stay paused until access is available.")).foregroundStyle(.secondary)
                     } else if step == 1 {
                         CalibrationControls(model: model)
                     } else {
@@ -93,11 +94,9 @@ struct MouseSetupWizard: View {
                     model.setMouseCaptureArea(nil)
                     if step < 2 { step += 1 }
                     else {
-                        if setup == "smooth" { model.update { $0.scroll = ScrollPreset.smooth.applying(to: $0.scroll); $0.engineEnabled = true } }
-                        else if setup != "keep" { model.preset(setup); if model.errorMessage == nil { model.update { $0.engineEnabled = true } } }
-                        if model.errorMessage == nil { model.completeSetup() }
+                        model.finishMouseSetup(setup)
                     }
-                }.buttonStyle(PointingButtonStyle(prominent: true)).disabled((step == 0 && (!model.accessibility || !model.inputMonitoring)) || (step == 2 && ["desktop", "browser"].contains(setup) && !hasSides))
+                }.buttonStyle(PointingButtonStyle(prominent: true)).disabled(step == 2 && ["desktop", "browser"].contains(setup) && !hasSides)
             }
         }.padding(24).frame(width: 590,height: 610).buttonStyle(PointingButtonStyle()).background(Color(nsColor: .windowBackgroundColor))
     }

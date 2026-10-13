@@ -11,7 +11,10 @@ import argparse, json, plistlib, shutil, subprocess, sys
 root = Path(__file__).resolve().parent.parent
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument('--output', type=Path, default=root / 'build/MacAppStore/source')
+parser.add_argument('--build-number', type=int, help='Store-only CFBundleVersion; leaves the direct edition unchanged')
 args = parser.parse_args()
+if args.build_number is not None and args.build_number < 1:
+    sys.exit('Build number must be positive.')
 dest = args.output.resolve()
 if dest == root or root not in dest.parents or 'build' not in dest.relative_to(root).parts:
     sys.exit('Output must be an isolated directory under this project build folder.')
@@ -107,6 +110,9 @@ package = package.replace(',\n        .testTarget(name: "MouseCoreTests", depend
 info_path = dest / 'Config/Info.plist'
 info = plistlib.loads(info_path.read_bytes())
 info['CFBundleIdentifier'] = 'app.glidemouse.store'
+info['GMStoreEdition'] = True
+if args.build_number is not None:
+    info['CFBundleVersion'] = str(args.build_number)
 info['LSApplicationCategoryType'] = 'public.app-category.utilities'
 for key in list(info):
     if key.startswith('SU') or key == 'GMSupportURL':

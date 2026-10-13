@@ -15,3 +15,9 @@ jobs:
         run: swift test
       - name: Native universal app
         run: xcodebuild -project GlideMouse.xcodeproj -scheme GlideMouse -configuration Release -destination 'generic/platform=macOS' CODE_SIGNING_ALLOWED=NO build
+      - name: Generate Store candidate
+        run: python3 Scripts/prepare-mac-app-store.py --output build/StoreCI --build-number 1
+      - name: Store app compilation and setup checks
+        run: |
+          xcodebuild -project build/StoreCI/GlideMouse.xcodeproj -scheme GlideMouse -configuration Release -destination 'generic/platform=macOS' -derivedDataPath build/StoreCIDerivedData CODE_SIGNING_ALLOWED=NO build
+          build/StoreCIDerivedData/Build/Products/Release/GlideMouse.app/Contents/MacOS/GlideMouse --ux-self-test

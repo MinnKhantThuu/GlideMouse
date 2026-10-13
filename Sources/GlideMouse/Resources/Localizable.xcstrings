@@ -15238,6 +15238,138 @@
           }
         }
       }
+    },
+    "You can continue setup now. Mouse actions stay paused until access is available.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You can continue setup now. Mouse actions stay paused until access is available."
+          }
+        },
+        "my": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ဆက်ပြီး သတ်မှတ်နိုင်ပါတယ်။ Permission ရမှ Mouse လုပ်ဆောင်ချက်တွေကို ဖွင့်သုံးနိုင်ပါမယ်။"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "你可以继续设置。获得权限前，鼠标操作会保持暂停。"
+          }
+        }
+      }
+    },
+    "Mouse actions allowed": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mouse actions allowed"
+          }
+        },
+        "my": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mouse လုပ်ဆောင်ချက်များကို ခွင့်ပြုထားသည်"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "已允许鼠标操作"
+          }
+        }
+      }
+    },
+    "Mouse actions need access": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mouse actions need access"
+          }
+        },
+        "my": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mouse လုပ်ဆောင်ချက်များအတွက် ခွင့်ပြုရန်လိုသည်"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "鼠标操作需要权限"
+          }
+        }
+      }
+    },
+    "Open mouse control settings": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open mouse control settings"
+          }
+        },
+        "my": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mouse control ဆက်တင်ဖွင့်ရန်"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "打开鼠标控制设置"
+          }
+        }
+      }
+    },
+    "Mouse control allows your chosen clicks and shortcuts. Input Monitoring recognizes mouse buttons and scrolling. Typed text is not saved.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mouse control allows your chosen clicks and shortcuts. Input Monitoring recognizes mouse buttons and scrolling. Typed text is not saved."
+          }
+        },
+        "my": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mouse control က ရွေးထားတဲ့ ကလစ်နဲ့ shortcut တွေကို လုပ်ပေးဖို့ လိုပါတယ်။ Input Monitoring က Mouse ခလုတ်နဲ့ ဘီးလှိမ့်တာကို သိဖို့ လိုပါတယ်။ ရိုက်ထည့်တဲ့စာတွေကို မသိမ်းပါဘူး။"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "鼠标控制用于执行你选择的点击和快捷键。输入监控用于识别鼠标按键和滚动，不会保存输入的文字。"
+          }
+        }
+      }
+    },
+    "macOS may call the mouse control setting Accessibility or Device Control and Data Access.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "macOS may call the mouse control setting Accessibility or Device Control and Data Access."
+          }
+        },
+        "my": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "macOS ဗားရှင်းပေါ်မူတည်ပြီး ဒီဆက်တင်ကို Accessibility ဒါမှမဟုတ် Device Control and Data Access လို့ ပြထားနိုင်ပါတယ်။"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "不同 macOS 版本可能将鼠标控制设置称为“辅助功能”或“设备控制和数据访问”。"
+          }
+        }
+      }
     }
   },
   "version": "1.0"

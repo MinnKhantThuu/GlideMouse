@@ -4,6 +4,7 @@ import AppKit
 enum AppResources {
     /// One source for About, the window footer and exported diagnostics.
     static var version: String { Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "development" }
+    static var isStoreEdition: Bool { Bundle.main.object(forInfoDictionaryKey: "GMStoreEdition") as? Bool == true }
     static var developerName: String { Bundle.main.object(forInfoDictionaryKey: "GMDeveloperName") as? String ?? "Minn Khant Thu" }
     static var supportURL: URL? { developerURL(for: "GMSupportURL") }
     static var emailURL: URL? { developerURL(for: "GMEmailURL") }
