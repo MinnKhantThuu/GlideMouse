@@ -21,7 +21,7 @@ import MouseCore
         func snapshot() -> ([(CGEventType, Int64, CGPoint, Int64)], [Trigger]) { lock.lock(); defer { lock.unlock() }; return (delivered, actions) }
     }
     static func run() -> Int32 {
-        guard AXIsProcessTrusted(), CGPreflightListenEventAccess() else { print("SKIP: permissions unavailable"); return 77 }
+        guard AXIsProcessTrusted() else { print("SKIP: permissions unavailable"); return 77 }
         let app = NSApplication.shared; app.setActivationPolicy(.regular); app.finishLaunching()
         let window = NSWindow(contentRect: NSRect(x: 0, y: 0, width: 500, height: 300), styleMask: [.titled, .closable], backing: .buffered, defer: false)
         window.title = "GlideMouse — Software primary-button regression"; window.contentView = NSView(); window.center(); window.makeKeyAndOrderFront(nil); app.activate(ignoringOtherApps: true)

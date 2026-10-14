@@ -46,13 +46,13 @@ with tempfile.TemporaryDirectory(prefix='glidemouse-store-validation-') as temp:
     assert not any(key.startswith('SU') for key in info), 'Sparkle configuration remains'
     assert not list(app.rglob('Sparkle.framework')), 'Sparkle framework remains'
     symbols = run('nm', '-u', str(app / 'Contents/MacOS/GlideMouse')).decode()
-    for forbidden in ['_AXIsProcessTrusted', '_AXUIElement', '_MTDeviceCreateList', '_MTRegisterContact', '_setuid', '_seteuid']:
+    for forbidden in ['_AXIsProcessTrusted', '_AXUIElement', '_MTDeviceCreateList', '_MTRegisterContact', '_setuid', '_seteuid', '_CGRequestListenEventAccess', '_CGPreflightListenEventAccess', '_IOHIDManagerOpen', '_IOHIDDeviceOpen']:
         assert forbidden not in symbols, f'Forbidden Store symbol: {forbidden}'
     print(json.dumps({
         'passed': True, 'bundleID': info['CFBundleIdentifier'],
         'version': info['CFBundleShortVersionString'], 'build': info['CFBundleVersion'],
         'teamID': args.team_id, 'sandbox': True, 'distributionSigned': True,
-        'previewDisabled': True, 'privateTouchAndAXAPIsAbsent': True,
+        'previewDisabled': True, 'inputMonitoringAPIsAbsent': True, 'hidInputDevicesNotOpened': True, 'privateTouchAndAXAPIsAbsent': True,
         'entitlements': entitlements,
         'scope': 'artifact checks only; not App Review approval or runtime/device proof',
     }, indent=2))

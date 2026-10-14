@@ -11,7 +11,7 @@ import MouseCore
     @Published var competingUtilities: [String] = []
     @Published var runtimeReport = RuntimeReport()
     @Published var accessibility = false
-    @Published var inputMonitoring = false
+    @Published var emergencyPauseAvailable = false
     @Published var lastMessage = ""
     @Published var errorMessage: String?
     @Published var pendingPreset: String?
@@ -39,6 +39,7 @@ import MouseCore
     private var observations: [NSObjectProtocol] = []
     private var activationObservation: NSObjectProtocol?
     private var permissionTimer: Timer?
+    private var pauseHotKey: EmergencyPauseHotKey?
     private var history: [Configuration] = []
     private var lastFocus: String?
     private var feedbackPanel: NSPanel?
@@ -63,6 +64,8 @@ import MouseCore
         if !testing { updater.start(automaticChecks: configuration.automaticUpdates) }
         if !rendering { registry.start { [weak self] in self?.refresh() } }
         refresh()
+        pauseHotKey = EmergencyPauseHotKey { [weak self] in self?.emergencyPause() }
+        emergencyPauseAvailable = pauseHotKey?.start() == true
         let center = NSWorkspace.shared.notificationCenter
         observations.append(center.addObserver(forName: NSWorkspace.didActivateApplicationNotification, object: nil, queue: .main) { [weak self] notification in
             guard let app = notification.userInfo?[NSWorkspace.applicationUserInfoKey] as? NSRunningApplication else { return }
@@ -160,16 +163,17 @@ import MouseCore
         apply(); loginEnabled = SMAppService.mainApp.status == .enabled
     }
     private func pollPermissions() {
-        let ax = AXIsProcessTrusted(), im = CGPreflightListenEventAccess()
-        let changed = ax != accessibility || im != inputMonitoring
-        if accessibility != ax { accessibility = ax }; if inputMonitoring != im { inputMonitoring = im }
-        if changed { apply() }
+        let granted = AXIsProcessTrusted()
+        if accessibility != granted { accessibility = granted; apply() }
     }
     func permission(_ kind: String) {
-        if kind == "accessibility" { accessibility = AXIsProcessTrustedWithOptions([kAXTrustedCheckOptionPrompt.takeUnretainedValue() as String: true] as CFDictionary) }
-        else { inputMonitoring = CGRequestListenEventAccess() }
-        let pane = kind == "accessibility" ? "Privacy_Accessibility" : "Privacy_ListenEvent"
-        if let u = URL(string: "x-apple.systempreferences:com.apple.preference.security?\(pane)") { NSWorkspace.shared.open(u) }
+        guard kind == "accessibility" else { return }
+        accessibility = AXIsProcessTrustedWithOptions([kAXTrustedCheckOptionPrompt.takeUnretainedValue() as String: true] as CFDictionary)
+        if let u = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility") { NSWorkspace.shared.open(u) }
+    }
+    func emergencyPause() {
+        runtime?.emergencyPause(); executor.cancel()
+        update { $0.engineEnabled = false }
     }
     func undo() {
         guard let previous = history.popLast() else { return }
@@ -224,7 +228,7 @@ import MouseCore
         }
         selectedButton = button
     }
-    var mouseAccessReady: Bool { accessibility && inputMonitoring }
+    var mouseAccessReady: Bool { accessibility }
     /// Configuration and local button identification work without global input access.
     /// Completing setup must never imply that macOS granted permission.
     func finishMouseSetup(_ setup: String) {
@@ -300,9 +304,9 @@ import MouseCore
         let panel = NSSavePanel(); panel.nameFieldStringValue = "GlideMouse-diagnostics.json"; panel.allowedContentTypes = [.json]
         panel.title = text("Export diagnostics"); panel.prompt = text("Save")
         guard panel.runModal() == .OK, let url = panel.url else { return }
-        struct Diagnostic: Codable { var version: String; var os: String; var accessibility: Bool; var inputMonitoring: Bool; var engine: String; var devices: [String]; var events: UInt64; var syntheticIgnored: UInt64; var timeouts: Int; var touchStatus: String; var touchDrops: UInt64; var maxCallbackMS: Double; var p95CallbackMS: Double; var records: [InputRecord] }
+        struct Diagnostic: Codable { var version: String; var os: String; var accessibility: Bool; var inputMonitoringRequired: Bool; var engine: String; var devices: [String]; var events: UInt64; var syntheticIgnored: UInt64; var timeouts: Int; var touchStatus: String; var touchDrops: UInt64; var maxCallbackMS: Double; var p95CallbackMS: Double; var records: [InputRecord] }
         let callbacks = runtimeReport.callbacks.sorted(); let p95 = callbacks.isEmpty ? 0 : callbacks[min(callbacks.count - 1, Int(Double(callbacks.count) * 0.95))]
-        let diagnostic = Diagnostic(version: AppResources.version, os: ProcessInfo.processInfo.operatingSystemVersionString, accessibility: accessibility, inputMonitoring: inputMonitoring, engine: runtimeReport.status, devices: devices.map { $0.name + " (" + $0.transport + ")" }, events: runtimeReport.events, syntheticIgnored: runtimeReport.injectedIgnored, timeouts: runtimeReport.timeouts, touchStatus: runtimeReport.touchStatus, touchDrops: runtimeReport.touchDrops, maxCallbackMS: runtimeReport.maximumCallbackMS, p95CallbackMS: p95, records: runtimeReport.records)
+        let diagnostic = Diagnostic(version: AppResources.version, os: ProcessInfo.processInfo.operatingSystemVersionString, accessibility: accessibility, inputMonitoringRequired: false, engine: runtimeReport.status, devices: devices.map { $0.name + " (" + $0.transport + ")" }, events: runtimeReport.events, syntheticIgnored: runtimeReport.injectedIgnored, timeouts: runtimeReport.timeouts, touchStatus: runtimeReport.touchStatus, touchDrops: runtimeReport.touchDrops, maxCallbackMS: runtimeReport.maximumCallbackMS, p95CallbackMS: p95, records: runtimeReport.records)
         do { let encoder = JSONEncoder(); encoder.outputFormatting = [.prettyPrinted,.sortedKeys]; try encoder.encode(diagnostic).write(to: url, options: .atomic); lastMessage = text("Exported") } catch { errorMessage = localizedError(error) }
     }
     func setLogin(_ enabled: Bool) {
@@ -322,8 +326,8 @@ import MouseCore
         }
     }
     func writeLaunchReport(to url: URL) {
-        struct Report: Codable { var version: String; var launchedNormally: Bool; var accessibility: Bool; var inputMonitoring: Bool; var engine: String; var devices: [String]; var competingUtilities: [String]; var finishedLaunching: Bool; var visibleWindows: Int; var temporarySettings: Bool; var settingsWindowVisible: Bool; var updateConfigured: Bool; var updateCanCheck: Bool }
-        let result = Report(version: AppResources.version, launchedNormally: true, accessibility: AXIsProcessTrusted(), inputMonitoring: CGPreflightListenEventAccess(), engine: runtimeReport.status, devices: devices.map(\.name), competingUtilities: competingUtilities, finishedLaunching: NSRunningApplication.current.isFinishedLaunching, visibleWindows: NSApplication.shared.windows.filter(\.isVisible).count, temporarySettings: CommandLine.arguments.contains("--ui-test"), settingsWindowVisible: NSApplication.shared.windows.contains { $0.title.contains("GlideMouse") && $0.isVisible }, updateConfigured: updater.configured, updateCanCheck: updater.canCheck)
+        struct Report: Codable { var version: String; var launchedNormally: Bool; var accessibility: Bool; var inputMonitoringRequired: Bool; var engine: String; var devices: [String]; var competingUtilities: [String]; var finishedLaunching: Bool; var visibleWindows: Int; var temporarySettings: Bool; var settingsWindowVisible: Bool; var updateConfigured: Bool; var updateCanCheck: Bool }
+        let result = Report(version: AppResources.version, launchedNormally: true, accessibility: AXIsProcessTrusted(), inputMonitoringRequired: false, engine: runtimeReport.status, devices: devices.map(\.name), competingUtilities: competingUtilities, finishedLaunching: NSRunningApplication.current.isFinishedLaunching, visibleWindows: NSApplication.shared.windows.filter(\.isVisible).count, temporarySettings: CommandLine.arguments.contains("--ui-test"), settingsWindowVisible: NSApplication.shared.windows.contains { $0.title.contains("GlideMouse") && $0.isVisible }, updateConfigured: updater.configured, updateCanCheck: updater.canCheck)
         let e = JSONEncoder(); e.outputFormatting = [.prettyPrinted,.sortedKeys]
         if let data = try? e.encode(result) { try? data.write(to: url, options: .atomic) }
         if CommandLine.arguments.contains("--ui-test") { UIHarness.captureSettingsWindow(to: url.deletingLastPathComponent().appendingPathComponent("glidemouse-settings-visible.png")) }
@@ -334,5 +338,5 @@ import MouseCore
         let encoder = JSONEncoder(); encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
         if let data = try? encoder.encode(snapshot) { try? data.write(to: url, options: .atomic) }
     }
-    func quit() { registry.stop(); permissionTimer?.invalidate(); if let activationObservation { NotificationCenter.default.removeObserver(activationObservation) }; executor.cancel(); runtime?.shutdown(); observations.forEach { NSWorkspace.shared.notificationCenter.removeObserver($0) }; NSApplication.shared.terminate(nil) }
+    func quit() { pauseHotKey?.stop(); registry.stop(); permissionTimer?.invalidate(); if let activationObservation { NotificationCenter.default.removeObserver(activationObservation) }; executor.cancel(); runtime?.shutdown(); observations.forEach { NSWorkspace.shared.notificationCenter.removeObserver($0) }; NSApplication.shared.terminate(nil) }
 }

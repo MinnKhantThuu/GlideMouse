@@ -31,8 +31,8 @@ import MouseCore
             UIHarness.renderTutorials(to: URL(fileURLWithPath: CommandLine.arguments[index + 1])); exit(0)
         }
         if CommandLine.arguments.contains("--probe") {
-            struct Probe: Codable { var os: String; var accessibility: Bool; var inputMonitoring: Bool; var devices: [MouseDevice]; var touch: TouchProbe }
-            let report = Probe(os: ProcessInfo.processInfo.operatingSystemVersionString, accessibility: AXIsProcessTrusted(), inputMonitoring: CGPreflightListenEventAccess(), devices: DeviceRegistry().enumerate(), touch: TouchProbe.run())
+            struct Probe: Codable { var os: String; var accessibility: Bool; var inputMonitoringRequired: Bool; var devices: [MouseDevice]; var touch: TouchProbe }
+            let report = Probe(os: ProcessInfo.processInfo.operatingSystemVersionString, accessibility: AXIsProcessTrusted(), inputMonitoringRequired: false, devices: DeviceRegistry().enumerate(), touch: TouchProbe.run())
             let e = JSONEncoder(); e.outputFormatting = [.prettyPrinted,.sortedKeys]; if let data = try? e.encode(report) { print(String(decoding: data, as: UTF8.self)) }; exit(0)
         }
         if let index = CommandLine.arguments.firstIndex(of: "--check-localization"), CommandLine.arguments.count > index + 1 {
@@ -71,7 +71,9 @@ import MouseCore
         if CommandLine.arguments.contains("--primary-button-test") { exit(PrimaryButtonHarness.run()) }
         if CommandLine.arguments.contains("--integration-test") { exit(IntegrationHarness.run()) }
         if CommandLine.arguments.contains("--test-desktop-latency") { exit(DesktopLatencyHarness.run()) }
+        #if DEBUG
         if CommandLine.arguments.contains("--test-desktop-keyboard") { exit(DesktopKeyboardHarness.run()) }
+        #endif
         GlideMouseApp.main()
     }
 }

@@ -1,6 +1,7 @@
 import Foundation
 import AppKit
 import SwiftUI
+import Carbon
 @preconcurrency import ApplicationServices
 import MouseCore
 
@@ -378,7 +379,11 @@ import MouseCore
     /// Real CoreGraphics event-tap round trip in a dedicated empty test window.
     /// These are synthetic integration events, never described as physical hardware evidence.
     static func run(physical: Bool = false, calibration: Bool = false) -> Int32 {
-        guard AXIsProcessTrusted(), CGPreflightListenEventAccess() else { print("SKIP: macOS input permissions unavailable"); return 77 }
+        guard AXIsProcessTrusted() else { print("SKIP: macOS input permissions unavailable"); return 77 }
+        #if GLIDEMOUSE_PERMISSION_TEST
+        let listenAccess = CGPreflightListenEventAccess()
+        print("EFFECTIVE_LISTEN_PREFLIGHT=\(listenAccess); no ListenEvent request is made")
+        #endif
         let app = NSApplication.shared; app.setActivationPolicy(.regular)
         let window = NSWindow(contentRect: NSRect(x: 200,y: 200,width: 400,height: 250), styleMask: [.titled,.closable], backing: .buffered, defer: false)
         window.title = physical ? "GlideMouse — Physical remap test" : "GlideMouse Integration Test"
@@ -411,7 +416,20 @@ import MouseCore
         var c = Configuration(); c.engineEnabled = true; c.globalDefaults.mappings = [.init(button: 3,action: .middleClick)]
         if physical { c.globalDefaults.mappings = (2...4).map { Mapping(button: $0,action: .middleClick) } }
         c.scroll.enabled = true; c.scroll.acceleration = 0
-        runtime?.apply(c,bundleID: nil,magicMousePresent: false)
+        var focusObservation: NSObjectProtocol?
+        if physical {
+            let ownID = Bundle.main.bundleIdentifier ?? "app.glidemouse.nomonitoringtest"
+            let actions = c.globalDefaults.mappings, scrolling = c.scroll
+            c.globalDefaults.mappings = []; c.scroll.enabled = false
+            c.profiles = [Profile(name: "Physical test", bundleID: ownID, mappings: actions, scroll: scrolling)]
+            runtime?.apply(c, bundleID: ownID, magicMousePresent: false)
+            let testRuntime = runtime
+            focusObservation = NSWorkspace.shared.notificationCenter.addObserver(forName: NSWorkspace.didActivateApplicationNotification, object: nil, queue: .main) { notification in
+                let app = notification.userInfo?[NSWorkspace.applicationUserInfoKey] as? NSRunningApplication
+                testRuntime?.focusChanged(app?.processIdentifier == ProcessInfo.processInfo.processIdentifier ? ownID : app?.bundleIdentifier)
+            }
+        } else { runtime?.apply(c,bundleID: nil,magicMousePresent: false) }
+        defer { if let focusObservation { NSWorkspace.shared.notificationCenter.removeObserver(focusObservation) } }
         pump(0.6)
         if physical {
             if calibration {
@@ -477,14 +495,20 @@ import MouseCore
         }
         let captureOwnerIsolationPassed = collector.syntheticButtons == beforeOwnerSynthetic && collector.testButtons == beforeOwnerNative + 2
         runtime?.setCaptureArea(nil); pump(0.1)
-        let emergency = CGEvent(keyboardEventSource: testSource,virtualKey: 53,keyDown: true)!
-        emergency.flags = [.maskControl,.maskAlternate,.maskCommand]; emergency.post(tap: .cgSessionEventTap)
-        let emergencyUp = CGEvent(keyboardEventSource: testSource,virtualKey: 53,keyDown: false)!
-        emergencyUp.flags = [.maskControl,.maskAlternate,.maskCommand]; emergencyUp.post(tap: .cgSessionEventTap)
-        // The idle report timer can publish after two 250 ms ticks. Wait for
-        // the observable state with a bound instead of racing a fixed delay.
-        let pauseDeadline = Date().addingTimeInterval(1.5)
-        while reportBox.value.status != "Emergency pause" && Date() < pauseDeadline { pump(0.05) }
+        // Exercise the registered Carbon hotkey handler inside this process.
+        // Do not synthesize a system-wide keyboard chord into the user's apps.
+        let pauseKey = EmergencyPauseHotKey { runtime?.emergencyPause() }
+        let pauseRegistered = pauseKey.start()
+        var pauseEvent: EventRef?
+        CreateEvent(nil, OSType(kEventClassKeyboard), UInt32(kEventHotKeyPressed), 0, 0, &pauseEvent)
+        var pauseID = EventHotKeyID(signature: 0x474D5053, id: 1)
+        var pauseDelivered = false
+        if let pauseEvent {
+            SetEventParameter(pauseEvent, EventParamName(kEventParamDirectObject), EventParamType(typeEventHotKeyID), MemoryLayout<EventHotKeyID>.size, &pauseID)
+            pauseDelivered = SendEventToEventTarget(pauseEvent, GetApplicationEventTarget()) == noErr
+            ReleaseEvent(pauseEvent)
+        }
+        RunLoop.main.run(until: Date().addingTimeInterval(0.3)); pauseKey.stop()
         let emergencyPassed = reportBox.value.status == "Emergency pause" && !reportBox.value.active
         let beforePaused = collector.testButtons
         c.engineEnabled = false; runtime?.apply(c,bundleID: nil,magicMousePresent: false); pump(0.2)
@@ -494,9 +518,9 @@ import MouseCore
         up.setIntegerValueField(.eventSourceUserData,value: EventCollector.testTag); up.post(tap: .cgSessionEventTap); pump(0.4)
         let pausePassed = collector.testButtons == beforePaused + 2
         runtime?.shutdown(); pump(0.15); CFMachPortInvalidate(tap); CFRunLoopRemoveSource(CFRunLoopGetMain(),source,.defaultMode); window.orderOut(nil)
-        let result: [String: Any] = ["actionDispatchMS":latencyBox.values,"captureOwnerIsolation":captureOwnerIsolationPassed,"captureAreaIsolation":captureIsolationPassed,"syntheticButtonRemap":remapPassed,"wheelSmoothing":smoothingPassed,"pausePassthrough":pausePassed,"syntheticButtons":collector.syntheticButtons,"syntheticScrollEvents":collector.syntheticScroll,"scrollPhases":Array(Set(collector.scrollPhases)).sorted(),"momentumPhases":Array(Set(collector.momentumPhases)).sorted(),"ownEventsIgnored":reportBox.value.injectedIgnored,"maximumCallbackMS":reportBox.value.maximumCallbackMS,"hardwareTest":false,"unmappedPassthrough":unmappedPassed,"nativeContinuousPreserved":nativeScrollPassed,"emergencyPause":emergencyPassed,"postEventAccess":CGPreflightPostEventAccess(),"engineStatus":reportBox.value.status,"runtimeEvents":reportBox.value.events,"listenerEvents":collector.total,"tags":Array(collector.tags).sorted()]
+        let result: [String: Any] = ["actionDispatchMS":latencyBox.values,"captureOwnerIsolation":captureOwnerIsolationPassed,"captureAreaIsolation":captureIsolationPassed,"syntheticButtonRemap":remapPassed,"wheelSmoothing":smoothingPassed,"pausePassthrough":pausePassed,"syntheticButtons":collector.syntheticButtons,"syntheticScrollEvents":collector.syntheticScroll,"scrollPhases":Array(Set(collector.scrollPhases)).sorted(),"momentumPhases":Array(Set(collector.momentumPhases)).sorted(),"ownEventsIgnored":reportBox.value.injectedIgnored,"maximumCallbackMS":reportBox.value.maximumCallbackMS,"hardwareTest":false,"unmappedPassthrough":unmappedPassed,"nativeContinuousPreserved":nativeScrollPassed,"emergencyPause":emergencyPassed && pauseRegistered && pauseDelivered,"postEventAccess":CGPreflightPostEventAccess(),"engineStatus":reportBox.value.status,"runtimeEvents":reportBox.value.events,"listenerEvents":collector.total,"tags":Array(collector.tags).sorted()]
         if let data = try? JSONSerialization.data(withJSONObject: result, options: [.prettyPrinted,.sortedKeys]) { print(String(decoding: data, as: UTF8.self)) }
-        return captureOwnerIsolationPassed && captureIsolationPassed && remapPassed && smoothingPassed && pausePassed && unmappedPassed && nativeScrollPassed && emergencyPassed ? 0 : 1
+        return captureOwnerIsolationPassed && captureIsolationPassed && remapPassed && smoothingPassed && pausePassed && unmappedPassed && nativeScrollPassed && emergencyPassed && pauseRegistered && pauseDelivered ? 0 : 1
     }
     private static func pump(_ time: Double) { RunLoop.current.run(until: Date().addingTimeInterval(time)) }
 }
@@ -523,7 +547,7 @@ private final class EventCollector: @unchecked Sendable {
 
 @MainActor enum HardwareObserver {
     static func run(seconds: Double) -> Int32 {
-        guard AXIsProcessTrusted(), CGPreflightListenEventAccess() else { print("SKIP: input permissions unavailable"); return 77 }
+        guard AXIsProcessTrusted() else { print("SKIP: input permissions unavailable"); return 77 }
         let app = NSApplication.shared; app.setActivationPolicy(.regular)
         let window = NSWindow(contentRect: NSRect(x: 250,y: 250,width: 520,height: 180),styleMask: [.titled,.closable],backing: .buffered,defer: false)
         window.title = "GlideMouse — Read-only mouse test"
@@ -591,7 +615,9 @@ private final class HardwareCounts: @unchecked Sendable { var calibrationSeen = 
         let original = model.configuration
         model.calibrate(button: 3, position: .lower)
         model.calibrate(button: 4, position: .upper)
-        var result = ["calibrationKeepsMappings": model.configuration.globalDefaults.mappings == original.globalDefaults.mappings]
+        var result = ["mouseTapExcludesAllKeyboardEvents": [CGEventType.keyDown, .keyUp, .flagsChanged].allSatisfy { InputRuntime.mouseEventMask & (1 << $0.rawValue) == 0 },
+                      "mouseTapRetainsButtonsWheelAndDrag": [CGEventType.leftMouseDown, .leftMouseUp, .rightMouseDown, .rightMouseUp, .otherMouseDown, .otherMouseUp, .scrollWheel, .otherMouseDragged].allSatisfy { InputRuntime.mouseEventMask & (1 << $0.rawValue) != 0 },
+                      "calibrationKeepsMappings": model.configuration.globalDefaults.mappings == original.globalDefaults.mappings]
         model.calibrate(button: 0, position: .wheel)
         result["reservedCalibrationRejected"] = model.errorMessage != nil
         model.calibrate(button: 2, position: .wheel)
@@ -657,22 +683,22 @@ private final class HardwareCounts: @unchecked Sendable { var calibrationSeen = 
         result["missingAppSelectionDisplaysAllApps"] = model.isGlobal && model.editingScopeName == model.text("All apps")
         model.completeSetup()
         result["setupCompletionPreservesMappings"] = model.configuration.usability?.setupCompleted == true && model.configuration.globalDefaults == global
-        // Setup must stay usable with denied, partial, or stale TCC states,
+        // Setup must stay usable with denied or stale posting permission states, independent of hotkey registration,
         // while permission checks continue to protect system-wide actions.
         for postAccess in [false, true] {
-            for listenAccess in [false, true] {
+            for hotKeyAvailable in [false, true] {
                 let setupModel = AppModel(testing: true, rendering: true)
-                setupModel.accessibility = postAccess; setupModel.inputMonitoring = listenAccess
+                setupModel.accessibility = postAccess; setupModel.emergencyPauseAvailable = hotKeyAvailable
                 setupModel.configuration.globalDefaults.mappings = [click]
                 setupModel.configuration.engineEnabled = true
                 setupModel.showMouseSetup = true
                 setupModel.finishMouseSetup("keep")
-                let name = "setup-post-\(postAccess)-listen-\(listenAccess)"
-                result[name] = setupModel.configuration.usability?.setupCompleted == true && !setupModel.showMouseSetup && setupModel.configuration.globalDefaults.mappings == [click] && setupModel.configuration.engineEnabled == (postAccess && listenAccess) && setupModel.accessibility == postAccess && setupModel.inputMonitoring == listenAccess && !setupModel.hasInputRuntime
+                let name = "setup-post-\(postAccess)-hotkey-\(hotKeyAvailable)"
+                result[name] = setupModel.configuration.usability?.setupCompleted == true && !setupModel.showMouseSetup && setupModel.configuration.globalDefaults.mappings == [click] && setupModel.configuration.engineEnabled == postAccess && setupModel.accessibility == postAccess && setupModel.emergencyPauseAvailable == hotKeyAvailable && !setupModel.hasInputRuntime
                 let smoothModel = AppModel(testing: true, rendering: true)
-                smoothModel.accessibility = postAccess; smoothModel.inputMonitoring = listenAccess
+                smoothModel.accessibility = postAccess; smoothModel.emergencyPauseAvailable = hotKeyAvailable
                 smoothModel.finishMouseSetup("smooth")
-                result[name + "-smooth"] = smoothModel.configuration.usability?.setupCompleted == true && smoothModel.configuration.engineEnabled == (postAccess && listenAccess) && smoothModel.errorMessage == nil
+                result[name + "-smooth"] = smoothModel.configuration.usability?.setupCompleted == true && smoothModel.configuration.engineEnabled == postAccess && smoothModel.errorMessage == nil
             }
         }
         // Inline edits and app inheritance use the same mutation path as the new rows.
@@ -716,7 +742,7 @@ private final class HardwareCounts: @unchecked Sendable { var calibrationSeen = 
 /// The injected desktop action is replaced by a recorder: no Spaces are changed.
 @MainActor enum DesktopLatencyHarness {
     static func run() -> Int32 {
-        guard AXIsProcessTrusted(), CGPreflightListenEventAccess() else { print("SKIP: macOS input permissions unavailable"); return 77 }
+        guard AXIsProcessTrusted() else { print("SKIP: macOS input permissions unavailable"); return 77 }
         let probe = DesktopLatencyProbe()
         let delivered = HarnessLatencyBox()
         let runtime = InputRuntime(report: { _ in }, action: { request in
@@ -757,9 +783,10 @@ private final class DesktopLatencyProbe: @unchecked Sendable {
     func snapshot() -> (actions: [MouseAction], time: Double?) { lock.lock(); defer { lock.unlock() }; return (actions, time) }
 }
 
+#if DEBUG
 @MainActor enum DesktopKeyboardHarness {
     static func run() -> Int32 {
-        guard AXIsProcessTrusted(), CGPreflightListenEventAccess() else { print("SKIP: macOS input permissions unavailable"); return 77 }
+        guard AXIsProcessTrusted() else { print("SKIP: macOS input permissions unavailable"); return 77 }
         let collector = DesktopKeyboardCollector()
         let mask = [CGEventType.keyDown, .keyUp, .flagsChanged].reduce(CGEventMask(0)) { $0 | (1 << $1.rawValue) }
         // Swallow only our tagged test shortcuts, so the test cannot switch Spaces
@@ -787,6 +814,8 @@ private final class DesktopKeyboardCollector: @unchecked Sendable {
     var arrows: [Int] = []
     var flags: [CGEventFlags] = []
 }
+
+#endif
 
 // Documentation captures use isolated sample settings, never a customer's
 // desktop, input injection or a recording of someone else's application.
@@ -823,7 +852,7 @@ extension UIHarness {
             }
             let setup = localized("01 · Start and label your mouse", "01 · စတင်သုံးရန်နှင့် ခလုတ်နေရာ သတ်မှတ်ရန်")
             scene("setup", 1, title: setup, en: "Open Settings → Language. Choose English, မြန်မာ or 简体中文.", my: "ဆက်တင်များ → ဘာသာစကား မှာ English၊ မြန်မာ၊ 简体中文 ကို ရွေးနိုင်ပါတယ်။", content: SettingsRoot(model: model, initialPage: .general))
-            scene("setup", 2, title: setup, en: "Open Mouse setup. Allow Accessibility and Input Monitoring in macOS System Settings, then return and Refresh.", my: "Mouse သတ်မှတ်ရန် ကိုဖွင့်ပါ။ macOS မှာ Accessibility နဲ့ Input Monitoring ကို Allow လုပ်ပြီး ပြန်လာကာ Refresh နှိပ်ပါ။", content: MouseSetupWizard(model: model, initialStep: 0), seconds: 9)
+            scene("setup", 2, title: setup, en: "Open Mouse setup. Allow mouse control in macOS System Settings, then return and Refresh.", my: "Mouse သတ်မှတ်ရန်ကို ဖွင့်ပါ။ macOS မှာ Mouse ထိန်းချုပ်ခွင့်ပေးပြီး ပြန်လာကာ Refresh နှိပ်ပါ။", content: MouseSetupWizard(model: model, initialStep: 0), seconds: 9)
             scene("setup", 3, title: setup, en: "In Identify buttons, start capture. Press one wheel or side button inside the box. Select its position and confirm.", my: "ခလုတ်နေရာ သတ်မှတ်ရန် မှာ capture စပါ။ အကွက်ထဲ၌ ဘီးခလုတ် သို့မဟုတ် ဘေးခလုတ်နှိပ်ပြီး နေရာရွေးကာ အတည်ပြုပါ။", content: MouseSetupWizard(model: model, initialStep: 1), seconds: 9)
             model.calibrate(button: 2, position: .wheel); model.calibrate(button: 3, position: .lower); model.calibrate(button: 4, position: .upper)
             scene("setup", 4, title: setup, en: "This sample mouse uses 3 = wheel, 4 = lower side, 5 = upper side. Your mouse may report different numbers.", my: "နမူနာ mouse မှာ 3 က ဘီးခလုတ်၊ 4 က အောက်ဘေးခလုတ်၊ 5 က အပေါ်ဘေးခလုတ်ပါ။ သင့် mouse မှာ နံပါတ်ကွာနိုင်ပါတယ်။", content: MouseSetupWizard(model: model, initialStep: 1), seconds: 9)
@@ -921,7 +950,7 @@ private struct TutorialCard: View {
 extension UIHarness {
     static func configureMappingListFixture(_ model: AppModel) {
         model.devices = [MouseDevice(id: "list-fixture", name: "Sample Mouse", transport: "Fixture", vendor: 0, product: 0, buttons: 5, stableIdentity: false, magicMouse: false)]
-        model.accessibility = true; model.inputMonitoring = true
+        model.accessibility = true; model.emergencyPauseAvailable = true
         model.configuration.globalDefaults.mappings = [Mapping(button: 4, action: .spaceRight), Mapping(button: 3, action: .spaceLeft), Mapping(trigger: .init(kind: .buttonHold, button: 3), action: .missionControl)] + MagicMouseCatalog.defaults
         model.configuration.profiles = [Profile(name: "Safari", bundleID: "com.apple.Safari")]
         model.configuration.engineEnabled = false; model.configuration.touchEnabled = false

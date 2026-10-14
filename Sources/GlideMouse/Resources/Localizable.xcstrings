@@ -15370,6 +15370,50 @@
           }
         }
       }
+    },
+    "Allow mouse control to use your chosen clicks, shortcuts and scrolling in other apps. GlideMouse does not request Input Monitoring or read the keyboard event stream.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Allow mouse control to use your chosen clicks, shortcuts and scrolling in other apps. GlideMouse does not request Input Monitoring or read the keyboard event stream."
+          }
+        },
+        "my": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "အခြား app တွေမှာ သင်ရွေးထားတဲ့ ကလစ်၊ shortcut နဲ့ scroll လုပ်ဆောင်ချက်တွေကို သုံးဖို့ Mouse ထိန်းချုပ်ခွင့်ပေးပါ။ GlideMouse က Input Monitoring ခွင့်ပြုချက် မတောင်းပါဘူး။ Keyboard နှိပ်သမျှကိုလည်း စောင့်ဖတ်မနေပါဘူး။"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "允许鼠标控制后，即可在其他应用中使用您设置的点击、快捷键和滚动操作。GlideMouse 不请求输入监控权限，也不监听键盘事件流。"
+          }
+        }
+      }
+    },
+    "Pause shortcut is in use. Pause from the menu bar.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pause shortcut is in use. Pause from the menu bar."
+          }
+        },
+        "my": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pause shortcut ကို အခြား app က သုံးနေပါတယ်။ Menu bar ကနေ ခဏရပ်နိုင်ပါတယ်။"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "暂停快捷键已被占用。请从菜单栏暂停。"
+          }
+        }
+      }
     }
   },
   "version": "1.0"

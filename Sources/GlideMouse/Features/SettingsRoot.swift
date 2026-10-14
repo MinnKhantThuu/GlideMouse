@@ -68,7 +68,7 @@ struct SettingsRoot: View {
                 }
                 Divider()
                 HStack {
-                    Text(model.userFacingMessage.isEmpty ? model.text("Emergency pause: ⌃⌥⌘ Esc") : model.userFacingMessage).lineLimit(2)
+                    Text(model.userFacingMessage.isEmpty ? model.text(!model.isTesting && !model.emergencyPauseAvailable ? "Pause shortcut is in use. Pause from the menu bar." : "Emergency pause: ⌃⌥⌘ Esc") : model.userFacingMessage).lineLimit(2)
                     Spacer(); Text("v" + AppResources.version).foregroundStyle(.secondary)
                 }.font(.caption).padding(12)
             }
@@ -126,8 +126,7 @@ struct PermissionControls: View {
     @ObservedObject var model: AppModel
     var body: some View {
         HStack { Label(model.text(AppResources.isStoreEdition ? (model.accessibility ? "Mouse actions allowed" : "Mouse actions need access") : (model.accessibility ? "Accessibility granted" : "Accessibility needed")), systemImage: model.accessibility ? "checkmark.shield" : "exclamationmark.shield"); Spacer(); Button(model.text(AppResources.isStoreEdition ? "Open mouse control settings" : "Open Accessibility")) { model.permission("accessibility") } }
-        HStack { Label(model.text(model.inputMonitoring ? "Input Monitoring granted" : "Input Monitoring needed"), systemImage: model.inputMonitoring ? "checkmark.shield" : "exclamationmark.shield"); Spacer(); Button(model.text("Open Input Monitoring")) { model.permission("input") } }
-        Text(model.text(AppResources.isStoreEdition ? "Mouse control allows your chosen clicks and shortcuts. Input Monitoring recognizes mouse buttons and scrolling. Typed text is not saved." : "Accessibility lets GlideMouse perform the actions you choose, such as switching desktops. Input Monitoring lets it recognize mouse buttons and wheel input. It does not save what you type.")).font(.caption).foregroundStyle(.secondary)
+        Text(model.text("Allow mouse control to use your chosen clicks, shortcuts and scrolling in other apps. GlideMouse does not request Input Monitoring or read the keyboard event stream.")).font(.caption).foregroundStyle(.secondary)
         if AppResources.isStoreEdition { Text(model.text("macOS may call the mouse control setting Accessibility or Device Control and Data Access.")).font(.caption).foregroundStyle(.secondary) }
         Text(model.text("After allowing access in System Settings, refresh. If access is still unavailable, quit and reopen GlideMouse.")).font(.caption).foregroundStyle(.secondary)
         Button(model.text("Refresh")) { model.refresh() }

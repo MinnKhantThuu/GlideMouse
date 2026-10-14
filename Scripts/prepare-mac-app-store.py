@@ -31,10 +31,17 @@ def patch(relative, old, new, count=1):
         sys.exit(f'Source drift: {relative}: expected {count} occurrences, found {actual}. Candidate not ready.')
     path.write_text(content.replace(old, new))
 
-# App Sandbox permits the PostEvent and ListenEvent TCC services. AXUIElement
+# Use only PostEvent. Mouse taps exclude keyboard events; no ListenEvent
+# request/preflight or HID device opening is retained. AXUIElement
 # access is a different privilege. Use Core Graphics permission APIs throughout.
 for file in (dest / 'Sources/GlideMouse').rglob('*.swift'):
     text = file.read_text().replace('AXIsProcessTrusted()', 'CGPreflightPostEventAccess()')
+    # Remove the development-only denied-permission assertion from the Store
+    # source altogether; its preflight API must not ship in the release payload.
+    if '#if GLIDEMOUSE_PERMISSION_TEST' in text:
+        start = text.index('        #if GLIDEMOUSE_PERMISSION_TEST')
+        end = text.index('        #endif', start) + len('        #endif\n')
+        text = text[:start] + text[end:]
     file.write_text(text)
 patch('Sources/GlideMouse/Core/AppModel.swift',
       'AXIsProcessTrustedWithOptions([kAXTrustedCheckOptionPrompt.takeUnretainedValue() as String: true] as CFDictionary)',
@@ -180,7 +187,7 @@ for directory in ['Sources', 'Config', 'GlideMouse.xcodeproj']:
     for file in (dest / directory).rglob('*'):
         if file.suffix not in ['.swift', '.c', '.h', '.plist', '.pbxproj']: continue
         text = file.read_text()
-        for token in ['MultitouchSupport.framework', 'MTDeviceCreateList', 'MTRegisterContact', 'import Sparkle', 'AXIsProcessTrusted', 'SPUStandardUpdater', 'with: .systemDefined']:
+        for token in ['MultitouchSupport.framework', 'MTDeviceCreateList', 'MTRegisterContact', 'import Sparkle', 'AXIsProcessTrusted', 'SPUStandardUpdater', 'with: .systemDefined', 'CGRequestListenEventAccess', 'CGPreflightListenEventAccess', 'IOHIDManagerOpen', 'IOHIDDeviceOpen']:
             if token in text:
                 sys.exit(f'Forbidden Store implementation remains: {file.relative_to(dest)}: {token}')
 report = {
@@ -189,7 +196,8 @@ report = {
     'status': 'candidate only; not signed for distribution, not runtime validated, not uploaded',
     'excludedActions': ['shell','appleShortcut','openApp','openFolder','volumeUp','volumeDown','mute','playPause','nextTrack','previousTrack','brightnessUp','brightnessDown'],
     'retainedActions': 'button clicks, holds/double presses, keyboard shortcuts, desktop switching, Mission Control, scroll smoothing, URL opening and app-specific mappings',
-    'permissionAPIs': ['CGPreflightPostEventAccess','CGRequestPostEventAccess','CGPreflightListenEventAccess','CGRequestListenEventAccess'],
+    'permissionAPIs': ['CGPreflightPostEventAccess','CGRequestPostEventAccess'],
+    'inputMonitoringRequired': False,
 }
 (dest.parent / (dest.name + '-preparation.json')).write_text(json.dumps(report, indent=2) + '\n')
 print(dest)

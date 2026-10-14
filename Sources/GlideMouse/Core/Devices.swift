@@ -4,7 +4,7 @@ import IOKit.hid
 import NativeBridge
 import MouseCore
 
-struct MouseDevice: Identifiable, Codable, Sendable {
+struct MouseDevice: Identifiable, Codable, Equatable, Sendable {
     var id: String
     var name: String
     var transport: String
@@ -15,45 +15,53 @@ struct MouseDevice: Identifiable, Codable, Sendable {
     var magicMouse: Bool
 }
 @MainActor final class DeviceRegistry {
-    private var manager: IOHIDManager?
-    private var onChange: (() -> Void)?
-    func start(onChange: @escaping () -> Void) {
-        self.onChange = onChange
-        let m = IOHIDManagerCreate(kCFAllocatorDefault, IOOptionBits(kIOHIDOptionsTypeNone)); manager = m
-        IOHIDManagerSetDeviceMatching(m, [kIOHIDDeviceUsagePageKey: 1, kIOHIDDeviceUsageKey: 2] as CFDictionary)
-        let callback: IOHIDDeviceCallback = { context, _, _, _ in
-            guard let context else { return }
-            MainActor.assumeIsolated { Unmanaged<DeviceRegistry>.fromOpaque(context).takeUnretainedValue().onChange?() }
+    private var timer: Timer?
+    private var snapshot: [MouseDevice] = []
+    func start(onChange: @escaping @MainActor @Sendable () -> Void) {
+        stop()
+        snapshot = enumerate()
+        // Registry metadata does not open an HID device or subscribe to input.
+        // Poll for connection changes; invoke refresh only when devices differ.
+        let timer = Timer(timeInterval: 2, repeats: true) { [weak self] _ in
+            MainActor.assumeIsolated {
+                guard let self else { return }
+                let devices = self.enumerate()
+                guard devices != self.snapshot else { return }
+                self.snapshot = devices; onChange()
+            }
         }
-        IOHIDManagerRegisterDeviceMatchingCallback(m,callback,Unmanaged.passUnretained(self).toOpaque())
-        IOHIDManagerRegisterDeviceRemovalCallback(m,callback,Unmanaged.passUnretained(self).toOpaque())
-        IOHIDManagerScheduleWithRunLoop(m,CFRunLoopGetMain(),CFRunLoopMode.defaultMode.rawValue)
-        _ = IOHIDManagerOpen(m,IOOptionBits(kIOHIDOptionsTypeNone))
+        RunLoop.main.add(timer, forMode: .common); self.timer = timer
     }
-    func stop() { if let m = manager { IOHIDManagerUnscheduleFromRunLoop(m,CFRunLoopGetMain(),CFRunLoopMode.defaultMode.rawValue); IOHIDManagerClose(m,IOOptionBits(kIOHIDOptionsTypeNone)) }; manager = nil; onChange = nil }
+    func stop() { timer?.invalidate(); timer = nil; snapshot = [] }
     func enumerate() -> [MouseDevice] {
-        let temporary = manager == nil
-        let m = manager ?? IOHIDManagerCreate(kCFAllocatorDefault, IOOptionBits(kIOHIDOptionsTypeNone))
-        if temporary { IOHIDManagerSetDeviceMatching(m, [kIOHIDDeviceUsagePageKey: 1, kIOHIDDeviceUsageKey: 2] as CFDictionary) }
-        guard IOHIDManagerOpen(m, IOOptionBits(kIOHIDOptionsTypeNone)) == kIOReturnSuccess else { return [] }
-        defer { if temporary { IOHIDManagerClose(m, IOOptionBits(kIOHIDOptionsTypeNone)) } }
-        let found = IOHIDManagerCopyDevices(m) as? Set<IOHIDDevice> ?? []
-        return found.compactMap { d -> MouseDevice? in
-            func property(_ key: String) -> Any? { IOHIDDeviceGetProperty(d, key as CFString) }
+        var iterator: io_iterator_t = 0
+        guard IOServiceGetMatchingServices(kIOMainPortDefault, IOServiceMatching("IOHIDDevice"), &iterator) == KERN_SUCCESS else { return [] }
+        defer { IOObjectRelease(iterator) }
+        var devices: [MouseDevice] = []
+        while case let service = IOIteratorNext(iterator), service != 0 {
+            defer { IOObjectRelease(service) }
+            guard let device = IOHIDDeviceCreate(kCFAllocatorDefault, service) else { continue }
+            func property(_ key: String) -> Any? { IOHIDDeviceGetProperty(device, key as CFString) }
+            guard property(kIOHIDPrimaryUsagePageKey) as? Int == 1,
+                  property(kIOHIDPrimaryUsageKey) as? Int == 2 else { continue }
             let vendor = property(kIOHIDVendorIDKey) as? Int ?? 0, product = property(kIOHIDProductIDKey) as? Int ?? 0
             let name = property(kIOHIDProductKey) as? String ?? "Mouse", transport = property(kIOHIDTransportKey) as? String ?? "Unknown"
             let serial = property(kIOHIDSerialNumberKey) as? String ?? ""
             let location = property(kIOHIDLocationIDKey) as? Int ?? 0
-            let elements = IOHIDDeviceCopyMatchingElements(d, nil, IOOptionBits(kIOHIDOptionsTypeNone)) as? [IOHIDElement] ?? []
+            let elements = IOHIDDeviceCopyMatchingElements(device, nil, IOOptionBits(kIOHIDOptionsTypeNone)) as? [IOHIDElement] ?? []
             let keyboardCollection = elements.contains { IOHIDElementGetUsagePage($0) == 1 && IOHIDElementGetUsage($0) == 6 }
             let touchpadCollection = elements.contains { IOHIDElementGetUsagePage($0) == 13 && IOHIDElementGetUsage($0) == 5 }
-            guard MouseDeviceClassification.isMouse(name: name, keyboardCollection: keyboardCollection, touchpadCollection: touchpadCollection) else { return nil }
+            guard MouseDeviceClassification.isMouse(name: name, keyboardCollection: keyboardCollection, touchpadCollection: touchpadCollection) else { continue }
             let buttons = elements.filter { IOHIDElementGetUsagePage($0) == 9 }.map { IOHIDElementGetUsage($0) }.max() ?? 0
-            let identifier = "\(vendor):\(product):\(transport):" + (serial.isEmpty ? "session-\(location)-\(IOHIDDeviceGetService(d))" : serial)
-            return MouseDevice(id: identifier, name: name, transport: transport, vendor: vendor, product: product, buttons: Int(buttons), stableIdentity: !serial.isEmpty, magicMouse: vendor == 1452 && (name.localizedCaseInsensitiveContains("magic mouse") || [781, 617, 789].contains(product)))
-        }.sorted { $0.name < $1.name }
+            var registryID: UInt64 = 0
+            IORegistryEntryGetRegistryEntryID(service, &registryID)
+            let identifier = "\(vendor):\(product):\(transport):" + (serial.isEmpty ? "session-\(location)-\(registryID)" : serial)
+            devices.append(MouseDevice(id: identifier, name: name, transport: transport, vendor: vendor, product: product, buttons: Int(buttons), stableIdentity: !serial.isEmpty, magicMouse: vendor == 1452 && (name.localizedCaseInsensitiveContains("magic mouse") || [781, 617, 789].contains(product))))
+        }
+        return devices.sorted { ($0.name, $0.id) < ($1.name, $1.id) }
     }
 }
+
 struct TouchDeviceInfo: Identifiable, Codable, Equatable, Sendable {
     var id: Int
     var family: Int

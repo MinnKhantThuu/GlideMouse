@@ -12,7 +12,7 @@ struct SimpleMousePage: View {
             .union(model.listTriggers(touch: false).map(\.button))).filter { $0 >= 2 }.sorted()
     }
     var body: some View {
-        if !model.accessibility || !model.inputMonitoring { SectionBox(title: model.text("Allow mouse control")) { PermissionControls(model: model) } }
+        if !model.mouseAccessReady { SectionBox(title: model.text("Allow mouse control")) { PermissionControls(model: model) } }
         HStack {
             Text(model.currentMouse?.name ?? model.text("Mouse buttons and wheel")).font(.headline)
             Spacer()

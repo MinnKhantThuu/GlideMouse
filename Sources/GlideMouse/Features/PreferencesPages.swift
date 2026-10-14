@@ -180,7 +180,7 @@ struct GeneralPage: View {
         SectionBox(title: model.text("Mouse setup")) {
             Button(model.text("Set up your mouse")) { model.showMouseSetup = true }
             Button(model.text("Identify buttons")) { model.showCalibration = true }
-            if model.accessibility && model.inputMonitoring { Label(model.text("Mouse control is allowed"), systemImage: "checkmark.shield").foregroundStyle(.secondary) }
+            if model.mouseAccessReady { Label(model.text("Mouse control is allowed"), systemImage: "checkmark.shield").foregroundStyle(.secondary) }
             else { PermissionControls(model: model) }
         }
         ExpandableSection(model: model, title: model.text("Suggested button actions")) {

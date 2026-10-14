@@ -38,6 +38,8 @@ struct ActionRequest: Sendable { var mapping: Mapping; var source: String; var e
 /// All mutable engine state is confined to its dedicated CFRunLoop thread.
 /// Public entry points enqueue immutable snapshots; the small lock protects only loop/epoch handles.
 final class InputRuntime: @unchecked Sendable {
+    static let mouseEventTypes: [CGEventType] = [.otherMouseDown, .otherMouseUp, .otherMouseDragged, .mouseMoved, .leftMouseDown, .leftMouseUp, .leftMouseDragged, .rightMouseDown, .rightMouseUp, .rightMouseDragged, .scrollWheel]
+    static var mouseEventMask: CGEventMask { mouseEventTypes.reduce(0) { $0 | (CGEventMask(1) << $1.rawValue) } }
     private let lock = NSLock()
     private var loop: CFRunLoop?
     private var pendingBlocks: [@Sendable () -> Void] = []
@@ -154,6 +156,11 @@ final class InputRuntime: @unchecked Sendable {
         }
     }
     func clearDiagnostics() { enqueue { [weak self] in self?.report.records = []; self?.report.callbacks = [] } }
+    func emergencyPause() { enqueue { [weak self] in
+        guard let self else { return }
+        self.configuration.engineEnabled = false; self.stopTap(); self.reset()
+        gm_touch_stop(); self.touchRunning = false; self.report.status = "Emergency pause"; self.pauseHandler()
+    } }
     func suspend() { enqueue { [weak self] in guard let self else { return }; self.stopTap(); self.reset(); gm_touch_stop(); self.touchRunning = false; self.report.status = "Suspended" } }
     func shutdown() { enqueue { [weak self] in guard let self else { return }; self.stopTap(); self.reset(); gm_touch_stop(); if let l = self.loop { CFRunLoopStop(l) } } }
     func isCurrent(_ e: Int) -> Bool { lock.lock(); defer { lock.unlock() }; return e == currentEpoch }
@@ -171,7 +178,7 @@ final class InputRuntime: @unchecked Sendable {
     }
     private func configureTouch() {
         gm_touch_stop(); touchRunning = false
-        guard configuration.engineEnabled, configuration.touchEnabled, allowMagic, AXIsProcessTrusted(), CGPreflightListenEventAccess() else { report.touchStatus = allowMagic ? "Experimental adapter disabled" : "No Magic Mouse connected"; return }
+        guard configuration.engineEnabled, configuration.touchEnabled, allowMagic, AXIsProcessTrusted() else { report.touchStatus = allowMagic ? "Experimental adapter disabled" : "No Magic Mouse connected"; return }
         let probe = TouchProbe.run(); report.touchDevices = probe.devices
         guard let candidate = probe.devices.first(where: { $0.candidate }), gm_touch_start(Int32(candidate.id)) else { report.touchStatus = String(cString: gm_touch_status()); return }
         touchDeviceID = "mt:\(candidate.id)"
@@ -179,9 +186,10 @@ final class InputRuntime: @unchecked Sendable {
     }
     private func startTap(listenOnly: Bool = false) {
         stopTap()
-        guard CGPreflightListenEventAccess(), listenOnly || AXIsProcessTrusted() else { report.status = "Permissions needed"; return }
-        let types: [CGEventType] = [.otherMouseDown,.otherMouseUp,.otherMouseDragged,.mouseMoved,.leftMouseDown,.leftMouseUp,.leftMouseDragged,.rightMouseDown,.rightMouseUp,.rightMouseDragged,.scrollWheel,.keyDown]
-        let mask = types.reduce(CGEventMask(0)) { $0 | (CGEventMask(1) << $1.rawValue) }
+        guard listenOnly || AXIsProcessTrusted() else { report.status = "Permissions needed"; return }
+        // Mouse events only. The pause chord uses RegisterEventHotKey, rather
+        // than tapping keyboard input and requiring Input Monitoring.
+        let mask = Self.mouseEventMask
         tap = CGEvent.tapCreate(tap: .cgSessionEventTap, place: .headInsertEventTap, options: listenOnly ? .listenOnly : .defaultTap, eventsOfInterest: mask, callback: { _, type, event, user in
             guard let user else { return Unmanaged.passUnretained(event) }
             let runtime = Unmanaged<InputRuntime>.fromOpaque(user).takeUnretainedValue()
@@ -245,10 +253,6 @@ final class InputRuntime: @unchecked Sendable {
         }
         if event.getIntegerValueField(.eventSourceUserData) == syntheticTag { report.injectedIgnored += 1; return false }
         let mods = Modifiers(cgFlags: event.flags)
-        if type == .keyDown {
-            if event.getIntegerValueField(.keyboardEventKeycode) == 53, mods == [.command,.option,.control] { configuration.engineEnabled = false; reset(); stopTap(); gm_touch_stop(); touchRunning = false; report.status = "Emergency pause"; pauseHandler(); return true }
-            return false
-        }
         report.events += 1
         if type == .leftMouseDown || type == .rightMouseDown { if touchHeld { resetTouch() }; gestures.cancelForNativeScroll(); taps.cancel(); if dragPointer { dragHandler(event.location, true); dragPointer = false } }
         let isDown = [.leftMouseDown, .rightMouseDown, .otherMouseDown].contains(type)
@@ -392,7 +396,7 @@ final class InputRuntime: @unchecked Sendable {
         let time = ProcessInfo.processInfo.systemUptime
         if time - lastPermissionCheck > 2 {
             lastPermissionCheck = time
-            if report.active && (!AXIsProcessTrusted() || !CGPreflightListenEventAccess()) { reset(); stopTap(); gm_touch_stop(); touchRunning = false; report.status = "Permission revoked" }
+            if report.active && !AXIsProcessTrusted() { stopTap(); reset(); gm_touch_stop(); touchRunning = false; report.status = "Permission revoked" }
         }
         if configuration.engineEnabled && report.active {
             let bs = bindings(); buttons.advance(time: time, bindings: bs).forEach { emit($0) }

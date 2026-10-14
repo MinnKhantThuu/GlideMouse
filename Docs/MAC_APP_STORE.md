@@ -2,14 +2,14 @@
 
 The direct-download edition remains the shipping app. A separate Store candidate
 uses `app.glidemouse.store` and the App Sandbox, with its own settings container.
-Version 0.4.2 (26), submitted on 7 October 2026, was rejected on 13 October under Guidelines 2.1 and 2.4.5. Apple specifically rejected mouse-control use of the requested permissions. Build 28 was resubmitted on 14 October 2026 and App Store Connect shows **Waiting for Review**. Updated notes explain the onboarding correction and public Core Graphics event APIs. Technical Sandbox compatibility does not resolve the policy objection; approval is still pending. See [the review investigation](REVIEW_2026_10_13.md). The app is not publicly released on the Mac App Store.
+Version 0.4.2 (26), submitted on 7 October 2026, was rejected on 13 October under Guidelines 2.1 and 2.4.5. Apple specifically rejected mouse-control use of the requested permissions. Build 28 was resubmitted on 14 October 2026. Build 30 is the replacement candidate: Input Monitoring requests and keyboard event tapping are removed, emergency pause uses a registered hotkey, and mouse discovery reads metadata without opening HID input devices. The signed package has been uploaded; final review submission is pending. Technical Sandbox compatibility does not resolve the policy objection; approval is still pending. See [the review investigation](REVIEW_2026_10_13.md). The app is not publicly released on the Mac App Store.
 
 ## Generate and archive
 
 From the repository root, with Xcode selected:
 
 ```sh
-python3 Scripts/prepare-mac-app-store.py --output build/MacAppStore/candidate --build-number 28
+python3 Scripts/prepare-mac-app-store.py --output build/MacAppStore/candidate --build-number 30
 xcodebuild -project build/MacAppStore/candidate/GlideMouse.xcodeproj \
   -scheme GlideMouse -configuration Release \
   -derivedDataPath build/MacAppStore/DerivedData \
@@ -31,12 +31,12 @@ After exporting with Xcode's `app-store-connect` method, validate the actual pac
 
 ```sh
 python3 Scripts/validate-store-package.py build/MacAppStore/export/GlideMouse.pkg \
-  --team-id YOUR_TEAM_ID --build-number 28
+  --team-id YOUR_TEAM_ID --build-number 30
 ```
 
 This extracts the payload without installing it, verifies the installer/app signing,
 checks App Sandbox in the signed payload, and rejects preview flags, AX trust/UI
-calls, private touch symbols and Sparkle. Run it before upload. Packaging checks
+calls, ListenEvent request/preflight calls, HID input-device opening, private touch symbols and Sparkle. Run it before upload. Packaging checks
 do not establish App Review approval or a real-device permission result.
 
 ## Edition differences
@@ -61,13 +61,13 @@ credit, email and website remain available.
 
 ## Permissions and review
 
-Use `CGPreflightPostEventAccess` / `CGRequestPostEventAccess` for synthetic UI
-inputs and `CGPreflightListenEventAccess` / `CGRequestListenEventAccess` for
-monitoring. These are different from AXUIElement access. Apple DTS explains that
-PostEvent and ListenEvent APIs are compatible with App Sandbox, while the separate
-Accessibility service is not. The PostEvent permission still appears in the
-Accessibility pane in System Settings. This technical compatibility is not a
-promise of App Review approval.
+Use only `CGPreflightPostEventAccess` / `CGRequestPostEventAccess` for chosen
+synthetic clicks, shortcuts and scroll replacement. Mouse event taps exclude
+keyboard input. Emergency pause uses `RegisterEventHotKey`, and device discovery
+uses IORegistry metadata without HID device/manager opening. No ListenEvent
+request or preflight calls are shipped. PostEvent may still appear under
+Accessibility or Device Control and Data Access in System Settings. This
+technical implementation does not establish App Review approval.
 
 See [Apple DTS's explanation](https://developer.apple.com/forums/thread/820594)
 and [Review Guidelines 2.4.5 and 2.5.1](https://developer.apple.com/app-store/review/guidelines/).
