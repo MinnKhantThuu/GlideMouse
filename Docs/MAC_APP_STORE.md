@@ -2,14 +2,14 @@
 
 The direct-download edition remains the shipping app. A separate Store candidate
 uses `app.glidemouse.store` and the App Sandbox, with its own settings container.
-Version 0.4.2 (26), submitted on 7 October 2026, was rejected on 13 October under Guidelines 2.1 and 2.4.5. Apple specifically rejected mouse-control use of the requested permissions. Build 28 was resubmitted on 14 October 2026. Build 30 is the replacement candidate: Input Monitoring requests and keyboard event tapping are removed, emergency pause uses a registered hotkey, and mouse discovery reads metadata without opening HID input devices. The signed package was submitted at 11:48 Asia/Bangkok on 14 October 2026. App Store Connect confirmed **Waiting for Review** for 0.4.2 (30), submission `80b45ded-240f-4933-8395-c31b5df39b05`. English and Simplified Chinese screenshots and permission descriptions were replaced with the current one-permission UI. Technical Sandbox compatibility does not resolve the policy objection; approval is still pending. See [the review investigation](REVIEW_2026_10_13.md). The app is not publicly released on the Mac App Store.
+Version 0.4.2 (26) was rejected under Guidelines 2.1 and 2.4.5. Build 30 was submitted on 14 October and rejected on 20 October 2026 for Accessibility and Input Monitoring use. Its binary check had excluded explicit ListenEvent request calls but missed remaining listen-only taps and HID user-client creation. Build 31 removes those paths and has passed denied-permission testing on macOS 27.0.1. The signed development archive is ready; Store export/upload is awaiting the signing-account refresh. An explanation was sent to App Review on 24 October at 16:39 Asia/Bangkok. Apple policy acceptance remains unresolved. See [the review investigation](REVIEW_2026_10_13.md). The app is not publicly released on the Mac App Store.
 
 ## Generate and archive
 
 From the repository root, with Xcode selected:
 
 ```sh
-python3 Scripts/prepare-mac-app-store.py --output build/MacAppStore/candidate --build-number 30
+python3 Scripts/prepare-mac-app-store.py --output build/MacAppStore/candidate --build-number 31
 xcodebuild -project build/MacAppStore/candidate/GlideMouse.xcodeproj \
   -scheme GlideMouse -configuration Release \
   -derivedDataPath build/MacAppStore/DerivedData \
@@ -31,7 +31,7 @@ After exporting with Xcode's `app-store-connect` method, validate the actual pac
 
 ```sh
 python3 Scripts/validate-store-package.py build/MacAppStore/export/GlideMouse.pkg \
-  --team-id YOUR_TEAM_ID --build-number 30
+  --team-id YOUR_TEAM_ID --build-number 31
 ```
 
 This extracts the payload without installing it, verifies the installer/app signing,

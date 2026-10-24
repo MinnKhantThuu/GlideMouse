@@ -38,7 +38,7 @@ for file in (dest / 'Sources/GlideMouse').rglob('*.swift'):
     text = file.read_text().replace('AXIsProcessTrusted()', 'CGPreflightPostEventAccess()')
     # Remove the development-only denied-permission assertion from the Store
     # source altogether; its preflight API must not ship in the release payload.
-    if '#if GLIDEMOUSE_PERMISSION_TEST' in text:
+    while '#if GLIDEMOUSE_PERMISSION_TEST' in text:
         start = text.index('        #if GLIDEMOUSE_PERMISSION_TEST')
         end = text.index('        #endif', start) + len('        #endif\n')
         text = text[:start] + text[end:]
@@ -187,7 +187,7 @@ for directory in ['Sources', 'Config', 'GlideMouse.xcodeproj']:
     for file in (dest / directory).rglob('*'):
         if file.suffix not in ['.swift', '.c', '.h', '.plist', '.pbxproj']: continue
         text = file.read_text()
-        for token in ['MultitouchSupport.framework', 'MTDeviceCreateList', 'MTRegisterContact', 'import Sparkle', 'AXIsProcessTrusted', 'SPUStandardUpdater', 'with: .systemDefined', 'CGRequestListenEventAccess', 'CGPreflightListenEventAccess', 'IOHIDManagerOpen', 'IOHIDDeviceOpen']:
+        for token in ['MultitouchSupport.framework', 'MTDeviceCreateList', 'MTRegisterContact', 'import Sparkle', 'AXIsProcessTrusted', 'SPUStandardUpdater', 'with: .systemDefined', 'CGRequestListenEventAccess', 'CGPreflightListenEventAccess', 'IOHIDManagerOpen', 'IOHIDDeviceOpen', 'IOHIDDeviceCreate(', 'IOHIDDeviceCopyMatchingElements(', '.listenOnly']:
             if token in text:
                 sys.exit(f'Forbidden Store implementation remains: {file.relative_to(dest)}: {token}')
 report = {

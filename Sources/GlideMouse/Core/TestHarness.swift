@@ -403,7 +403,7 @@ import MouseCore
         let testSource = CGEventSource(stateID: .privateState)!
         testSource.userData = EventCollector.testTag; testSource.localEventsSuppressionInterval = 0
         let mask = [CGEventType.otherMouseDown,.otherMouseUp,.scrollWheel].reduce(CGEventMask(0)) { $0 | (1 << $1.rawValue) }
-        guard let tap = CGEvent.tapCreate(tap: .cgSessionEventTap, place: .tailAppendEventTap, options: .listenOnly, eventsOfInterest: mask, callback: { _,type,event,user in
+        guard let tap = CGEvent.tapCreate(tap: .cgSessionEventTap, place: .tailAppendEventTap, options: .defaultTap, eventsOfInterest: mask, callback: { _,type,event,user in
             if let user { Unmanaged<EventCollector>.fromOpaque(user).takeUnretainedValue().record(type,event) }; return Unmanaged.passUnretained(event)
         }, userInfo: Unmanaged.passUnretained(collector).toOpaque()) else { print("FAIL: listener tap creation"); return 1 }
         let source = CFMachPortCreateRunLoopSource(nil,tap,0)!
@@ -558,7 +558,7 @@ private final class EventCollector: @unchecked Sendable {
         let counts = HardwareCounts()
         let types: [CGEventType] = [.leftMouseDown,.leftMouseUp,.rightMouseDown,.rightMouseUp,.otherMouseDown,.otherMouseUp,.scrollWheel,.mouseMoved]
         let mask = types.reduce(CGEventMask(0)) { $0 | (1 << $1.rawValue) }
-        guard let tap = CGEvent.tapCreate(tap: .cgSessionEventTap,place: .headInsertEventTap,options: .listenOnly,eventsOfInterest: mask,callback: { _,type,event,user in
+        guard let tap = CGEvent.tapCreate(tap: .cgSessionEventTap,place: .headInsertEventTap,options: .defaultTap,eventsOfInterest: mask,callback: { _,type,event,user in
             guard let user else { return Unmanaged.passUnretained(event) }
             let c = Unmanaged<HardwareCounts>.fromOpaque(user).takeUnretainedValue()
             let tag = event.getIntegerValueField(.eventSourceUserData)
@@ -618,6 +618,9 @@ private final class HardwareCounts: @unchecked Sendable { var calibrationSeen = 
         var result = ["mouseTapExcludesAllKeyboardEvents": [CGEventType.keyDown, .keyUp, .flagsChanged].allSatisfy { InputRuntime.mouseEventMask & (1 << $0.rawValue) == 0 },
                       "mouseTapRetainsButtonsWheelAndDrag": [CGEventType.leftMouseDown, .leftMouseUp, .rightMouseDown, .rightMouseUp, .otherMouseDown, .otherMouseUp, .scrollWheel, .otherMouseDragged].allSatisfy { InputRuntime.mouseEventMask & (1 << $0.rawValue) != 0 },
                       "calibrationKeepsMappings": model.configuration.globalDefaults.mappings == original.globalDefaults.mappings]
+        let nestedDescriptors: [[String: Any]] = [["UsagePage": 1, "Usage": 2, "Elements": [["UsagePage": 9, "Usage": 5], ["UsagePage": 9, "Usage": 8]]]]
+        let flatDescriptors = DeviceRegistry.flattenElements(nestedDescriptors)
+        result["registryButtonDescriptorsNeedNoHIDClient"] = flatDescriptors.count == 3 && flatDescriptors.filter { $0["UsagePage"] as? Int == 9 }.compactMap { $0["Usage"] as? Int }.max() == 8
         model.calibrate(button: 0, position: .wheel)
         result["reservedCalibrationRejected"] = model.errorMessage != nil
         model.calibrate(button: 2, position: .wheel)
@@ -735,6 +738,97 @@ private final class HardwareCounts: @unchecked Sendable { var calibrationSeen = 
         return result.values.allSatisfy { $0 } ? 0 : 1
     }
 }
+
+        #if GLIDEMOUSE_PERMISSION_TEST
+@MainActor enum PermissionDeniedHarness {
+    static func run() -> Int32 {
+        let app = NSApplication.shared
+        app.setActivationPolicy(.regular); app.finishLaunching()
+        func emit(_ value: [String: Any]) {
+            let data = try! JSONSerialization.data(withJSONObject: value, options: [.prettyPrinted, .sortedKeys])
+            let directory = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0].appendingPathComponent("GlideMouse")
+            try? FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+            try? data.write(to: directory.appendingPathComponent("permission-denied-report.json"), options: .atomic)
+            let text = String(decoding: data, as: UTF8.self)
+            print(text)
+            if Bundle.main.object(forInfoDictionaryKey: "GMRunDeniedPrivacyCheck") as? Bool == true {
+                let alert = NSAlert()
+                alert.messageText = "GlideMouse privacy test result"
+                alert.informativeText = text
+                alert.addButton(withTitle: "Done")
+                alert.runModal()
+            }
+        }
+        let postBefore = CGPreflightPostEventAccess()
+        let listenBefore = CGPreflightListenEventAccess()
+        guard !postBefore && !listenBefore else {
+            emit(["requiresFreshIdentity": true, "postEventBefore": postBefore, "listenEventBefore": listenBefore])
+            return 77
+        }
+        let model = AppModel(testing: true)
+        let window = NSWindow(contentRect: NSRect(x: 200, y: 200, width: 540, height: 220), styleMask: [.titled, .closable], backing: .buffered, defer: false)
+        window.title = "GlideMouse — Permission denied check"
+        let view = MouseCaptureArea.CaptureView()
+        view.label = "Checking local button capture with both permissions denied"
+        view.armed = true
+        view.areaChanged = { model.setMouseCaptureArea($1, owner: $0) }
+        var captured: [Trigger] = []
+        view.captured = { trigger, _ in if let trigger { captured.append(trigger) } }
+        window.contentView = view; window.center(); window.makeKeyAndOrderFront(nil)
+        app.activate(ignoringOtherApps: true)
+        func pump(_ duration: Double = 0.4) { RunLoop.main.run(until: Date().addingTimeInterval(duration)) }
+        pump()
+        // These NSEvents are delivered directly to this owned view. They are
+        // never posted to the system event stream or sent to another app.
+        let eventPairs: [(NSEvent.EventType, NSEvent.EventType)] = [(.leftMouseDown, .leftMouseUp), (.rightMouseDown, .rightMouseUp), (.otherMouseDown, .otherMouseUp)]
+        for (down, up) in eventPairs {
+            let time = ProcessInfo.processInfo.systemUptime
+            let rawFirst = NSEvent.mouseEvent(with: down, location: NSPoint(x: 30, y: 30), modifierFlags: [], timestamp: time, windowNumber: window.windowNumber, context: nil, eventNumber: 0, clickCount: 1, pressure: 1)!
+            let rawLast = NSEvent.mouseEvent(with: up, location: NSPoint(x: 30, y: 30), modifierFlags: [], timestamp: time + 0.05, windowNumber: window.windowNumber, context: nil, eventNumber: 1, clickCount: 1, pressure: 0)!
+            // NSEvent.mouseEvent defaults its buttonNumber field to zero,
+            // including for right/other types. Set the local test data explicitly.
+            let number: Int64 = down == .leftMouseDown ? 0 : down == .rightMouseDown ? 1 : 2
+            let firstCG = rawFirst.cgEvent!, lastCG = rawLast.cgEvent!
+            firstCG.setIntegerValueField(.mouseEventButtonNumber, value: number)
+            lastCG.setIntegerValueField(.mouseEventButtonNumber, value: number)
+            let first = NSEvent(cgEvent: firstCG)!, last = NSEvent(cgEvent: lastCG)!
+            switch down {
+            case .leftMouseDown: view.mouseDown(with: first); view.mouseUp(with: last)
+            case .rightMouseDown: view.rightMouseDown(with: first); view.rightMouseUp(with: last)
+            default: view.otherMouseDown(with: first); view.otherMouseUp(with: last)
+            }
+        }
+        model.learnButton(); pump()
+        model.stopLearning(); pump()
+        model.update { $0.engineEnabled = true }; pump()
+        model.setMouseCaptureArea(NSRect(x: 10, y: 10, width: 100, height: 100)); pump()
+        let enabledWithoutTap = !model.runtimeReport.active && model.runtimeReport.tapCreationAttempts == 0
+        model.emergencyPause(); pump()
+        let postAfter = CGPreflightPostEventAccess(), listenAfter = CGPreflightListenEventAccess()
+        let checks: [String: Bool] = [
+            "bothPermissionsDeniedBefore": !postBefore && !listenBefore,
+            "bothPermissionsStillDeniedAfter": !postAfter && !listenAfter,
+            "runtimeCreatedNoGlobalTaps": model.runtimeReport.tapCreationAttempts == 0,
+            "enablingWithoutPermissionStaysInactive": enabledWithoutTap,
+            "localLeftRightMiddleCaptured": Set(captured.map(\.button)) == Set([0, 1, 2]),
+            "localCaptureDidNotExecuteActions": model.runtimeReport.events == 0,
+            "nativeTrackpadExcluded": model.devices.allSatisfy { !$0.name.localizedCaseInsensitiveContains("trackpad") },
+            "registeredPauseHotkeyNeedsNoInputMonitoring": model.emergencyPauseAvailable,
+            "temporaryConfigurationSaved": model.errorMessage == nil,
+            "emergencyPauseKeptEngineOff": !model.configuration.engineEnabled
+        ]
+        var report: [String: Any] = checks
+        report["capturedButtons"] = captured.map(\.button)
+        report["mouseDevicePresent"] = !model.devices.isEmpty
+        report["devices"] = model.devices.map { ["name": $0.name, "buttons": $0.buttons] as [String: Any] }
+        report["postBefore"] = postBefore; report["postAfter"] = postAfter
+        report["listenBefore"] = listenBefore; report["listenAfter"] = listenAfter
+        emit(report)
+        window.orderOut(nil); pump(0.1)
+        return checks.values.allSatisfy { $0 } ? 0 : 1
+    }
+}
+        #endif
 
 @MainActor private final class HarnessLatencyBox { var values: [Double] = [] }
 

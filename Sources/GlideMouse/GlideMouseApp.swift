@@ -64,6 +64,9 @@ import MouseCore
             executor.execute(Mapping(button: 3, action: CommandLine.arguments.contains("--test-space-right") ? .spaceRight : .spaceLeft))
             RunLoop.main.run(until: Date().addingTimeInterval(2)); exit(0)
         }
+        #if GLIDEMOUSE_PERMISSION_TEST
+        if CommandLine.arguments.contains("--permission-denied-test") || Bundle.main.object(forInfoDictionaryKey: "GMRunDeniedPrivacyCheck") as? Bool == true { exit(PermissionDeniedHarness.run()) }
+        #endif
         if CommandLine.arguments.contains("--observe-hardware") { exit(HardwareObserver.run(seconds: 30)) }
         if CommandLine.arguments.contains("--hardware-calibration") { exit(IntegrationHarness.run(physical: true,calibration: true)) }
         if CommandLine.arguments.contains("--hardware-remap-test") { exit(IntegrationHarness.run(physical: true)) }

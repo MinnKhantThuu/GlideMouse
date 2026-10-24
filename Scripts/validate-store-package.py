@@ -41,18 +41,18 @@ with tempfile.TemporaryDirectory(prefix='glidemouse-store-validation-') as temp:
     assert info['CFBundleIdentifier'] == 'app.glidemouse.store'
     assert info['CFBundleVersion'] == args.build_number
     assert info.get('GMStoreEdition') is True
-    for key in ['GMOnboardingPreview', 'GMListPreview', 'GMMagicPreview', 'GMGuidePreview']:
+    for key in ['GMOnboardingPreview', 'GMListPreview', 'GMMagicPreview', 'GMGuidePreview', 'GMRunDeniedPrivacyCheck']:
         assert not info.get(key), f'Preview enabled in distribution: {key}'
     assert not any(key.startswith('SU') for key in info), 'Sparkle configuration remains'
     assert not list(app.rglob('Sparkle.framework')), 'Sparkle framework remains'
     symbols = run('nm', '-u', str(app / 'Contents/MacOS/GlideMouse')).decode()
-    for forbidden in ['_AXIsProcessTrusted', '_AXUIElement', '_MTDeviceCreateList', '_MTRegisterContact', '_setuid', '_seteuid', '_CGRequestListenEventAccess', '_CGPreflightListenEventAccess', '_IOHIDManagerOpen', '_IOHIDDeviceOpen']:
+    for forbidden in ['_AXIsProcessTrusted', '_AXUIElement', '_MTDeviceCreateList', '_MTRegisterContact', '_setuid', '_seteuid', '_CGRequestListenEventAccess', '_CGPreflightListenEventAccess', '_IOHIDManagerOpen', '_IOHIDDeviceOpen', '_IOHIDDeviceCreate', '_IOHIDDeviceCopyMatchingElements']:
         assert forbidden not in symbols, f'Forbidden Store symbol: {forbidden}'
     print(json.dumps({
         'passed': True, 'bundleID': info['CFBundleIdentifier'],
         'version': info['CFBundleShortVersionString'], 'build': info['CFBundleVersion'],
         'teamID': args.team_id, 'sandbox': True, 'distributionSigned': True,
-        'previewDisabled': True, 'inputMonitoringAPIsAbsent': True, 'hidInputDevicesNotOpened': True, 'privateTouchAndAXAPIsAbsent': True,
+        'previewDisabled': True, 'explicitListenEventAPIsAbsent': True, 'hidUserClientAPIsAbsent': True, 'privateTouchAndAXAPIsAbsent': True,
         'entitlements': entitlements,
         'scope': 'artifact checks only; not App Review approval or runtime/device proof',
     }, indent=2))

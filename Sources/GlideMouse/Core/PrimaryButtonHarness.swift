@@ -29,7 +29,7 @@ import MouseCore
         let collector = Collector()
         let types: [CGEventType] = [.leftMouseDown,.leftMouseUp,.leftMouseDragged,.rightMouseDown,.rightMouseUp,.rightMouseDragged]
         let mask = types.reduce(CGEventMask(0)) { $0 | (1 << $1.rawValue) }
-        guard let tap = CGEvent.tapCreate(tap: .cgSessionEventTap, place: .tailAppendEventTap, options: .listenOnly, eventsOfInterest: mask, callback: { _,type,event,user in
+        guard let tap = CGEvent.tapCreate(tap: .cgSessionEventTap, place: .tailAppendEventTap, options: .defaultTap, eventsOfInterest: mask, callback: { _,type,event,user in
             if let user { Unmanaged<Collector>.fromOpaque(user).takeUnretainedValue().record(type,event) }; return Unmanaged.passUnretained(event)
         }, userInfo: Unmanaged.passUnretained(collector).toOpaque()) else { return 1 }
         let tapSource = CFMachPortCreateRunLoopSource(nil, tap, 0)!

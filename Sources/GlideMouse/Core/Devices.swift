@@ -1,6 +1,6 @@
 import Foundation
 import AppKit
-import IOKit.hid
+import IOKit
 import NativeBridge
 import MouseCore
 
@@ -40,25 +40,38 @@ struct MouseDevice: Identifiable, Codable, Equatable, Sendable {
         var devices: [MouseDevice] = []
         while case let service = IOIteratorNext(iterator), service != 0 {
             defer { IOObjectRelease(service) }
-            guard let device = IOHIDDeviceCreate(kCFAllocatorDefault, service) else { continue }
-            func property(_ key: String) -> Any? { IOHIDDeviceGetProperty(device, key as CFString) }
-            guard property(kIOHIDPrimaryUsagePageKey) as? Int == 1,
-                  property(kIOHIDPrimaryUsageKey) as? Int == 2 else { continue }
-            let vendor = property(kIOHIDVendorIDKey) as? Int ?? 0, product = property(kIOHIDProductIDKey) as? Int ?? 0
-            let name = property(kIOHIDProductKey) as? String ?? "Mouse", transport = property(kIOHIDTransportKey) as? String ?? "Unknown"
-            let serial = property(kIOHIDSerialNumberKey) as? String ?? ""
-            let location = property(kIOHIDLocationIDKey) as? Int ?? 0
-            let elements = IOHIDDeviceCopyMatchingElements(device, nil, IOOptionBits(kIOHIDOptionsTypeNone)) as? [IOHIDElement] ?? []
-            let keyboardCollection = elements.contains { IOHIDElementGetUsagePage($0) == 1 && IOHIDElementGetUsage($0) == 6 }
-            let touchpadCollection = elements.contains { IOHIDElementGetUsagePage($0) == 13 && IOHIDElementGetUsage($0) == 5 }
+            // Read published registry properties directly. IOHIDDeviceCreate can
+            // establish an IOHIDLib user client without explicitly opening it.
+            // In particular, never construct that client for keyboard devices.
+            var published: Unmanaged<CFMutableDictionary>?
+            _ = IORegistryEntryCreateCFProperties(service, &published, kCFAllocatorDefault, 0)
+            let properties = published?.takeRetainedValue() as? [String: Any] ?? [:]
+            func property(_ key: String) -> Any? {
+                properties[key] ?? IORegistryEntryCreateCFProperty(service, key as CFString, kCFAllocatorDefault, 0)?.takeRetainedValue()
+            }
+            guard property("PrimaryUsagePage") as? Int == 1,
+                  property("PrimaryUsage") as? Int == 2 else { continue }
+            let vendor = property("VendorID") as? Int ?? 0, product = property("ProductID") as? Int ?? 0
+            let name = property("Product") as? String ?? "Mouse", transport = property("Transport") as? String ?? "Unknown"
+            let serial = property("SerialNumber") as? String ?? ""
+            let location = property("LocationID") as? Int ?? 0
+            let elements = Self.flattenElements(property("Elements") as? [[String: Any]] ?? [])
+            let usages = property("DeviceUsagePairs") as? [[String: Int]] ?? []
+            let keyboardCollection = usages.contains { $0["DeviceUsagePage"] == 1 && $0["DeviceUsage"] == 6 }
+                || elements.contains { $0["UsagePage"] as? Int == 1 && $0["Usage"] as? Int == 6 }
+            let touchpadCollection = usages.contains { $0["DeviceUsagePage"] == 13 && $0["DeviceUsage"] == 5 }
+                || elements.contains { $0["UsagePage"] as? Int == 13 && $0["Usage"] as? Int == 5 }
             guard MouseDeviceClassification.isMouse(name: name, keyboardCollection: keyboardCollection, touchpadCollection: touchpadCollection) else { continue }
-            let buttons = elements.filter { IOHIDElementGetUsagePage($0) == 9 }.map { IOHIDElementGetUsage($0) }.max() ?? 0
+            let buttons = elements.filter { $0["UsagePage"] as? Int == 9 }.compactMap { $0["Usage"] as? Int }.max() ?? 0
             var registryID: UInt64 = 0
             IORegistryEntryGetRegistryEntryID(service, &registryID)
             let identifier = "\(vendor):\(product):\(transport):" + (serial.isEmpty ? "session-\(location)-\(registryID)" : serial)
             devices.append(MouseDevice(id: identifier, name: name, transport: transport, vendor: vendor, product: product, buttons: Int(buttons), stableIdentity: !serial.isEmpty, magicMouse: vendor == 1452 && (name.localizedCaseInsensitiveContains("magic mouse") || [781, 617, 789].contains(product))))
         }
         return devices.sorted { ($0.name, $0.id) < ($1.name, $1.id) }
+    }
+    static func flattenElements(_ elements: [[String: Any]]) -> [[String: Any]] {
+        elements.flatMap { [$0] + flattenElements($0["Elements"] as? [[String: Any]] ?? []) }
     }
 }
 

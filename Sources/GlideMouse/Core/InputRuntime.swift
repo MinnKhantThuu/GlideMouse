@@ -26,6 +26,7 @@ struct RuntimeReport: Equatable, Sendable {
     var touchDrops: UInt64 = 0
     var lastPeakArea: Double = 0
     var active = false
+    var tapCreationAttempts = 0
     var learningButton: Int?
     var observedButtons: Set<Int> = []
     var lastObservedButton: Int?
@@ -139,13 +140,12 @@ final class InputRuntime: @unchecked Sendable {
             guard self.captureRect != rect else { return }
             self.captureRect = rect
             if rect == nil { self.captureButtons.removeAll() }
-            if !self.configuration.engineEnabled {
-                if rect != nil { self.startTap(listenOnly: true) }
-                else { self.stopTap(); self.report.status = "Paused" }
-            }
+            // CaptureView receives events delivered to our own window. Publishing
+            // its rectangle only exempts that area from an already-running remap.
+            // Opening a capture box must never install a global listener.
         }
     }
-    func beginLearning() { enqueue { [weak self] in guard let self else { return }; self.stopTap(); self.reset(); self.learning = true; self.report.learningButton = nil; self.startTap(listenOnly: true) } }
+    func beginLearning() { enqueue { [weak self] in guard let self else { return }; self.stopTap(); self.reset(); self.learning = true; self.report.learningButton = nil; self.startTap() } }
     func endLearning() { enqueue { [weak self] in guard let self else { return }; self.learning = false; self.stopTap(); if self.configuration.engineEnabled { self.startTap() } } }
     func recordDispatch(recognizedAt: Double) {
         let milliseconds = max(0, (ProcessInfo.processInfo.systemUptime - recognizedAt) * 1000)
@@ -184,13 +184,14 @@ final class InputRuntime: @unchecked Sendable {
         touchDeviceID = "mt:\(candidate.id)"
         touchRunning = true; report.touchStatus = String(cString: gm_touch_status())
     }
-    private func startTap(listenOnly: Bool = false) {
+    private func startTap() {
         stopTap()
-        guard listenOnly || AXIsProcessTrusted() else { report.status = "Permissions needed"; return }
+        guard AXIsProcessTrusted() else { report.status = "Permissions needed"; return }
         // Mouse events only. The pause chord uses RegisterEventHotKey, rather
         // than tapping keyboard input and requiring Input Monitoring.
         let mask = Self.mouseEventMask
-        tap = CGEvent.tapCreate(tap: .cgSessionEventTap, place: .headInsertEventTap, options: listenOnly ? .listenOnly : .defaultTap, eventsOfInterest: mask, callback: { _, type, event, user in
+        report.tapCreationAttempts += 1
+        tap = CGEvent.tapCreate(tap: .cgSessionEventTap, place: .headInsertEventTap, options: .defaultTap, eventsOfInterest: mask, callback: { _, type, event, user in
             guard let user else { return Unmanaged.passUnretained(event) }
             let runtime = Unmanaged<InputRuntime>.fromOpaque(user).takeUnretainedValue()
             return runtime.handle(type, event: event) ? nil : Unmanaged.passUnretained(event)
@@ -198,7 +199,7 @@ final class InputRuntime: @unchecked Sendable {
         guard let tap else { report.status = "Event tap unavailable. Check permissions and reopen the app."; return }
         tapSource = CFMachPortCreateRunLoopSource(nil, tap, 0)
         if let source = tapSource, let loop { CFRunLoopAddSource(loop, source, .defaultMode) }
-        CGEvent.tapEnable(tap: tap, enable: true); report.status = listenOnly ? "Learning button" : "Active"; report.active = !listenOnly
+        CGEvent.tapEnable(tap: tap, enable: true); report.status = learning ? "Learning button" : "Active"; report.active = !learning
     }
     private func stopTap() {
         if let tap { CGEvent.tapEnable(tap: tap, enable: false); CFMachPortInvalidate(tap) }
@@ -396,7 +397,7 @@ final class InputRuntime: @unchecked Sendable {
         let time = ProcessInfo.processInfo.systemUptime
         if time - lastPermissionCheck > 2 {
             lastPermissionCheck = time
-            if report.active && !AXIsProcessTrusted() { stopTap(); reset(); gm_touch_stop(); touchRunning = false; report.status = "Permission revoked" }
+            if tap != nil && !AXIsProcessTrusted() { stopTap(); reset(); gm_touch_stop(); touchRunning = false; report.status = "Permission revoked" }
         }
         if configuration.engineEnabled && report.active {
             let bs = bindings(); buttons.advance(time: time, bindings: bs).forEach { emit($0) }
